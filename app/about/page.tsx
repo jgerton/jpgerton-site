@@ -190,6 +190,25 @@ export default function AboutPage() {
           href: siteConfig.author.youtube,
         }}
       />
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Person",
+            name: "Jon Gerton",
+            jobTitle: "Claude Code Educator & Toolsmith",
+            url: "https://jpgerton.com",
+            sameAs: [
+              "https://github.com/jgerton",
+              "https://x.com/jongerton",
+              "https://youtube.com/@jongerton",
+              "https://www.linkedin.com/in/jon-gerton-8009a9393/",
+            ],
+          }),
+        }}
+      />
     </>
   );
 }
