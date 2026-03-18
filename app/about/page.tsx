@@ -202,8 +202,8 @@ export default function AboutPage() {
             url: "https://jpgerton.com",
             sameAs: [
               "https://github.com/jgerton",
-              "https://x.com/jongerton",
-              "https://youtube.com/@jongerton",
+              "https://x.com/jgerton",
+              "https://youtube.com/@jgerton",
               "https://www.linkedin.com/in/jon-gerton-8009a9393/",
             ],
           }),

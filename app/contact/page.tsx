@@ -10,12 +10,12 @@ export const metadata = {
 const socialLinks = [
   {
     label: "YouTube",
-    handle: "@jongerton",
+    handle: "@jgerton",
     href: siteConfig.author.youtube,
   },
   {
     label: "X / Twitter",
-    handle: "@jongerton",
+    handle: "@jgerton",
     href: siteConfig.author.x,
   },
   {
