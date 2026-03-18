@@ -1,11 +1,16 @@
 import type { Metadata } from "next";
 import { inter, spaceGrotesk, jetbrainsMono } from "@/lib/fonts";
 import { siteConfig } from "@/lib/site-config";
+import { Nav } from "@/components/nav";
+import { Footer } from "@/components/footer";
 import "./globals.css";
 
 export const metadata: Metadata = {
   title: siteConfig.name,
   description: siteConfig.description,
+  icons: {
+    icon: "/icon.svg",
+  },
 };
 
 export default function RootLayout({
@@ -18,7 +23,17 @@ export default function RootLayout({
       lang="en"
       className={`${inter.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable}`}
     >
-      <body className="font-sans antialiased">{children}</body>
+      <body className="font-sans antialiased">
+        {/* Prevent dark mode flash on load */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var t=localStorage.getItem('theme');if(t==='dark'||(!t&&window.matchMedia('(prefers-color-scheme:dark)').matches)){document.documentElement.classList.add('dark')}}catch(e){}})()`,
+          }}
+        />
+        <Nav />
+        <main>{children}</main>
+        <Footer />
+      </body>
     </html>
   );
 }
