@@ -59,7 +59,7 @@ export function Hero() {
           style={{ animationDelay: "200ms" }}
         >
           <TerminalBlock
-            command="claude install jgerton/brand-toolkit"
+            command="claude plugin install brand-toolkit"
             output="Plugin installed successfully"
           />
         </div>
