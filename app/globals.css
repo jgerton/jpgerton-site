@@ -1,1 +1,289 @@
 @import "tailwindcss";
+
+/* Custom theme configuration for Tailwind v4 */
+@theme {
+  /* ===== BRAND COLORS ===== */
+  --color-brand-teal: #0D9488;
+  --color-brand-slate: #1E293B;
+  --color-brand-amber: #F59E0B;
+  --color-brand-green: #22C55E;
+  --color-brand-dark: #0F172A;
+
+  /* ===== SPACING SCALE (8pt grid) ===== */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-2xl: 48px;
+  --spacing-3xl: 64px;
+
+  /* ===== SHADOW ELEVATION SYSTEM ===== */
+  --shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+
+  /* ===== ANIMATION DURATION TOKENS ===== */
+  --duration-fast: 150ms;
+  --duration-entrance: 250ms;
+  --duration-base: 300ms;
+  --duration-slow: 500ms;
+
+  /* ===== CUSTOM EASING FUNCTIONS ===== */
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+  /* ===== BORDER RADIUS ===== */
+  --radius-lg: 12px;
+  --radius-md: 8px;
+  --radius-sm: 4px;
+
+  /* ===== FONT FAMILY ===== */
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, 'Cascadia Code', 'Fira Code', monospace;
+
+  /* ===== FLUID TYPOGRAPHY SCALE (1.2x ratio, 400-1280px viewport) ===== */
+  /* Hero H1: 60px mobile -> 72px desktop */
+  --font-size-hero: clamp(3.75rem, 1.364vw + 3.409rem, 4.5rem);
+  /* H1: 40px -> 52px */
+  --font-size-h1: clamp(2.5rem, 1.364vw + 2.159rem, 3.25rem);
+  /* H2: 33px -> 43px */
+  --font-size-h2: clamp(2.063rem, 1.136vw + 1.778rem, 2.688rem);
+  /* H3: 28px -> 36px */
+  --font-size-h3: clamp(1.75rem, 0.909vw + 1.523rem, 2.25rem);
+  /* H4: 23px -> 30px */
+  --font-size-h4: clamp(1.438rem, 0.795vw + 1.239rem, 1.875rem);
+  /* H5: 19px -> 25px */
+  --font-size-h5: clamp(1.188rem, 0.682vw + 1.017rem, 1.563rem);
+  /* H6: 16px -> 21px */
+  --font-size-h6: clamp(1rem, 0.568vw + 0.858rem, 1.313rem);
+  /* Body base: 16px -> 18px */
+  --font-size-base: clamp(1rem, 0.227vw + 0.943rem, 1.125rem);
+  /* Small: 14px -> 16px */
+  --font-size-sm: clamp(0.875rem, 0.227vw + 0.818rem, 1rem);
+  /* Extra small: 12px -> 14px */
+  --font-size-xs: clamp(0.75rem, 0.227vw + 0.693rem, 0.875rem);
+
+  /* ===== MAX-WIDTH CONTAINER SCALE =====
+   * Restores Tailwind v4 default container widths that are
+   * overridden by --spacing-* tokens sharing the same names.
+   * Without these, max-w-2xl resolves to 48px (--spacing-2xl)
+   * instead of 42rem (672px). */
+  --max-width-xs: 20rem;
+  --max-width-sm: 24rem;
+  --max-width-md: 28rem;
+  --max-width-lg: 32rem;
+  --max-width-xl: 36rem;
+  --max-width-2xl: 42rem;
+  --max-width-3xl: 48rem;
+  --max-width-4xl: 56rem;
+  --max-width-5xl: 64rem;
+  --max-width-6xl: 72rem;
+  --max-width-7xl: 80rem;
+
+  /* ===== LINE HEIGHT TOKENS ===== */
+  --leading-tight: 1.1;
+  --leading-snug: 1.25;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.6;
+}
+
+/* Semantic color mappings - wraps CSS variables defined in @layer base */
+@theme inline {
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+
+  /* Warm accent (amber/gold) */
+  --color-accent-warm: hsl(var(--accent-warm));
+  --color-accent-warm-foreground: hsl(var(--accent-warm-foreground));
+
+  /* Code accent (terminal green) */
+  --color-code-accent: hsl(var(--code-accent));
+  --color-code-accent-foreground: hsl(var(--code-accent-foreground));
+}
+
+/* CSS Variables for theming */
+@layer base {
+  /* ===== COLOR SYSTEM - WCAG AA VERIFIED =====
+   * All foreground/background pairs: 4.5:1+ (text)
+   * All UI element pairs: 3:1+ (borders, inputs)
+   * Light mode: 9 pairs verified
+   * Dark mode: 12 pairs verified (including cross-surface)
+   * Last verified: 2026-02-06 (14-03 dark mode audit)
+   * ============================================ */
+
+  :root {
+    /* Base colors - white background with slate-900 text */
+    --background: 0 0% 100%; /* #FFFFFF */
+    --foreground: 222 47% 11%; /* #0F172A - slate-900 (15.4:1 contrast) */
+
+    /* Card colors - seamless with background */
+    --card: 0 0% 100%; /* #FFFFFF */
+    --card-foreground: 222 47% 11%; /* #0F172A */
+
+    /* Popover colors */
+    --popover: 0 0% 100%; /* #FFFFFF */
+    --popover-foreground: 222 47% 11%; /* #0F172A */
+
+    /* Primary brand - teal-700 for WCAG AA compliance */
+    --primary: 175 77% 26%; /* #0F766E - teal-700 (4.98:1 on white) */
+    --primary-foreground: 0 0% 100%; /* #FFFFFF */
+
+    /* Secondary brand - slate-800 */
+    --secondary: 217 33% 17%; /* #1E293B - slate-800 */
+    --secondary-foreground: 0 0% 100%; /* #FFFFFF */
+
+    /* Muted UI elements - slate-tinted grays */
+    --muted: 210 40% 98%; /* #F8FAFC - slate-50 */
+    --muted-foreground: 215 16% 47%; /* #64748B - slate-500 (4.71:1 on white) */
+
+    /* Accent - subtle teal for hover states */
+    --accent: 166 76% 94%; /* ~#CCFBF1 - teal-100 hover bg */
+    --accent-foreground: 175 77% 26%; /* #0F766E - teal-700 text on accent */
+
+    /* Destructive actions */
+    --destructive: 0 84% 50%; /* #F01F1F - red (4.52:1 contrast) */
+    --destructive-foreground: 0 0% 100%; /* #FFFFFF */
+
+    /* Form elements and borders */
+    --border: 0 0% 55%; /* #8C8C8C - medium gray (3.36:1 contrast) */
+    --input: 214 32% 91%; /* #E2E8F0 - slate-200 */
+    --ring: 175 77% 26%; /* teal-700 focus ring */
+    --radius: 8px;
+
+    /* Warm accent - amber for CTAs and highlights */
+    --accent-warm: 38 92% 50%; /* #F59E0B - amber-500 */
+    --accent-warm-foreground: 222 47% 11%; /* #0F172A - dark text on amber */
+
+    /* Code accent - terminal green */
+    --code-accent: 142 72% 29%; /* #15803D - green-700 (5.07:1 on white) */
+    --code-accent-foreground: 0 0% 100%; /* #FFFFFF */
+  }
+
+  .dark {
+    /* Base colors - slate-900 background */
+    --background: 222 47% 11%; /* #0F172A - slate-900 */
+    --foreground: 210 40% 98%; /* #F8FAFC - slate-50 */
+
+    /* Color elevation: lighter = higher surface */
+    --card: 217 33% 17%; /* #1E293B - slate-800 (+6%) */
+    --card-foreground: 210 40% 98%; /* #F8FAFC */
+
+    /* Popover - more elevated */
+    --popover: 215 28% 22%; /* ~#283445 - elevated slate */
+    --popover-foreground: 210 40% 98%; /* #F8FAFC */
+
+    /* Primary brand - teal-500 for dark mode visibility */
+    --primary: 175 77% 40%; /* #14B8A6 - teal-500 (5.79:1 on bg, 6.51:1 as bg with dark text) */
+    --primary-foreground: 222 47% 11%; /* #0F172A - dark text on teal */
+
+    /* Secondary brand - lighter slate for dark mode */
+    --secondary: 215 28% 22%; /* elevated slate */
+    --secondary-foreground: 210 40% 98%; /* #F8FAFC */
+
+    /* Muted UI elements - follows elevation pattern */
+    --muted: 217 33% 15%; /* between bg and card */
+    --muted-foreground: 215 20% 65%; /* #94A3B8 - slate-400 (6.31:1 on bg) */
+
+    /* Accent - dark teal for subtle hover */
+    --accent: 175 40% 18%; /* dark teal hover bg */
+    --accent-foreground: 166 72% 50%; /* lighter teal text on hover */
+
+    /* Destructive actions */
+    --destructive: 0 62% 50%; /* #CF2F2F - red (5.10:1 contrast) */
+    --destructive-foreground: 0 0% 100%; /* #FFFFFF */
+
+    /* Form elements and borders */
+    --border: 0 0% 45%; /* #737373 - gray border (3.75:1 on bg) */
+    --input: 217 33% 17%; /* #1E293B - slate-800 */
+    --ring: 175 77% 40%; /* teal-500 focus ring */
+
+    /* Warm accent - brighter amber for dark backgrounds */
+    --accent-warm: 38 95% 55%; /* #F4A832 - brighter amber (8.89:1 contrast) */
+    --accent-warm-foreground: 222 47% 11%; /* #0F172A */
+
+    /* Code accent - terminal green, bright for dark mode */
+    --code-accent: 142 71% 45%; /* #22C55E - green-500 (7.06:1 on bg) */
+    --code-accent-foreground: 222 47% 11%; /* #0F172A */
+  }
+}
+
+@layer base {
+  * {
+    border-color: hsl(var(--border));
+  }
+  body {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+  }
+
+  /* Focus ring animation - smooth keyboard focus appearance */
+  *:focus-visible {
+    transition: box-shadow var(--duration-fast) var(--ease-smooth);
+  }
+}
+
+/* ===== CSS KEYFRAME ANIMATIONS ===== */
+/* GPU-accelerated entrance animations for scroll-triggered content */
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* ===== ANIMATION UTILITY CLASSES ===== */
+@layer utilities {
+  .animate-fade-up {
+    animation: fade-up var(--duration-entrance) var(--ease-smooth) both;
+  }
+
+  .animate-fade-in {
+    animation: fade-in var(--duration-entrance) var(--ease-smooth) both;
+  }
+}
+
+/* ===== ACCESSIBILITY: REDUCED MOTION SUPPORT ===== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -1,0 +1,26 @@
+export const siteConfig = {
+  name: "Jon Gerton",
+  description: "Claude Code educator and toolsmith. Open-source plugins, tutorials, and a community of builders.",
+  url: process.env.NEXT_PUBLIC_SITE_URL || "https://jpgerton.com",
+  author: {
+    name: "Jon Gerton",
+    email: "jon@jpgerton.com",
+    jobTitle: "Claude Code Educator & Toolsmith",
+    github: "https://github.com/jgerton",
+    x: "https://x.com/jongerton",
+    youtube: "https://youtube.com/@jongerton",
+    skool: "https://www.skool.com/you-craft-and-ai-helps",
+    linkedin: "https://www.linkedin.com/in/jon-gerton-8009a9393/",
+  },
+  keywords: [
+    "Claude Code",
+    "Claude Code plugins",
+    "Claude Code skills",
+    "AI development tools",
+    "Claude Code tutorial",
+    "AI educator",
+    "open source AI tools",
+  ],
+  locale: "en_US",
+  themeColor: "#0F172A",
+};
