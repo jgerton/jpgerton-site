@@ -1,9 +1,8 @@
 interface TerminalBlockProps {
-  command: string;
-  output?: string;
+  commands: { command: string; output?: string }[];
 }
 
-export function TerminalBlock({ command, output }: TerminalBlockProps) {
+export function TerminalBlock({ commands }: TerminalBlockProps) {
   return (
     <div className="group relative w-full max-w-xl mx-auto">
       {/* Glow effect behind terminal */}
@@ -37,31 +36,40 @@ export function TerminalBlock({ command, output }: TerminalBlockProps) {
 
         {/* Terminal body */}
         <div className="px-5 py-4 font-mono text-sm leading-relaxed sm:text-base">
-          {/* Command line */}
-          <div className="flex items-start gap-2">
-            <span className="text-brand-green select-none" aria-hidden="true">
-              &gt;
-            </span>
-            <span className="text-brand-green">{command}</span>
-            {/* Blinking cursor */}
-            <span
-              className="inline-block h-4 w-2 translate-y-0.5 bg-brand-green/80"
-              style={{
-                animation: "terminal-blink 1.2s step-end infinite",
-              }}
-              aria-hidden="true"
-            />
-          </div>
+          {commands.map((line, i) => (
+            <div key={i}>
+              {/* Command line */}
+              <div className="flex items-start gap-2">
+                <span className="text-brand-green select-none" aria-hidden="true">
+                  &gt;
+                </span>
+                <span className="text-brand-green">{line.command}</span>
+                {/* Blinking cursor on last command only */}
+                {i === commands.length - 1 && !line.output && (
+                  <span
+                    className="inline-block h-4 w-2 translate-y-0.5 bg-brand-green/80"
+                    style={{
+                      animation: "terminal-blink 1.2s step-end infinite",
+                    }}
+                    aria-hidden="true"
+                  />
+                )}
+              </div>
 
-          {/* Output line */}
-          {output && (
-            <div className="mt-2 flex items-start gap-2">
-              <span className="select-none opacity-0" aria-hidden="true">
-                &gt;
-              </span>
-              <span className="text-white/70">{output}</span>
+              {/* Output line */}
+              {line.output && (
+                <div className="mt-1 flex items-start gap-2">
+                  <span className="select-none opacity-0" aria-hidden="true">
+                    &gt;
+                  </span>
+                  <span className="text-white/70">{line.output}</span>
+                </div>
+              )}
+
+              {/* Spacing between command groups */}
+              {i < commands.length - 1 && <div className="mt-2" />}
             </div>
-          )}
+          ))}
         </div>
       </div>
 

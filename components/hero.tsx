@@ -59,8 +59,10 @@ export function Hero() {
           style={{ animationDelay: "200ms" }}
         >
           <TerminalBlock
-            command="claude plugin install brand-toolkit"
-            output="Plugin installed successfully"
+            commands={[
+              { command: "git clone https://github.com/jgerton/brand-toolkit", output: "Cloning into 'brand-toolkit'..." },
+              { command: "claude --plugin-dir ./brand-toolkit" },
+            ]}
           />
         </div>
 
