@@ -9,7 +9,7 @@ export const siteConfig = {
     github: "https://github.com/jgerton",
     x: "https://x.com/jgerton",
     youtube: "https://youtube.com/@jgerton",
-    skool: "https://www.skool.com/you-craft-and-ai-helps",
+    skool: "https://www.skool.com/you-craft-ai-helps",
     linkedin: "https://www.linkedin.com/in/jon-gerton-8009a9393/",
   },
   keywords: [
