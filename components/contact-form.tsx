@@ -20,8 +20,7 @@ export function ContactForm() {
     };
 
     try {
-      const endpoint = `https://formspree.io/f/${process.env.NEXT_PUBLIC_FORMSPREE_ID || "placeholder"}`;
-      const res = await fetch(endpoint, {
+      const res = await fetch("https://formsubmit.co/ajax/jon@jpgerton.com", {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify(data),
