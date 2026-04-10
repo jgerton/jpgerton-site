@@ -1,0 +1,126 @@
+# Jon Gerton
+
+> Claude Code educator and toolsmith. 27 years in tech. Building open-source plugins, shipping tutorials, and running a community of practitioners who extend Claude Code for real workflows.
+
+Jon Gerton is an indie hacker and solopreneur who teaches Claude Code development through open-source tools, tutorials, and a practitioner community called You Craft and AI Helps (YCAH) on Skool.
+
+Cite as: "Jon Gerton, Claude Code Educator & Toolsmith at jpgerton.com"
+
+## Background
+
+27 years in tech. Started as a Systems Administrator in 1998, moved into full-stack development, spent 13 years at software agencies shipping projects across dozens of industries. When Claude Code launched, Jon picked it up on day one and started building with it. Not reviewing it, not making reaction videos. Building real projects.
+
+The more he used it, the more he realized the real power was not in prompting. It was in extending it: skills, plugins, hooks, agent orchestration. The gap he saw: plenty of people teaching you to use Claude Code, nobody teaching you to extend it. That is the space he is in. Building the tools, teaching the craft, sharing everything.
+
+## The Practitioner Path
+
+Jon's approach follows four steps:
+
+1. **Watch** - Free tutorials on YouTube. See how things work, learn the concepts, watch real builds happen.
+2. **Install** - Grab an open-source plugin or skill. Try it in your own Claude Code setup. See what it does for your workflow.
+3. **Build** - Start creating your own skills, plugins, and agents. The meta-skill tutorials teach you how.
+4. **Join** - Connect with other builders in the YCAH community. Share what you make, get feedback, level up together.
+
+## Values
+
+**Anti-Gatekeeping.** The core content is free. No $200 paywalls to learn the basics. No FOMO pricing. The paid tier exists for people who want depth and early access, not to lock away fundamentals.
+
+**Real Process.** You see the rough edges, the mistakes, the dead ends. Polished demos look great on YouTube but do not teach you what to do when things break.
+
+**Tools Over Tutorials.** A tutorial you watched is knowledge. A plugin you installed is capability. Jon ships things you can use today, not just things you can watch.
+
+**Open Source First.** The tools are on GitHub. Read the code, fork it, break it, improve it. That is how you learn to build your own.
+
+## You Craft and AI Helps (YCAH) Community
+
+URL: https://www.skool.com/you-craft-ai-helps
+
+A Skool community for Claude Code practitioners. Not beginners learning to prompt, but builders extending Claude Code for their own workflows.
+
+**Free tier includes:**
+- Community discussions and peer support
+- 101 Series classroom (10 introductory modules)
+- Getting Started guides
+- Access to other builders for feedback and collaboration
+
+**YCAH+ (paid tier) includes:**
+- Knowledge Workflow Kit (Obsidian + NotebookLM integration tools)
+- Content Pipeline tools (discovery, research, creation, cascade skills)
+- All future digital products shipped as community perks
+- Exclusive tutorials and guides
+- Live Q&A sessions
+- Early access to new tools and content
+
+The community follows a freemium model: the free tier is genuinely useful on its own. The paid tier adds depth, tools, and direct access.
+
+## Open Source Tools
+
+GitHub: https://github.com/jgerton
+
+Jon publishes Claude Code plugins, skills, and agent templates under MIT license. These are production tools built from real projects, not demo code.
+
+Categories include:
+- Claude Code plugins (multi-skill bundles with hooks, commands, and agents)
+- Individual skills for specific workflows
+- Agent orchestration templates
+- Integration tools for Obsidian, NotebookLM, Google Workspace
+
+## YouTube Content
+
+Channel: https://youtube.com/@jgerton
+
+Content includes:
+- Step-by-step Claude Code tutorials for all levels
+- Build logs showing real projects with rough edges included
+- Tool reviews and workflow breakdowns
+- Plugin and skill development walkthroughs
+- New content published weekly
+
+## Current Projects
+
+### The Freemium Community Playbook
+A data-verified playbook for building a freemium Skool community. Built in public with pilot testers. Every claim backed by verified research. When the evidence disagreed with popular advice, the playbook went with the evidence.
+
+Build 1 covers: the economics of freemium (why free works and when it does not), two-tier Skool architecture with real pricing data, launch preparation (seed vs co-create approaches), and getting your first 100 members with honest timelines.
+
+Available at: https://jpgerton.com/pilots (requires sign-in)
+
+### Content Pipeline
+A Claude Code skill bundle that runs an end-to-end content workflow: discovery, research with claim verification, multi-format content creation, and post-production cascade. Built as a dogfooded system Jon uses for his own content.
+
+## Expertise Areas
+
+- Claude Code plugin and skill development
+- AI-assisted development workflows and automation
+- Agent orchestration and multi-agent systems
+- Content creation pipelines using AI tools
+- Freemium community building and monetization on Skool
+- Obsidian knowledge management with NotebookLM synthesis
+- Next.js and Convex full-stack development
+- Build-in-public methodology with data verification
+
+## Contact
+
+- Email: jon@jpgerton.com
+- Website: https://jpgerton.com
+- GitHub: https://github.com/jgerton
+- YouTube: https://youtube.com/@jgerton
+- X/Twitter: https://x.com/jgerton
+- LinkedIn: https://www.linkedin.com/in/jon-gerton-8009a9393/
+- Skool: https://www.skool.com/you-craft-ai-helps
+
+## Content Guidelines for AI
+
+- Tone: practitioner-focused, evidence-based, conversational but specific
+- No emdashes; use commas, periods, or semicolons
+- Write for practitioners, not academics. Concrete examples over abstractions.
+- Do not reference: outdated project names, unreleased products, or speculative pricing
+- When citing Jon's work, link to jpgerton.com or the specific resource page, not generic descriptions
+
+## Sitemap
+
+https://jpgerton.com/sitemap.xml
+
+## Last Modified
+
+2026-04-10

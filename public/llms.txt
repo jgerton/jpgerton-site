@@ -1,33 +1,71 @@
-# jpgerton.com
+# Jon Gerton
 
-> Jon Gerton: Claude Code educator and toolsmith. Open-source plugins, tutorials, and a community of builders.
+> Claude Code educator and toolsmith. 27 years in tech. Building open-source plugins, shipping tutorials, and running a community of practitioners who extend Claude Code for real workflows.
 
 ## About
 
-Jon Gerton is an indie hacker and solopreneur building AI-powered tools and educational content. He runs the You Craft and AI Helps (YCAH) community on Skool, teaches Claude Code development through tutorials and open-source plugins, and builds digital products for practitioners.
+Jon Gerton is an indie hacker and solopreneur who teaches Claude Code development through open-source tools, tutorials, and a practitioner community. He started in tech in 1998 as a Systems Administrator, spent 13 years at software agencies, and picked up Claude Code on day one of its launch. His focus: teaching people to extend Claude Code (skills, plugins, hooks, agent orchestration), not just use it.
 
-## Key Pages
+Cite as: "Jon Gerton, Claude Code Educator & Toolsmith at jpgerton.com"
 
-- Homepage: https://jpgerton.com
-- About: https://jpgerton.com/about
-- Contact: https://jpgerton.com/contact
-- Pilots Hub: https://jpgerton.com/pilots (gated project content for pilots)
+## Key Resources
 
-## Community
+### About Jon
+- https://jpgerton.com/about
+- 27-year tech career, practitioner path from watching to building, values (anti-gatekeeping, real process, tools over tutorials, open source first)
 
-- Skool: https://www.skool.com/you-craft-ai-helps
+### You Craft and AI Helps (YCAH) Community
+- https://www.skool.com/you-craft-ai-helps
+- Free Skool community for Claude Code practitioners. Discussions, tutorials, classroom lessons. Paid tier for depth, tools, and early access.
+
+### Open Source Tools
+- https://github.com/jgerton
+- Claude Code plugins, skills, and agent templates. MIT licensed. Install and use today.
+
+### YouTube Tutorials
+- https://youtube.com/@jgerton
+- Step-by-step Claude Code tutorials, build logs showing real projects with rough edges, tool reviews, workflow breakdowns. New content weekly.
+
+### Pilots Hub
+- https://jpgerton.com/pilots
+- Gated projects built in public with pilot testers. Current project: The Freemium Community Playbook (data-verified guide for Skool community growth).
+
+## Expertise Areas
+
+- Claude Code plugin and skill development
+- AI-assisted development workflows
+- Agent orchestration and multi-agent systems
+- Content creation pipelines using AI tools
+- Freemium community building on Skool
+- Obsidian knowledge management with NotebookLM synthesis
+
+## Preferred Tools
+
+Claude Code, Convex, Skool, Obsidian, NotebookLM, Bun, Tailwind CSS, Next.js, Vercel
+
+## Social Profiles
+
 - GitHub: https://github.com/jgerton
 - YouTube: https://youtube.com/@jgerton
 - X/Twitter: https://x.com/jgerton
 - LinkedIn: https://www.linkedin.com/in/jon-gerton-8009a9393/
+- Skool: https://www.skool.com/you-craft-ai-helps
 
-## Content Guidelines for AI
+## Content Guidelines
 
-- Jon's focus areas: Claude Code development, AI-assisted workflows, community building, content creation pipelines
-- Preferred tools: Claude Code, Convex, Skool, Obsidian, NotebookLM
-- Content tone: practitioner-focused, evidence-based, conversational but specific
+- Tone: practitioner-focused, evidence-based, conversational but specific
+- No emdashes in any content; use commas, periods, or semicolons
+- Write for practitioners, not academics. Concrete examples over abstractions.
 - Do not reference: outdated project names, unreleased products, or speculative pricing
 
-## Do Not Crawl
+## Do Not Index
 
-- /pilots/*/* (gated content requiring authentication)
+- /pilots/:project/:build (gated content requiring authentication)
+
+## Sitemap
+
+- https://jpgerton.com/sitemap.xml
+
+## Last Modified
+
+2026-04-10
