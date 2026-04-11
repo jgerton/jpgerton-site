@@ -1,7 +1,7 @@
 export default {
   providers: [
     {
-      domain: process.env.AUTH_RESEND_DOMAIN,
+      domain: "https://accounts.google.com",
       applicationID: "convex",
     },
   ],
