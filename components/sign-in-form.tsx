@@ -8,7 +8,7 @@ export function SignInForm() {
   return (
     <div className="max-w-md mx-auto">
       <button
-        onClick={() => void signIn("google")}
+        onClick={() => void signIn("google", { redirectTo: "/pilots" })}
         className="w-full px-4 py-3 rounded-lg border border-border bg-card text-foreground font-medium hover:border-accent transition-colors flex items-center justify-center gap-3"
       >
         <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true">
