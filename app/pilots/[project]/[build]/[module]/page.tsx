@@ -1,6 +1,7 @@
 import { serialize } from "next-mdx-remote/serialize";
 import { MDXRenderer } from "@/components/mdx-renderer";
 import { ModuleHeader } from "@/components/pilots/module-header";
+import { SectionObserverWrapper } from "@/components/pilots/section-observer-wrapper";
 import { readFile } from "fs/promises";
 import { join } from "path";
 import matter from "gray-matter";
@@ -51,12 +52,16 @@ export default async function ModulePage({ params }: PageProps) {
 
   const moduleIndex = buildData.modules.indexOf(moduleInfo);
   const totalModules = buildData.modules.length;
-
   const wordCount = source.compiledSource.split(/\s+/).length;
   const readTime = Math.max(1, Math.round(wordCount / 200));
 
   return (
-    <div>
+    <SectionObserverWrapper
+      projectSlug={project}
+      buildSlug={build}
+      moduleSlug={moduleSlug}
+      sections={moduleInfo.sections}
+    >
       <ModuleHeader
         moduleNumber={moduleIndex + 1}
         totalModules={totalModules}
@@ -66,6 +71,6 @@ export default async function ModulePage({ params }: PageProps) {
         readTimeMinutes={readTime}
       />
       <MDXRenderer source={source} />
-    </div>
+    </SectionObserverWrapper>
   );
 }
