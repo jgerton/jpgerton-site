@@ -1,4 +1,5 @@
 import { serialize } from "next-mdx-remote/serialize";
+import rehypeSlug from "rehype-slug";
 import { MDXRenderer } from "@/components/mdx-renderer";
 import { readFile } from "fs/promises";
 import { join } from "path";
@@ -24,7 +25,11 @@ export default async function BuildPage({ params }: PageProps) {
   try {
     const raw = await readFile(contentPath, "utf-8");
     const { content } = matter(raw);
-    source = await serialize(content);
+    source = await serialize(content, {
+      mdxOptions: {
+        rehypePlugins: [rehypeSlug],
+      },
+    });
   } catch {
     notFound();
   }

@@ -1,4 +1,5 @@
 import { serialize } from "next-mdx-remote/serialize";
+import rehypeSlug from "rehype-slug";
 import { MDXRenderer } from "@/components/mdx-renderer";
 import { ModuleHeader } from "@/components/pilots/module-header";
 import { SectionObserverWrapper } from "@/components/pilots/section-observer-wrapper";
@@ -29,7 +30,11 @@ export default async function ModulePage({ params }: PageProps) {
     const raw = await readFile(modulePath, "utf-8");
     const { content, data } = matter(raw);
     frontmatter = data;
-    source = await serialize(content);
+    source = await serialize(content, {
+      mdxOptions: {
+        rehypePlugins: [rehypeSlug],
+      },
+    });
   } catch {
     notFound();
   }

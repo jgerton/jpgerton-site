@@ -16,10 +16,18 @@ const components = {
     <h1 className="text-3xl font-heading font-bold mt-12 mb-4" {...props} />
   ),
   h2: (props: React.ComponentProps<"h2">) => (
-    <h2 className="text-2xl font-heading font-semibold mt-10 mb-3" {...props} />
+    <h2
+      className="text-2xl font-heading font-semibold mt-10 mb-3"
+      data-section-id={props.id}
+      {...props}
+    />
   ),
   h3: (props: React.ComponentProps<"h3">) => (
-    <h3 className="text-xl font-heading font-semibold mt-8 mb-2" {...props} />
+    <h3
+      className="text-xl font-heading font-semibold mt-8 mb-2"
+      data-section-id={props.id}
+      {...props}
+    />
   ),
   h4: (props: React.ComponentProps<"h4">) => (
     <h4 className="text-lg font-heading font-medium mt-6 mb-2" {...props} />
