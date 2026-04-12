@@ -12,6 +12,7 @@ export function useFeedback(
     moduleSlug,
   });
   const submitFeedback = useMutation(api.pilotFeedback.submitModuleFeedback);
+  const updateFeedback = useMutation(api.pilotFeedback.updateModuleFeedback);
 
   return {
     submitted: feedback !== null && feedback !== undefined,
@@ -23,6 +24,18 @@ export function useFeedback(
       situation?: string;
     }) =>
       submitFeedback({
+        projectSlug,
+        buildSlug,
+        moduleSlug,
+        ...data,
+      }),
+    update: (data: {
+      readiness: "not-ready" | "getting-there" | "ready";
+      whatLanded?: string;
+      whatsMissing?: string;
+      situation?: string;
+    }) =>
+      updateFeedback({
         projectSlug,
         buildSlug,
         moduleSlug,
