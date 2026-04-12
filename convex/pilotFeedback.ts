@@ -57,6 +57,46 @@ export const submitModuleFeedback = mutation({
   },
 });
 
+export const updateModuleFeedback = mutation({
+  args: {
+    projectSlug: v.string(),
+    buildSlug: v.string(),
+    moduleSlug: v.string(),
+    readiness: v.union(
+      v.literal("not-ready"),
+      v.literal("getting-there"),
+      v.literal("ready")
+    ),
+    whatLanded: v.optional(v.string()),
+    whatsMissing: v.optional(v.string()),
+    situation: v.optional(v.string()),
+  },
+  handler: async (ctx, args) => {
+    const userId = await getAuthUserId(ctx);
+    if (!userId) throw new Error("Not authenticated");
+
+    const existing = await ctx.db
+      .query("pilotFeedback")
+      .withIndex("by_user_module", (q) =>
+        q
+          .eq("userId", userId)
+          .eq("projectSlug", args.projectSlug)
+          .eq("buildSlug", args.buildSlug)
+          .eq("moduleSlug", args.moduleSlug)
+      )
+      .first();
+
+    if (!existing) throw new Error("No feedback to update");
+
+    await ctx.db.patch(existing._id, {
+      readiness: args.readiness,
+      whatLanded: args.whatLanded,
+      whatsMissing: args.whatsMissing,
+      situation: args.situation,
+    });
+  },
+});
+
 export const getMyUXFeedback = query({
   args: {},
   handler: async (ctx) => {
@@ -88,6 +128,33 @@ export const submitUXFeedback = mutation({
       exerciseTools: args.exerciseTools,
       openText: args.openText,
       createdAt: Date.now(),
+    });
+  },
+});
+
+export const updateUXFeedback = mutation({
+  args: {
+    navigation: v.optional(v.number()),
+    readability: v.optional(v.number()),
+    exerciseTools: v.optional(v.number()),
+    openText: v.optional(v.string()),
+  },
+  handler: async (ctx, args) => {
+    const userId = await getAuthUserId(ctx);
+    if (!userId) throw new Error("Not authenticated");
+
+    const existing = await ctx.db
+      .query("pilotUXFeedback")
+      .withIndex("by_userId", (q) => q.eq("userId", userId))
+      .first();
+
+    if (!existing) throw new Error("No UX feedback to update");
+
+    await ctx.db.patch(existing._id, {
+      navigation: args.navigation,
+      readability: args.readability,
+      exerciseTools: args.exerciseTools,
+      openText: args.openText,
     });
   },
 });
