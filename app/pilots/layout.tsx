@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { PilotNav } from "@/components/pilot-nav";
 import { usePilotProfile } from "@/hooks/use-pilot-profile";
 import { useConvexAuth } from "convex/react";
@@ -13,6 +14,7 @@ export default function PilotsLayout({
 }) {
   const { isAuthenticated } = useConvexAuth();
   const { isLoading, hasProfile, approvalStatus } = usePilotProfile();
+  const [editing, setEditing] = useState(false);
 
   if (!isAuthenticated) {
     return (
@@ -33,16 +35,16 @@ export default function PilotsLayout({
     );
   }
 
-  if (!hasProfile) {
+  if (!hasProfile || editing) {
     return (
       <section className="py-24 px-6">
-        <PilotSignUpForm />
+        <PilotSignUpForm onDone={() => setEditing(false)} />
       </section>
     );
   }
 
   if (approvalStatus === "pending") {
-    return <PendingApproval />;
+    return <PendingApproval onEditProfile={() => setEditing(true)} />;
   }
 
   if (approvalStatus === "revoked") {

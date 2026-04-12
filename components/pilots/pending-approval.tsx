@@ -1,9 +1,11 @@
 "use client";
 
 import { usePilotProfile } from "@/hooks/use-pilot-profile";
+import { useAuthActions } from "@convex-dev/auth/react";
 
-export function PendingApproval() {
+export function PendingApproval({ onEditProfile }: { onEditProfile?: () => void }) {
   const { profile } = usePilotProfile();
+  const { signOut } = useAuthActions();
 
   return (
     <section className="py-24 px-6">
@@ -15,6 +17,9 @@ export function PendingApproval() {
         <p className="text-muted-foreground leading-relaxed">
           Pilot projects are available to YCAH community members. We're syncing
           your membership now. This usually takes a few minutes.
+        </p>
+        <p className="text-sm text-muted-foreground">
+          Signed in as <strong>{profile?.email}</strong>
         </p>
         <p className="text-muted-foreground leading-relaxed">
           If you haven't joined YCAH yet, you can do so here:
@@ -31,6 +36,22 @@ export function PendingApproval() {
           Already a member? Sit tight. Your access will activate automatically
           once our systems sync.
         </p>
+        <div className="flex justify-center gap-4 pt-4 border-t border-border">
+          {onEditProfile && (
+            <button
+              onClick={onEditProfile}
+              className="text-sm text-muted-foreground hover:text-foreground"
+            >
+              Edit profile
+            </button>
+          )}
+          <button
+            onClick={() => void signOut()}
+            className="text-sm text-muted-foreground hover:text-foreground"
+          >
+            Sign out
+          </button>
+        </div>
       </div>
     </section>
   );

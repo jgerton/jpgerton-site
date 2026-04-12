@@ -2,35 +2,51 @@
 
 import { useState } from "react";
 import { usePilotProfile } from "@/hooks/use-pilot-profile";
+import { useAuthActions } from "@convex-dev/auth/react";
 
-export function PilotSignUpForm() {
-  const { createProfile } = usePilotProfile();
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [preferredName, setPreferredName] = useState("");
-  const [skoolUsername, setSkoolUsername] = useState("");
-  const [communityUrl, setCommunityUrl] = useState("");
-  const [communityName, setCommunityName] = useState("");
+export function PilotSignUpForm({ onDone }: { onDone?: () => void }) {
+  const { profile, hasProfile, createProfile, updateProfile } = usePilotProfile();
+  const { signOut } = useAuthActions();
+  const isEditing = hasProfile;
+
+  const [firstName, setFirstName] = useState(profile?.firstName ?? "");
+  const [lastName, setLastName] = useState(profile?.lastName ?? "");
+  const [preferredName, setPreferredName] = useState(profile?.preferredName ?? "");
+  const [skoolUsername, setSkoolUsername] = useState(profile?.skoolUsername ?? "");
+  const [communityUrl, setCommunityUrl] = useState(profile?.communityUrl ?? "");
+  const [communityName, setCommunityName] = useState(profile?.communityName ?? "");
   const [submitting, setSubmitting] = useState(false);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setSubmitting(true);
-    await createProfile({
-      firstName,
-      lastName: lastName || undefined,
-      preferredName: preferredName || firstName,
-      skoolUsername: skoolUsername || undefined,
-      communityUrl: communityUrl || undefined,
-      communityName: communityName || undefined,
-    });
+    if (isEditing) {
+      await updateProfile({
+        firstName,
+        lastName: lastName || undefined,
+        preferredName: preferredName || firstName,
+        skoolUsername: skoolUsername || undefined,
+        communityUrl: communityUrl || undefined,
+        communityName: communityName || undefined,
+      });
+    } else {
+      await createProfile({
+        firstName,
+        lastName: lastName || undefined,
+        preferredName: preferredName || firstName,
+        skoolUsername: skoolUsername || undefined,
+        communityUrl: communityUrl || undefined,
+        communityName: communityName || undefined,
+      });
+    }
     setSubmitting(false);
+    onDone?.();
   }
 
   return (
     <form onSubmit={handleSubmit} className="max-w-md mx-auto space-y-4">
       <h2 className="text-2xl font-heading font-bold text-center">
-        Complete your pilot profile
+        {isEditing ? "Edit your profile" : "Complete your pilot profile"}
       </h2>
       <p className="text-sm text-muted-foreground text-center">
         Tell us a bit about yourself so we can personalize your experience.
@@ -119,8 +135,26 @@ export function PilotSignUpForm() {
         disabled={!firstName || submitting}
         className="w-full px-4 py-3 rounded-lg bg-primary text-primary-foreground font-medium hover:opacity-90 transition-opacity disabled:opacity-50"
       >
-        {submitting ? "Setting up..." : "Continue"}
+        {submitting ? "Saving..." : isEditing ? "Save changes" : "Continue"}
       </button>
+      <div className="flex justify-center gap-4 pt-2">
+        {isEditing && onDone && (
+          <button
+            type="button"
+            onClick={onDone}
+            className="text-sm text-muted-foreground hover:text-foreground"
+          >
+            Cancel
+          </button>
+        )}
+        <button
+          type="button"
+          onClick={() => void signOut()}
+          className="text-sm text-muted-foreground hover:text-foreground"
+        >
+          Sign out
+        </button>
+      </div>
     </form>
   );
 }
