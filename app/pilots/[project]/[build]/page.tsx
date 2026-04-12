@@ -2,8 +2,8 @@ import { serialize } from "next-mdx-remote/serialize";
 import { MDXRenderer } from "@/components/mdx-renderer";
 import { readFile } from "fs/promises";
 import { join } from "path";
+import matter from "gray-matter";
 import { notFound } from "next/navigation";
-import Link from "next/link";
 
 type PageProps = {
   params: Promise<{ project: string; build: string }>;
@@ -16,30 +16,22 @@ export default async function BuildPage({ params }: PageProps) {
     "content",
     "pilots",
     project,
-    `${build}.mdx`
+    build,
+    "index.mdx"
   );
 
   let source;
   try {
     const raw = await readFile(contentPath, "utf-8");
-    source = await serialize(raw);
+    const { content } = matter(raw);
+    source = await serialize(content);
   } catch {
     notFound();
   }
 
   return (
-    <section className="py-16 px-6">
-      <div className="max-w-3xl mx-auto">
-        <div className="mb-8">
-          <Link
-            href={`/pilots/${project}`}
-            className="text-sm text-muted-foreground hover:text-accent"
-          >
-            &larr; Back to project
-          </Link>
-        </div>
-        <MDXRenderer source={source} />
-      </div>
-    </section>
+    <div>
+      <MDXRenderer source={source} />
+    </div>
   );
 }
