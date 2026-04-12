@@ -2,6 +2,14 @@
 
 import { MDXRemote } from "next-mdx-remote";
 import type { MDXRemoteSerializeResult } from "next-mdx-remote";
+import {
+  KeyData,
+  Insight,
+  Action,
+  Exercise,
+  WatchOut,
+  OpenQuestion,
+} from "@/components/mdx/callouts";
 
 const components = {
   h1: (props: React.ComponentProps<"h1">) => (
@@ -51,6 +59,13 @@ const components = {
   td: (props: React.ComponentProps<"td">) => (
     <td className="border border-border px-3 py-2" {...props} />
   ),
+  // Callout components
+  KeyData,
+  Insight,
+  Action,
+  Exercise,
+  WatchOut,
+  OpenQuestion,
 };
 
 export function MDXRenderer({
