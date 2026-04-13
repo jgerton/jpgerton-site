@@ -55,8 +55,6 @@ export function ExerciseCallout({
       />
 
       <ExerciseAlternatives
-        exerciseId={exerciseId}
-        exerciseTitle={title}
         prompt={prompt}
         emailBody={emailBody}
         emailSubject={emailSubject}

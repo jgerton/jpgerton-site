@@ -3,8 +3,6 @@
 import { useState } from "react";
 
 type ExerciseAlternativesProps = {
-  exerciseId: string;
-  exerciseTitle: string;
   prompt: string;
   emailBody: string;
   emailSubject: string;
@@ -76,15 +74,11 @@ function PromptModal({
 }
 
 export function ExerciseAlternatives({
-  exerciseId,
-  exerciseTitle,
   prompt,
   emailBody,
   emailSubject,
 }: ExerciseAlternativesProps) {
   const [showModal, setShowModal] = useState(false);
-  void exerciseId;
-  void exerciseTitle;
 
   const gmailHref = `https://mail.google.com/mail/?view=cm&to=${encodeURIComponent("jgerton.ai.assistant@gmail.com")}&su=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
 

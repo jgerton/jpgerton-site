@@ -7,6 +7,7 @@ import {
   DocsDescription,
 } from "fumadocs-ui/page";
 import { getMDXComponents } from "@/mdx-components";
+import { DocsPageWrapper } from "@/components/pilots/docs-page-wrapper";
 import type { Metadata } from "next";
 
 interface Props {
@@ -26,7 +27,9 @@ export default async function Page({ params }: Props) {
       <DocsTitle>{page.data.title}</DocsTitle>
       <DocsDescription>{page.data.description}</DocsDescription>
       <DocsBody>
-        <MDX components={getMDXComponents()} />
+        <DocsPageWrapper>
+          <MDX components={getMDXComponents()} />
+        </DocsPageWrapper>
       </DocsBody>
     </DocsPage>
   );
