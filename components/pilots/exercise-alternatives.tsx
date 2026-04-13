@@ -83,7 +83,7 @@ export function ExerciseAlternatives({
   const [showModal, setShowModal] = useState(false);
   void exerciseId;
 
-  const mailtoHref = `mailto:jgerton.ai.assistant@gmail.com?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(`My response to ${exerciseTitle}:\n\n`)}`;
+  const gmailHref = `https://mail.google.com/mail/?view=cm&to=${encodeURIComponent("jgerton.ai.assistant@gmail.com")}&su=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(`My response to ${exerciseTitle}:\n\n`)}`;
 
   return (
     <div className="mt-4 pt-3 border-t border-indigo-500/10">
@@ -107,10 +107,12 @@ export function ExerciseAlternatives({
       <div className="flex gap-2 text-[11px]">
         <span className="text-fd-muted-foreground">Or:</span>
         <a
-          href={mailtoHref}
+          href={gmailHref}
+          target="_blank"
+          rel="noopener noreferrer"
           className="px-2 py-1 rounded border border-fd-border text-fd-muted-foreground hover:text-fd-foreground flex items-center gap-1"
         >
-          Email response
+          Email via Gmail
         </a>
         <span className="px-2 py-1 rounded border border-fd-border text-fd-muted-foreground flex items-center gap-1 opacity-50 cursor-not-allowed" title="Coming soon">
           Google Sheets
