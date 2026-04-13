@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import { inter, spaceGrotesk, jetbrainsMono } from "@/lib/fonts";
 import { siteConfig } from "@/lib/site-config";
 import { Nav } from "@/components/nav";
@@ -27,11 +28,7 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="font-sans antialiased">
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `(function(){try{var t=localStorage.getItem('theme');if(t==='dark'||(!t&&window.matchMedia('(prefers-color-scheme:dark)').matches)){document.documentElement.classList.add('dark')}}catch(e){}})()`,
-          }}
-        />
+        <Script src="/theme-init.js" strategy="beforeInteractive" />
         <ConvexAuthNextjsServerProvider>
           <ConvexClientProvider>
             <Nav />
