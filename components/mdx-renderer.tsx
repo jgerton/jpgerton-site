@@ -10,8 +10,10 @@ import {
   WatchOut,
   OpenQuestion,
 } from "@/components/mdx/callouts";
+import { ExerciseCallout } from "@/components/pilots/exercise-callout";
+import { useMemo } from "react";
 
-const components = {
+const baseComponents = {
   h1: (props: React.ComponentProps<"h1">) => (
     <h1 className="text-3xl font-heading font-bold mt-12 mb-4" {...props} />
   ),
@@ -76,10 +78,38 @@ const components = {
   OpenQuestion,
 };
 
+type MDXRendererProps = {
+  source: MDXRemoteSerializeResult;
+  projectSlug?: string;
+  buildSlug?: string;
+};
+
 export function MDXRenderer({
   source,
-}: {
-  source: MDXRemoteSerializeResult;
-}) {
+  projectSlug,
+  buildSlug,
+}: MDXRendererProps) {
+  const components = useMemo(() => {
+    if (!projectSlug || !buildSlug) return baseComponents;
+
+    return {
+      ...baseComponents,
+      PilotExercise: (props: {
+        exerciseId: string;
+        title: string;
+        fields: { label: string; placeholder?: string }[];
+        prompt: string;
+        emailSubject: string;
+        children: React.ReactNode;
+      }) => (
+        <ExerciseCallout
+          {...props}
+          projectSlug={projectSlug}
+          buildSlug={buildSlug}
+        />
+      ),
+    };
+  }, [projectSlug, buildSlug]);
+
   return <MDXRemote {...source} components={components} />;
 }

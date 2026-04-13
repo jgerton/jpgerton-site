@@ -75,7 +75,7 @@ export default async function ModulePage({ params }: PageProps) {
         exerciseCount={moduleInfo.exercises?.length ?? 0}
         readTimeMinutes={readTime}
       />
-      <MDXRenderer source={source} />
+      <MDXRenderer source={source} projectSlug={project} buildSlug={build} />
     </SectionObserverWrapper>
   );
 }
