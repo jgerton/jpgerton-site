@@ -12,6 +12,7 @@ type ExerciseCalloutProps = {
   buildSlug: string;
   fields: Field[];
   prompt: string;
+  emailBody: string;
   emailSubject: string;
   children: React.ReactNode;
 };
@@ -23,6 +24,7 @@ export function ExerciseCallout({
   buildSlug,
   fields,
   prompt,
+  emailBody,
   emailSubject,
   children,
 }: ExerciseCalloutProps) {
@@ -56,6 +58,7 @@ export function ExerciseCallout({
         exerciseId={exerciseId}
         exerciseTitle={title}
         prompt={prompt}
+        emailBody={emailBody}
         emailSubject={emailSubject}
       />
     </div>

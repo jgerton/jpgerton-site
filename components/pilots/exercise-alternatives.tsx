@@ -6,6 +6,7 @@ type ExerciseAlternativesProps = {
   exerciseId: string;
   exerciseTitle: string;
   prompt: string;
+  emailBody: string;
   emailSubject: string;
 };
 
@@ -78,12 +79,13 @@ export function ExerciseAlternatives({
   exerciseId,
   exerciseTitle,
   prompt,
+  emailBody,
   emailSubject,
 }: ExerciseAlternativesProps) {
   const [showModal, setShowModal] = useState(false);
   void exerciseId;
+  void exerciseTitle;
 
-  const emailBody = `${exerciseTitle}\n\n${prompt}\n\n---\nMy response:\n\n`;
   const gmailHref = `https://mail.google.com/mail/?view=cm&to=${encodeURIComponent("jgerton.ai.assistant@gmail.com")}&su=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
 
   return (

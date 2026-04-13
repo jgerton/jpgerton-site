@@ -2,6 +2,7 @@ export type ExerciseConfig = {
   title: string;
   fields: { label: string; placeholder?: string }[];
   prompt: string;
+  emailBody: string;
   emailSubject: string;
 };
 
@@ -27,6 +28,19 @@ Here's what I know about my community:
 - Who my ideal member is: [fill in]
 
 Help me craft this sentence. Push back if it's too vague or if the free tier sounds like it would cannibalize the paid tier.`,
+    emailBody: `Exercise 1: Define your free tier value proposition
+
+Write one sentence: "A free member of my community gets _____, which is genuinely useful on its own even if they never upgrade."
+
+The 80/20 rule: give away ~80% of your value for free, gate 15-25% behind paid. Your free tier should deliver a real result, not just a taste.
+
+My niche/expertise:
+
+My value proposition sentence:
+
+Why I think this works (or where I'm stuck):
+
+`,
     emailSubject: "[PILOT-PLAYBOOK-EX1] Free Tier Value Prop",
   },
   ex2: {
@@ -55,6 +69,24 @@ Help me create two lists (free vs. paid) and check:
 1. Does free deliver a real result (not just a taste)?
 2. Would someone pay monthly for the paid tier and feel good about it?
 3. Can free members see what paid members are getting?`,
+    emailBody: `Exercise 2: Map your free vs. gate split
+
+Make two lists: everything in your free tier, and everything behind paid.
+
+Check your lists against these questions:
+1. Does free deliver a real result (not just a taste)?
+2. Would someone pay monthly for the paid tier and feel good about it?
+3. Can free members see what paid members are getting?
+
+My community niche:
+
+Free tier:
+
+Paid tier:
+
+Notes/questions:
+
+`,
     emailSubject: "[PILOT-PLAYBOOK-EX2] Free vs Gate Split",
   },
   ex3: {
@@ -86,6 +118,23 @@ My community: [fill in platform and niche]
 Current state: [fill in - existing community or starting from zero]
 
 Help me think through these numbers honestly. If I'm starting from zero, help me set realistic expectations based on the playbook benchmarks (3-10% free-to-paid conversion, 8% monthly churn target, 3-5 posts/week for growth).`,
+    emailBody: `Exercise 3: Find your baseline numbers
+
+Document your current community numbers. If you're starting from zero, just write "starting from zero" and share what you're planning.
+
+My community (platform, niche):
+
+Total free members:
+
+Total paid members:
+
+Posting frequency (honest count, last 30 days):
+
+Monthly churn estimate (paid members lost / paid members at start of month):
+
+Notes/questions:
+
+`,
     emailSubject: "[PILOT-PLAYBOOK-EX3] Baseline Numbers",
   },
 };

@@ -28,6 +28,7 @@ export function PilotExerciseWrapper({
       title={config.title}
       fields={config.fields}
       prompt={config.prompt}
+      emailBody={config.emailBody}
       emailSubject={config.emailSubject}
       projectSlug={projectSlug}
       buildSlug={buildSlug}
