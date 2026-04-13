@@ -27,7 +27,7 @@ export default function PilotsPage() {
             {projects.map((project) => (
               <Link
                 key={project._id}
-                href={`/pilots/${project.slug}`}
+                href={`/pilots/docs/${project.slug}`}
                 className="block p-6 rounded-lg border border-border hover:border-accent transition-colors space-y-2"
               >
                 <h2 className="text-xl font-heading font-semibold">
@@ -46,7 +46,7 @@ export default function PilotsPage() {
           <p className="text-muted-foreground text-sm">
             Want to pilot a project?{" "}
             <Link href="/pilots/signin" className="text-accent hover:underline">
-              Sign in with your email
+              Sign in with Google
             </Link>{" "}
             to get access.
           </p>
