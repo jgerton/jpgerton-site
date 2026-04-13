@@ -11,6 +11,7 @@ import {
   OpenQuestion,
 } from "@/components/mdx/callouts";
 import { ExerciseCallout } from "@/components/pilots/exercise-callout";
+import { exerciseConfigs } from "@/content/pilots/freemium-playbook/exercise-configs";
 import { useMemo } from "react";
 
 const baseComponents = {
@@ -96,18 +97,24 @@ export function MDXRenderer({
       ...baseComponents,
       PilotExercise: (props: {
         exerciseId: string;
-        title: string;
-        fields: { label: string; placeholder?: string }[];
-        prompt: string;
-        emailSubject: string;
         children: React.ReactNode;
-      }) => (
-        <ExerciseCallout
-          {...props}
-          projectSlug={projectSlug}
-          buildSlug={buildSlug}
-        />
-      ),
+      }) => {
+        const config = exerciseConfigs[props.exerciseId];
+        if (!config) return <div>Unknown exercise: {props.exerciseId}</div>;
+        return (
+          <ExerciseCallout
+            exerciseId={props.exerciseId}
+            title={config.title}
+            fields={config.fields}
+            prompt={config.prompt}
+            emailSubject={config.emailSubject}
+            projectSlug={projectSlug}
+            buildSlug={buildSlug}
+          >
+            {props.children}
+          </ExerciseCallout>
+        );
+      },
     };
   }, [projectSlug, buildSlug]);
 

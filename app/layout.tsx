@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Script from "next/script";
 import { inter, spaceGrotesk, jetbrainsMono } from "@/lib/fonts";
 import { siteConfig } from "@/lib/site-config";
 import { Nav } from "@/components/nav";
@@ -28,7 +27,6 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="font-sans antialiased">
-        <Script src="/theme-init.js" strategy="beforeInteractive" />
         <ConvexAuthNextjsServerProvider>
           <ConvexClientProvider>
             <Nav />
