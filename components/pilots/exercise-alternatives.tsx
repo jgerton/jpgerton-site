@@ -9,7 +9,21 @@ type ExerciseAlternativesProps = {
   emailSubject: string;
 };
 
-function PromptInfoModal({ onClose }: { onClose: () => void }) {
+function PromptModal({
+  prompt,
+  onClose,
+}: {
+  prompt: string;
+  onClose: () => void;
+}) {
+  const [copied, setCopied] = useState(false);
+
+  async function copyPrompt() {
+    await navigator.clipboard.writeText(prompt);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  }
+
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4"
@@ -17,9 +31,9 @@ function PromptInfoModal({ onClose }: { onClose: () => void }) {
         if (e.target === e.currentTarget) onClose();
       }}
     >
-      <div className="bg-fd-card border border-fd-border rounded-xl max-w-sm w-full p-5">
+      <div className="bg-fd-card border border-fd-border rounded-xl max-w-lg w-full p-5 max-h-[85vh] flex flex-col">
         <div className="flex items-center justify-between mb-3">
-          <h3 className="text-sm font-semibold">How "Copy prompt for Claude" works</h3>
+          <h3 className="text-sm font-semibold">Work through this exercise with Claude</h3>
           <button
             onClick={onClose}
             className="text-fd-muted-foreground hover:text-fd-foreground text-lg leading-none"
@@ -29,27 +43,32 @@ function PromptInfoModal({ onClose }: { onClose: () => void }) {
           </button>
         </div>
 
-        <ol className="text-xs text-fd-muted-foreground space-y-2.5 list-decimal list-inside">
-          <li>
-            <strong className="text-fd-foreground">Copy</strong> the prompt using the button
-          </li>
-          <li>
-            <strong className="text-fd-foreground">Paste</strong> it into a text editor or notes app
-          </li>
-          <li>
-            <strong className="text-fd-foreground">Fill in</strong> the [bracketed sections] with your own details
-          </li>
-          <li>
-            <strong className="text-fd-foreground">Paste</strong> the completed prompt into Claude (or any AI assistant)
-          </li>
-          <li>
-            <strong className="text-fd-foreground">Work through</strong> the exercise conversationally, then paste your result back here
-          </li>
+        {/* Steps */}
+        <ol className="text-xs text-fd-muted-foreground space-y-1.5 list-decimal list-inside mb-4">
+          <li>Copy the prompt below</li>
+          <li>Paste into a text editor and fill in the <strong className="text-fd-foreground">[bracketed sections]</strong></li>
+          <li>Paste the completed prompt into Claude (or any AI assistant)</li>
+          <li>Work through the exercise conversationally, then paste your result back into the form above</li>
         </ol>
 
-        <p className="text-[11px] text-fd-muted-foreground mt-3 pt-3 border-t border-fd-border">
-          The prompt gives Claude context about this exercise so it can help you think through your answer. It's a starting point, not a fill-in-the-blank template.
-        </p>
+        {/* Prompt text */}
+        <div className="flex-1 min-h-0 overflow-y-auto mb-4 rounded-md border border-fd-border bg-fd-background p-3">
+          <pre className="text-xs text-fd-muted-foreground whitespace-pre-wrap break-words font-sans leading-relaxed">
+            {prompt}
+          </pre>
+        </div>
+
+        {/* Copy action */}
+        <button
+          onClick={copyPrompt}
+          className="w-full px-4 py-2.5 rounded-md text-sm font-medium transition-colors"
+          style={{
+            background: copied ? "#22C55E" : "#6366F1",
+            color: "white",
+          }}
+        >
+          {copied ? "Copied to clipboard!" : "Copy prompt"}
+        </button>
       </div>
     </div>
   );
@@ -61,45 +80,28 @@ export function ExerciseAlternatives({
   prompt,
   emailSubject,
 }: ExerciseAlternativesProps) {
-  const [copied, setCopied] = useState(false);
-  const [showInfo, setShowInfo] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   void exerciseId;
-
-  async function copyPrompt() {
-    await navigator.clipboard.writeText(prompt);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  }
 
   const mailtoHref = `mailto:jgerton.ai.assistant@gmail.com?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(`My response to ${exerciseTitle}:\n\n`)}`;
 
   return (
     <div className="mt-4 pt-3 border-t border-indigo-500/10">
-      {/* Featured: Claude prompt */}
-      <div className="flex items-center gap-1.5 mb-3">
-        <button
-          onClick={copyPrompt}
-          className="flex-1 flex items-center gap-2 px-3 py-2.5 rounded-md border border-indigo-500/20 bg-indigo-500/5 text-sm text-fd-foreground hover:bg-indigo-500/10 transition-colors"
-        >
-          <span>{copied ? "✓" : "📋"}</span>
-          <span className="font-medium">
-            {copied ? "Copied!" : "Copy prompt for Claude"}
-          </span>
-          <span className="text-xs text-fd-muted-foreground ml-auto hidden sm:inline">
-            Work through this with AI
-          </span>
-        </button>
-        <button
-          onClick={() => setShowInfo(true)}
-          className="shrink-0 w-8 h-8 rounded-md border border-fd-border text-fd-muted-foreground hover:text-fd-foreground hover:border-fd-muted-foreground flex items-center justify-center text-xs transition-colors"
-          aria-label="What is this?"
-          title="What is this?"
-        >
-          ?
-        </button>
-      </div>
+      {/* Featured: opens prompt modal */}
+      <button
+        onClick={() => setShowModal(true)}
+        className="w-full mb-3 flex items-center gap-2 px-3 py-2.5 rounded-md border border-indigo-500/20 bg-indigo-500/5 text-sm text-fd-foreground hover:bg-indigo-500/10 transition-colors"
+      >
+        <span>📋</span>
+        <span className="font-medium">Use prompt for Claude</span>
+        <span className="text-xs text-fd-muted-foreground ml-auto hidden sm:inline">
+          Preview and copy
+        </span>
+      </button>
 
-      {showInfo && <PromptInfoModal onClose={() => setShowInfo(false)} />}
+      {showModal && (
+        <PromptModal prompt={prompt} onClose={() => setShowModal(false)} />
+      )}
 
       {/* Secondary options */}
       <div className="flex gap-2 text-[11px]">
