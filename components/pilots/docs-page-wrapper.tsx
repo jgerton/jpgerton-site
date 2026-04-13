@@ -6,6 +6,7 @@ import { usePilotProfile } from "@/hooks/use-pilot-profile";
 import { WelcomeModal } from "./welcome-modal";
 import { ModuleFeedbackForm } from "./module-feedback-form";
 import { UXFeedbackPrompt } from "./ux-feedback-prompt";
+import { ProgressTracker } from "./progress-tracker";
 import { useState } from "react";
 
 // Module manifest for welcome modal (minimal, just needs titles)
@@ -68,6 +69,8 @@ export function DocsPageWrapper({ children }: { children: React.ReactNode }) {
           onScreenChange={(screen) => updateScreen({ screen })}
         />
       )}
+
+      <ProgressTracker />
 
       {children}
 
