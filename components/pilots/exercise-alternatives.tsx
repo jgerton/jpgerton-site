@@ -83,7 +83,8 @@ export function ExerciseAlternatives({
   const [showModal, setShowModal] = useState(false);
   void exerciseId;
 
-  const gmailHref = `https://mail.google.com/mail/?view=cm&to=${encodeURIComponent("jgerton.ai.assistant@gmail.com")}&su=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(`My response to ${exerciseTitle}:\n\n`)}`;
+  const emailBody = `${exerciseTitle}\n\n${prompt}\n\n---\nMy response:\n\n`;
+  const gmailHref = `https://mail.google.com/mail/?view=cm&to=${encodeURIComponent("jgerton.ai.assistant@gmail.com")}&su=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
 
   return (
     <div className="mt-4 pt-3 border-t border-indigo-500/10">
