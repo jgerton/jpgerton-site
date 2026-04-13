@@ -43,6 +43,27 @@ export const submitModuleFeedback = mutation({
     const userId = await getAuthUserId(ctx);
     if (!userId) throw new Error("Not authenticated");
 
+    const existing = await ctx.db
+      .query("pilotFeedback")
+      .withIndex("by_user_module", (q) =>
+        q
+          .eq("userId", userId)
+          .eq("projectSlug", args.projectSlug)
+          .eq("buildSlug", args.buildSlug)
+          .eq("moduleSlug", args.moduleSlug)
+      )
+      .first();
+
+    if (existing) {
+      await ctx.db.patch(existing._id, {
+        readiness: args.readiness,
+        whatLanded: args.whatLanded,
+        whatsMissing: args.whatsMissing,
+        situation: args.situation,
+      });
+      return existing._id;
+    }
+
     return await ctx.db.insert("pilotFeedback", {
       userId,
       projectSlug: args.projectSlug,

@@ -1,6 +1,7 @@
 // convex/ycahMembers.ts
 import { mutation, query } from "./_generated/server";
 import { v } from "convex/values";
+import { getAuthUserId } from "@convex-dev/auth/server";
 
 export const syncFromZapier = mutation({
   args: {
@@ -56,10 +57,15 @@ export const syncFromZapier = mutation({
 export const getByEmail = query({
   args: { email: v.string() },
   handler: async (ctx, args) => {
-    return await ctx.db
+    const userId = await getAuthUserId(ctx);
+    if (!userId) return null;
+
+    const member = await ctx.db
       .query("ycahMembers")
       .withIndex("by_email", (q) => q.eq("email", args.email))
       .first();
+
+    return member ? { isMember: true } : null;
   },
 });
 
