@@ -5,6 +5,7 @@ import { Nav } from "@/components/nav";
 import { Footer } from "@/components/footer";
 import { ConvexAuthNextjsServerProvider } from "@convex-dev/auth/nextjs/server";
 import { ConvexClientProvider } from "@/components/convex-provider";
+import { RootProvider } from "fumadocs-ui/provider/next";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -27,18 +28,15 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="font-sans antialiased">
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `(function(){try{var t=localStorage.getItem('theme');if(t==='dark'||(!t&&window.matchMedia('(prefers-color-scheme:dark)').matches)){document.documentElement.classList.add('dark')}}catch(e){}})()`,
-          }}
-        />
-        <ConvexAuthNextjsServerProvider>
-          <ConvexClientProvider>
-            <Nav />
-            <main>{children}</main>
-            <Footer />
-          </ConvexClientProvider>
-        </ConvexAuthNextjsServerProvider>
+        <RootProvider>
+          <ConvexAuthNextjsServerProvider>
+            <ConvexClientProvider>
+              <Nav />
+              <main>{children}</main>
+              <Footer />
+            </ConvexClientProvider>
+          </ConvexAuthNextjsServerProvider>
+        </RootProvider>
       </body>
     </html>
   );

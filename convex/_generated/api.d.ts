@@ -10,8 +10,14 @@
 
 import type * as auth from "../auth.js";
 import type * as http from "../http.js";
+import type * as pilotExercises from "../pilotExercises.js";
+import type * as pilotFeedback from "../pilotFeedback.js";
+import type * as pilotOnboarding from "../pilotOnboarding.js";
+import type * as pilotProfiles from "../pilotProfiles.js";
+import type * as pilotProgress from "../pilotProgress.js";
 import type * as projects from "../projects.js";
 import type * as seed from "../seed.js";
+import type * as ycahMembers from "../ycahMembers.js";
 
 import type {
   ApiFromModules,
@@ -22,8 +28,14 @@ import type {
 declare const fullApi: ApiFromModules<{
   auth: typeof auth;
   http: typeof http;
+  pilotExercises: typeof pilotExercises;
+  pilotFeedback: typeof pilotFeedback;
+  pilotOnboarding: typeof pilotOnboarding;
+  pilotProfiles: typeof pilotProfiles;
+  pilotProgress: typeof pilotProgress;
   projects: typeof projects;
   seed: typeof seed;
+  ycahMembers: typeof ycahMembers;
 }>;
 
 /**
