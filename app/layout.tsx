@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { inter, spaceGrotesk, jetbrainsMono } from "@/lib/fonts";
+import { sourceSerif, bricolageGrotesque, jetbrainsMono } from "@/lib/fonts";
 import { siteConfig } from "@/lib/site-config";
 import { Nav } from "@/components/nav";
 import { Footer } from "@/components/footer";
@@ -24,7 +24,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable}`}
+      className={`${sourceSerif.variable} ${bricolageGrotesque.variable} ${jetbrainsMono.variable}`}
       suppressHydrationWarning
     >
       <body className="font-sans antialiased">

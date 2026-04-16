@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 
 type ExerciseAlternativesProps = {
   prompt: string;
@@ -16,6 +16,7 @@ function PromptModal({
   onClose: () => void;
 }) {
   const [copied, setCopied] = useState(false);
+  const dialogRef = useRef<HTMLDivElement>(null);
 
   async function copyPrompt() {
     await navigator.clipboard.writeText(prompt);
@@ -23,16 +24,54 @@ function PromptModal({
     setTimeout(() => setCopied(false), 2000);
   }
 
+  useEffect(() => {
+    const dialog = dialogRef.current;
+    if (!dialog) return;
+    dialog.focus();
+
+    function handleKeyDown(e: KeyboardEvent) {
+      if (e.key === "Escape") {
+        onClose();
+        return;
+      }
+      if (e.key === "Tab" && dialog) {
+        const focusable = dialog.querySelectorAll<HTMLElement>(
+          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        );
+        if (focusable.length === 0) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    }
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [onClose]);
+
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-foreground/50 p-4"
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose();
       }}
     >
-      <div className="bg-fd-card border border-fd-border rounded-xl max-w-lg w-full p-5 max-h-[85vh] flex flex-col">
+      <div
+        ref={dialogRef}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="prompt-modal-title"
+        tabIndex={-1}
+        className="bg-fd-card border border-fd-border rounded-xl max-w-lg w-full p-5 max-h-[85vh] flex flex-col outline-none"
+      >
         <div className="flex items-center justify-between mb-3">
-          <h3 className="text-sm font-semibold">Work through this exercise with Claude</h3>
+          <h3 id="prompt-modal-title" className="text-sm font-semibold">Work through this exercise with Claude</h3>
           <button
             onClick={onClose}
             className="text-fd-muted-foreground hover:text-fd-foreground text-lg leading-none"
@@ -60,11 +99,11 @@ function PromptModal({
         {/* Copy action */}
         <button
           onClick={copyPrompt}
-          className="w-full px-4 py-2.5 rounded-md text-sm font-medium transition-colors"
-          style={{
-            background: copied ? "#22C55E" : "#6366F1",
-            color: "white",
-          }}
+          className={`w-full px-4 py-2.5 rounded-md text-sm font-medium transition-colors text-white ${
+            copied
+              ? "bg-code-accent"
+              : "bg-callout-exercise hover:bg-callout-exercise/90"
+          }`}
         >
           {copied ? "Copied to clipboard!" : "Copy prompt"}
         </button>
@@ -83,11 +122,11 @@ export function ExerciseAlternatives({
   const gmailHref = `https://mail.google.com/mail/?view=cm&to=${encodeURIComponent("jgerton.ai.assistant@gmail.com")}&su=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
 
   return (
-    <div className="mt-4 pt-3 border-t border-indigo-500/10">
+    <div className="mt-4 pt-3 border-t border-callout-exercise/10">
       {/* Featured: opens prompt modal */}
       <button
         onClick={() => setShowModal(true)}
-        className="w-full mb-3 flex items-center gap-2 px-3 py-2.5 rounded-md border border-indigo-500/20 bg-indigo-500/5 text-sm text-fd-foreground hover:bg-indigo-500/10 transition-colors"
+        className="w-full mb-3 flex items-center gap-2 px-3 py-2.5 rounded-md border border-callout-exercise/20 bg-callout-exercise/5 text-sm text-fd-foreground hover:bg-callout-exercise/10 transition-colors"
       >
         <span>📋</span>
         <span className="font-medium">Use prompt for Claude</span>

@@ -58,6 +58,7 @@ export function ContactForm() {
           id="name"
           name="name"
           required
+          aria-required="true"
           className="w-full rounded-md border border-border bg-background px-md py-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
           placeholder="Your name"
         />
@@ -72,6 +73,7 @@ export function ContactForm() {
           id="email"
           name="email"
           required
+          aria-required="true"
           className="w-full rounded-md border border-border bg-background px-md py-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
           placeholder="you@example.com"
         />
@@ -85,6 +87,7 @@ export function ContactForm() {
           id="message"
           name="message"
           required
+          aria-required="true"
           rows={5}
           className="w-full rounded-md border border-border bg-background px-md py-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
           style={{ minHeight: "120px" }}
@@ -93,7 +96,7 @@ export function ContactForm() {
       </div>
 
       {status === "error" && (
-        <p className="text-sm text-destructive">
+        <p id="form-error" role="alert" className="text-sm text-destructive">
           Something went wrong. Please try again or email me directly.
         </p>
       )}
@@ -101,7 +104,8 @@ export function ContactForm() {
       <button
         type="submit"
         disabled={status === "submitting"}
-        className="w-full rounded-lg bg-primary px-xl py-3 font-heading text-sm font-semibold text-primary-foreground shadow-sm transition-all duration-base hover:shadow-md hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60"
+        aria-describedby={status === "error" ? "form-error" : undefined}
+        className="w-full rounded-lg bg-primary px-xl py-3 font-heading text-sm font-semibold text-primary-foreground shadow-sm transition-all duration-base hover:shadow-md hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60"
       >
         {status === "submitting" ? "Sending..." : "Send Message"}
       </button>

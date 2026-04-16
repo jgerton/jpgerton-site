@@ -29,19 +29,10 @@ export function ExerciseCallout({
   children,
 }: ExerciseCalloutProps) {
   return (
-    <div
-      className="rounded-r-lg my-5 px-5 py-4"
-      style={{
-        borderLeft: "3px solid #6366F1",
-        background: "linear-gradient(135deg, rgba(99,102,241,0.08), rgba(99,102,241,0.03))",
-      }}
-    >
+    <div className="rounded-lg border border-callout-exercise/30 bg-callout-exercise/5 dark:border-callout-exercise/20 dark:bg-callout-exercise/5 my-5 px-5 py-4">
       <div className="flex items-center gap-2 mb-2">
         <span className="text-base">🔨</span>
-        <span
-          className="font-semibold text-xs uppercase tracking-wider"
-          style={{ color: "#6366F1" }}
-        >
+        <span className="font-semibold text-xs uppercase tracking-wider text-callout-exercise">
           {title}
         </span>
       </div>

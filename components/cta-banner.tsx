@@ -20,7 +20,7 @@ export function CTABanner({
         className="pointer-events-none absolute inset-0"
         aria-hidden="true"
       >
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_50%_at_50%_100%,rgba(13,148,136,0.08),transparent)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_50%_at_50%_100%,color-mix(in_srgb,var(--color-brand-teal)_8%,transparent),transparent)]" />
         <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
         <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
       </div>
@@ -40,7 +40,7 @@ export function CTABanner({
               target: "_blank",
               rel: "noopener noreferrer",
             })}
-            className="inline-flex min-w-[200px] items-center justify-center rounded-lg bg-accent-warm px-xl py-3 font-heading text-sm font-semibold text-accent-warm-foreground shadow-md transition-all duration-base hover:shadow-lg hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+            className="inline-flex min-w-0 sm:min-w-[200px] items-center justify-center rounded-lg bg-accent-warm px-xl py-3 font-heading text-sm font-semibold text-accent-warm-foreground shadow-md transition-all duration-base hover:shadow-lg hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
           >
             {primaryCta.text}
           </a>
@@ -50,7 +50,7 @@ export function CTABanner({
               target: "_blank",
               rel: "noopener noreferrer",
             })}
-            className="inline-flex min-w-[200px] items-center justify-center rounded-lg border border-border bg-transparent px-xl py-3 font-heading text-sm font-semibold text-foreground transition-all duration-base hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+            className="inline-flex min-w-0 sm:min-w-[200px] items-center justify-center rounded-lg border border-border bg-transparent px-xl py-3 font-heading text-sm font-semibold text-foreground transition-all duration-base hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
           >
             {secondaryCta.text}
           </a>

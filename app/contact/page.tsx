@@ -45,7 +45,7 @@ export default function ContactPage() {
           className="pointer-events-none absolute inset-0"
           aria-hidden="true"
         >
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_-20%,rgba(13,148,136,0.08),transparent)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_-20%,color-mix(in_srgb,var(--color-brand-teal)_8%,transparent),transparent)]" />
         </div>
 
         <div className="relative mx-auto max-w-3xl px-md text-center">
@@ -67,8 +67,8 @@ export default function ContactPage() {
         <div className="mx-auto max-w-6xl px-md">
           <div className="grid grid-cols-1 gap-2xl lg:grid-cols-2">
             {/* Left column: Contact form */}
-            <div className="rounded-lg border border-border bg-card p-xl shadow-sm">
-              <h2 className="font-heading text-h4 font-bold text-card-foreground">
+            <div>
+              <h2 className="font-heading text-h4 font-bold text-foreground">
                 Send a Message
               </h2>
               <p className="mt-sm text-sm leading-relaxed text-muted-foreground">
@@ -81,10 +81,10 @@ export default function ContactPage() {
             </div>
 
             {/* Right column: Community + social links */}
-            <div className="flex flex-col gap-lg">
-              {/* Community card - highlighted */}
-              <div className="rounded-lg border-2 border-primary bg-card p-xl shadow-sm">
-                <h2 className="font-heading text-h4 font-bold text-card-foreground">
+            <div className="flex flex-col gap-2xl">
+              {/* Community section */}
+              <div className="rounded-lg bg-primary/5 p-xl">
+                <h2 className="font-heading text-h4 font-bold text-foreground">
                   Join the Community
                 </h2>
                 <p className="mt-sm text-sm leading-relaxed text-muted-foreground">
@@ -95,23 +95,23 @@ export default function ContactPage() {
                   href={siteConfig.author.skool}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-xl block w-full rounded-lg bg-accent-warm px-xl py-3 text-center font-heading text-sm font-semibold text-accent-warm-foreground shadow-md transition-all duration-base hover:shadow-lg hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                  className="mt-xl block w-full rounded-lg bg-accent-warm px-xl py-3 text-center font-heading text-sm font-semibold text-accent-warm-foreground shadow-md transition-all duration-base hover:shadow-lg hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                 >
                   Join on Skool
                 </a>
               </div>
 
-              {/* Social links card */}
-              <div className="rounded-lg border border-border bg-card p-xl shadow-sm">
-                <h2 className="font-heading text-h4 font-bold text-card-foreground">
+              {/* Social links */}
+              <div>
+                <h2 className="font-heading text-h4 font-bold text-foreground">
                   Other ways to connect
                 </h2>
-                <ul className="mt-xl space-y-lg">
+                <ul className="mt-lg space-y-md">
                   {socialLinks.map((link) => (
-                    <li key={link.label}>
-                      <h4 className="text-sm font-medium text-foreground">
+                    <li key={link.label} className="flex items-baseline justify-between">
+                      <span className="text-sm font-medium text-foreground">
                         {link.label}
-                      </h4>
+                      </span>
                       <a
                         href={link.href}
                         target="_blank"

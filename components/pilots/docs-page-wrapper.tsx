@@ -7,7 +7,7 @@ import { WelcomeModal } from "./welcome-modal";
 import { ModuleFeedbackForm } from "./module-feedback-form";
 import { UXFeedbackPrompt } from "./ux-feedback-prompt";
 import { ProgressTracker } from "./progress-tracker";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 // Module manifest for welcome modal (minimal, just needs titles)
 const buildModules = [
@@ -52,8 +52,17 @@ export function DocsPageWrapper({ children }: { children: React.ReactNode }) {
   const buildSlug = slugParts[1] ?? "";
   const moduleSlug = slugParts[2] ?? "";
 
+  // Apply saved font preference on mount
+  useEffect(() => {
+    const saved = localStorage.getItem("pilots-font-preference");
+    if (saved === "sans") {
+      const wrapper = document.querySelector("[data-font-toggle]");
+      if (wrapper) wrapper.classList.add("font-sans-override");
+    }
+  }, []);
+
   return (
-    <>
+    <div data-font-toggle>
       {(shouldShowWelcome || welcomeOpen) && (
         <WelcomeModal
           preferredName={preferredName ?? undefined}
@@ -88,6 +97,6 @@ export function DocsPageWrapper({ children }: { children: React.ReactNode }) {
           />
         </>
       )}
-    </>
+    </div>
   );
 }

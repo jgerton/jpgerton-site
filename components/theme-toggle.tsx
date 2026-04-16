@@ -24,8 +24,7 @@ export function ThemeToggle() {
     <button
       onClick={toggle}
       aria-label="Toggle theme"
-      className="flex items-center justify-center rounded-md text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
-      style={{ minWidth: 44, minHeight: 44 }}
+      className="flex items-center justify-center rounded-md text-muted-foreground hover:text-foreground hover:bg-accent transition-colors min-w-11 min-h-11"
     >
       {isDark ? (
         // Sun icon (shown in dark mode to switch to light)

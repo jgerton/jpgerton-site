@@ -35,7 +35,7 @@
 
   /* ===== CUSTOM EASING FUNCTIONS ===== */
   --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
-  --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
 
   /* ===== BORDER RADIUS ===== */
   --radius-lg: 12px;
@@ -43,8 +43,8 @@
   --radius-sm: 4px;
 
   /* ===== FONT FAMILY ===== */
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-heading: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-source-serif), 'Georgia', ui-serif, serif;
+  --font-heading: var(--font-bricolage-grotesque), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-jetbrains-mono), ui-monospace, 'Cascadia Code', 'Fira Code', monospace;
 
   /* ===== FLUID TYPOGRAPHY SCALE (1.2x ratio, 400-1280px viewport) ===== */
@@ -122,6 +122,10 @@
   /* Code accent (terminal green) */
   --color-code-accent: hsl(var(--code-accent));
   --color-code-accent-foreground: hsl(var(--code-accent-foreground));
+
+  /* Callout colors */
+  --color-callout-exercise: hsl(var(--callout-exercise));
+  --color-callout-question: hsl(var(--callout-question));
 }
 
 /* CSS Variables for theming */
@@ -180,6 +184,14 @@
     /* Code accent - terminal green */
     --code-accent: 142 72% 29%; /* #15803D - green-700 (5.07:1 on white) */
     --code-accent-foreground: 0 0% 100%; /* #FFFFFF */
+
+    /* Callout: exercise - indigo */
+    --callout-exercise: 239 84% 67%; /* #818CF8 - indigo-400 for text */
+    --callout-exercise-bg: 239 84% 67%; /* used at low opacity */
+
+    /* Callout: question - purple */
+    --callout-question: 271 91% 65%; /* #A855F7 - purple-500 */
+    --callout-question-bg: 271 91% 65%;
   }
 
   .dark {
@@ -227,6 +239,14 @@
     /* Code accent - terminal green, bright for dark mode */
     --code-accent: 142 71% 45%; /* #22C55E - green-500 (7.06:1 on bg) */
     --code-accent-foreground: 222 47% 11%; /* #0F172A */
+
+    /* Callout: exercise - indigo (brighter for dark bg) */
+    --callout-exercise: 239 84% 67%; /* #818CF8 - indigo-400 */
+    --callout-exercise-bg: 239 84% 67%;
+
+    /* Callout: question - purple (brighter for dark bg) */
+    --callout-question: 271 91% 65%; /* #A855F7 */
+    --callout-question-bg: 271 91% 65%;
   }
 }
 
@@ -246,6 +266,12 @@
 }
 
 /* ===== CSS KEYFRAME ANIMATIONS ===== */
+/* Terminal cursor blink */
+@keyframes terminal-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
 /* GPU-accelerated entrance animations for scroll-triggered content */
 @keyframes fade-up {
   from {
@@ -275,6 +301,23 @@
 
   .animate-fade-in {
     animation: fade-in var(--duration-entrance) var(--ease-smooth) both;
+  }
+}
+
+/* ===== READING FONT OVERRIDE ===== */
+/* When user prefers sans-serif on pilot reading pages */
+.font-sans-override,
+.font-sans-override p,
+.font-sans-override li,
+.font-sans-override blockquote {
+  font-family: var(--font-bricolage-grotesque), ui-sans-serif, system-ui, sans-serif;
+}
+
+/* ===== MICRO-INTERACTIONS ===== */
+@layer utilities {
+  /* Satisfying button press: subtle downward shift on click */
+  .press-active:active {
+    transform: translateY(1px);
   }
 }
 

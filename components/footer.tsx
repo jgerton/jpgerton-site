@@ -15,7 +15,7 @@ export function Footer() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="YouTube"
-            className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+            className="rounded text-sm text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           >
             YouTube
           </a>
@@ -24,7 +24,7 @@ export function Footer() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="X (formerly Twitter)"
-            className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+            className="rounded text-sm text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           >
             X
           </a>
@@ -33,7 +33,7 @@ export function Footer() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="GitHub"
-            className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+            className="rounded text-sm text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           >
             GitHub
           </a>
@@ -42,7 +42,7 @@ export function Footer() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Community"
-            className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+            className="rounded text-sm text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           >
             Community
           </a>

@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import { useUXFeedback } from "@/hooks/use-ux-feedback";
 import { useFormState } from "@/hooks/use-form-state";
 
@@ -25,16 +26,20 @@ function RatingScale({
   onChange: (v: string) => void;
   label: string;
 }) {
+  const labelId = `rating-${label.replace(/\s+/g, "-").toLowerCase()}`;
   return (
     <div className="mb-5">
-      <label className="text-sm font-medium block mb-2">{label}</label>
-      <div className="flex gap-1.5">
+      <div id={labelId} className="text-sm font-medium block mb-2">{label}</div>
+      <div role="radiogroup" aria-labelledby={labelId} className="flex gap-1.5">
         {[1, 2, 3, 4, 5].map((n) => (
           <button
             key={n}
             type="button"
+            role="radio"
+            aria-checked={value === String(n)}
+            aria-label={`${n} out of 5`}
             onClick={() => onChange(String(n))}
-            className={`w-10 h-10 rounded-lg border text-sm font-medium transition-colors ${
+            className={`w-10 h-10 rounded-lg border text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary ${
               value === String(n)
                 ? "border-primary bg-primary/10 text-primary"
                 : "border-border text-muted-foreground hover:border-primary/30"
@@ -54,6 +59,38 @@ export function UXFeedbackForm({
   onClose,
 }: UXFeedbackFormProps) {
   const uxFeedback = useUXFeedback(projectSlug, buildSlug);
+  const dialogRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const dialog = dialogRef.current;
+    if (!dialog) return;
+    dialog.focus();
+
+    function handleKeyDown(e: KeyboardEvent) {
+      if (e.key === "Escape") {
+        onClose();
+        return;
+      }
+      if (e.key === "Tab" && dialog) {
+        const focusable = dialog.querySelectorAll<HTMLElement>(
+          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        );
+        if (focusable.length === 0) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    }
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [onClose]);
 
   const form = useFormState<UXFeedbackValues>({
     initialValues: {
@@ -87,10 +124,10 @@ export function UXFeedbackForm({
 
   if (form.isSubmitted && !form.isDirty) {
     return (
-      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-        <div className="bg-card border border-border rounded-xl max-w-md w-full mx-4 p-8 text-center">
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-foreground/50">
+        <div ref={dialogRef} role="dialog" aria-modal="true" aria-labelledby="ux-feedback-title" tabIndex={-1} className="bg-card border border-border rounded-xl max-w-md w-full mx-4 p-8 text-center outline-none">
           <div className="text-3xl mb-3">🙌</div>
-          <h2 className="text-xl font-heading font-bold mb-2">Thanks!</h2>
+          <h2 id="ux-feedback-title" className="text-xl font-heading font-bold mb-2">Thanks!</h2>
           <p className="text-sm text-muted-foreground mb-4">
             Your feedback helps us make the pilot experience better for everyone.
           </p>
@@ -114,9 +151,9 @@ export function UXFeedbackForm({
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-      <div className="bg-card border border-border rounded-xl max-w-md w-full mx-4 p-6 max-h-[90vh] overflow-y-auto">
-        <h2 className="text-xl font-heading font-bold mb-1">Site experience feedback</h2>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-foreground/50">
+      <div ref={dialogRef} role="dialog" aria-modal="true" aria-labelledby="ux-form-title" tabIndex={-1} className="bg-card border border-border rounded-xl max-w-md w-full mx-4 p-6 max-h-[90vh] overflow-y-auto outline-none">
+        <h2 id="ux-form-title" className="text-xl font-heading font-bold mb-1">Site experience feedback</h2>
         <p className="text-sm text-muted-foreground mb-6">
           All fields optional. Rate 1 (poor) to 5 (great).
         </p>

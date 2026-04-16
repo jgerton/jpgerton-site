@@ -1,15 +1,15 @@
-import { Inter, Space_Grotesk, JetBrains_Mono } from 'next/font/google';
+import { Source_Serif_4, Bricolage_Grotesque, JetBrains_Mono } from 'next/font/google';
 
-export const inter = Inter({
+export const sourceSerif = Source_Serif_4({
   subsets: ['latin'],
   display: 'swap',
-  variable: '--font-inter',
+  variable: '--font-source-serif',
 });
 
-export const spaceGrotesk = Space_Grotesk({
+export const bricolageGrotesque = Bricolage_Grotesque({
   subsets: ['latin'],
   display: 'swap',
-  variable: '--font-space-grotesk',
+  variable: '--font-bricolage-grotesque',
 });
 
 export const jetbrainsMono = JetBrains_Mono({

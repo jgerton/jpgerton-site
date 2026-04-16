@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import { DocsLayout } from "fumadocs-ui/layouts/docs";
 import { pilotsSource } from "@/lib/pilots-source";
 import { PilotsAuthGate } from "@/components/pilots/pilots-auth-gate";
+import { FontToggle } from "@/components/pilots/font-toggle";
 
 export default function PilotsDocsLayout({ children }: { children: ReactNode }) {
   return (
@@ -10,6 +11,7 @@ export default function PilotsDocsLayout({ children }: { children: ReactNode }) 
         tree={pilotsSource.pageTree}
         nav={{
           title: "Pilots Hub",
+          children: <FontToggle />,
         }}
         sidebar={{
           defaultOpenLevel: 2,

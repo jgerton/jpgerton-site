@@ -87,15 +87,19 @@ export function ModuleFeedbackForm({
       </p>
 
       <div className="mb-6">
-        <label className="text-sm font-medium block mb-2">
-          How ready do you feel to act on this module? <span className="text-red-500">*</span>
-        </label>
-        <div className="flex gap-2">
+        <div id="readiness-label" className="text-sm font-medium block mb-2">
+          How ready do you feel to act on this module? <span className="text-red-500" aria-hidden="true">*</span>
+          <span className="sr-only">(required)</span>
+        </div>
+        <div role="radiogroup" aria-labelledby="readiness-label" aria-required="true" className="flex gap-2">
           {readinessOptions.map((option) => (
             <button
               key={option.value}
+              type="button"
+              role="radio"
+              aria-checked={form.values.readiness === option.value}
               onClick={() => form.setValue("readiness", option.value)}
-              className={`flex-1 px-3 py-3 rounded-lg border text-center transition-colors ${
+              className={`flex-1 px-3 py-3 rounded-lg border text-center transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary ${
                 form.values.readiness === option.value
                   ? "border-primary bg-primary/10 text-foreground"
                   : "border-border text-muted-foreground hover:border-primary/30"

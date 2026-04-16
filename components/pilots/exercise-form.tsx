@@ -80,7 +80,7 @@ export function ExerciseForm({
 
   if (form.isSubmitted && !form.isDirty) {
     return (
-      <div className="mt-4 pt-4 border-t border-indigo-500/15">
+      <div className="mt-4 pt-4 border-t border-callout-exercise/15">
         <div className="text-xs text-muted-foreground mb-2">Your response (submitted):</div>
         {fields.map((field, i) => (
           <div key={i} className="mb-2">
@@ -92,7 +92,7 @@ export function ExerciseForm({
         ))}
         <button
           onClick={form.edit}
-          className="mt-2 text-xs text-indigo-400 hover:text-indigo-300"
+          className="mt-2 text-xs text-callout-exercise hover:text-callout-exercise/80"
         >
           Edit response
         </button>
@@ -101,7 +101,7 @@ export function ExerciseForm({
   }
 
   return (
-    <div className="mt-4 pt-4 border-t border-indigo-500/15">
+    <div className="mt-4 pt-4 border-t border-callout-exercise/15">
       {fields.map((field, i) => (
         <div key={i} className="mb-3">
           <label className="text-xs font-medium block mb-1">{field.label}</label>
@@ -118,8 +118,7 @@ export function ExerciseForm({
           <button
             onClick={() => void form.submit()}
             disabled={form.isSubmitting || valuesToArray(form.values).every((v) => !v.trim())}
-            className="px-5 py-2 rounded-md text-sm font-medium text-white disabled:opacity-50"
-            style={{ background: "#6366F1" }}
+            className="px-5 py-2 rounded-md text-sm font-medium text-white bg-callout-exercise hover:bg-callout-exercise/90 disabled:opacity-50"
           >
             {form.isSubmitting ? "Saving..." : "Save response"}
           </button>

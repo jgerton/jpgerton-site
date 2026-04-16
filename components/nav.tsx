@@ -22,13 +22,12 @@ export function Nav() {
   }
 
   return (
-    <header className="sticky top-0 z-50 border-b border-border bg-background/80 backdrop-blur-md">
+    <header className="sticky top-0 z-50 border-b border-border bg-background">
       <div className="container mx-auto flex h-14 items-center justify-between px-4">
         {/* Logo / Brand */}
         <Link href="/" className="flex items-center gap-2 font-heading font-bold">
           <span
-            className="flex items-center justify-center rounded bg-brand-dark font-mono font-bold text-brand-green"
-            style={{ width: 28, height: 28, fontSize: 13 }}
+            className="flex items-center justify-center rounded bg-brand-dark font-mono font-bold text-brand-green w-7 h-7 text-xs"
             aria-hidden="true"
           >
             {">_"}
@@ -42,9 +41,9 @@ export function Nav() {
             <Link
               key={link.href}
               href={link.href}
-              className={`px-3 py-1.5 text-sm font-medium transition-colors ${
+              className={`rounded-md px-3 py-1.5 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${
                 isActive(link.href)
-                  ? "text-primary underline decoration-teal-500 underline-offset-4"
+                  ? "text-primary underline decoration-primary underline-offset-4"
                   : "text-muted-foreground hover:text-foreground"
               }`}
             >
@@ -61,8 +60,7 @@ export function Nav() {
             onClick={() => setMobileOpen((o) => !o)}
             aria-label={mobileOpen ? "Close menu" : "Open menu"}
             aria-expanded={mobileOpen}
-            className="flex items-center justify-center rounded-md text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
-            style={{ minWidth: 44, minHeight: 44 }}
+            className="flex items-center justify-center rounded-md text-muted-foreground hover:text-foreground hover:bg-accent transition-colors min-w-11 min-h-11"
           >
             {mobileOpen ? (
               // X icon
@@ -113,9 +111,9 @@ export function Nav() {
                 key={link.href}
                 href={link.href}
                 onClick={() => setMobileOpen(false)}
-                className={`py-3 text-sm font-medium transition-colors ${
+                className={`rounded-md py-3 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
                   isActive(link.href)
-                    ? "text-primary underline decoration-teal-500 underline-offset-4"
+                    ? "text-primary underline decoration-primary underline-offset-4"
                     : "text-muted-foreground hover:text-foreground"
                 }`}
               >

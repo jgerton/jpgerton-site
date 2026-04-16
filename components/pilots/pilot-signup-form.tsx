@@ -77,12 +77,15 @@ export function PilotSignUpForm({ onDone }: { onDone?: () => void }) {
       </p>
 
       <div>
-        <label className="block text-sm font-medium mb-1">
-          First name <span className="text-red-500">*</span>
+        <label htmlFor="pilot-firstName" className="block text-sm font-medium mb-1">
+          First name <span className="text-red-500" aria-hidden="true">*</span>
+          <span className="sr-only">(required)</span>
         </label>
         <input
+          id="pilot-firstName"
           type="text"
           required
+          aria-required="true"
           value={form.values.firstName}
           onChange={(e) => form.setValue("firstName", e.target.value)}
           className="w-full px-3 py-2 rounded-md border border-border bg-card text-foreground text-sm"
@@ -90,8 +93,9 @@ export function PilotSignUpForm({ onDone }: { onDone?: () => void }) {
       </div>
 
       <div>
-        <label className="block text-sm font-medium mb-1">Last name</label>
+        <label htmlFor="pilot-lastName" className="block text-sm font-medium mb-1">Last name</label>
         <input
+          id="pilot-lastName"
           type="text"
           value={form.values.lastName}
           onChange={(e) => form.setValue("lastName", e.target.value)}
@@ -100,10 +104,11 @@ export function PilotSignUpForm({ onDone }: { onDone?: () => void }) {
       </div>
 
       <div>
-        <label className="block text-sm font-medium mb-1">
+        <label htmlFor="pilot-preferredName" className="block text-sm font-medium mb-1">
           What should we call you?
         </label>
         <input
+          id="pilot-preferredName"
           type="text"
           value={form.values.preferredName}
           onChange={(e) => form.setValue("preferredName", e.target.value)}
@@ -116,8 +121,9 @@ export function PilotSignUpForm({ onDone }: { onDone?: () => void }) {
       </div>
 
       <div>
-        <label className="block text-sm font-medium mb-1">Skool username</label>
+        <label htmlFor="pilot-skoolUsername" className="block text-sm font-medium mb-1">Skool username</label>
         <input
+          id="pilot-skoolUsername"
           type="text"
           value={form.values.skoolUsername}
           onChange={(e) => form.setValue("skoolUsername", e.target.value)}
@@ -127,8 +133,9 @@ export function PilotSignUpForm({ onDone }: { onDone?: () => void }) {
       </div>
 
       <div>
-        <label className="block text-sm font-medium mb-1">Your Skool community URL</label>
+        <label htmlFor="pilot-communityUrl" className="block text-sm font-medium mb-1">Your Skool community URL</label>
         <input
+          id="pilot-communityUrl"
           type="url"
           value={form.values.communityUrl}
           onChange={(e) => form.setValue("communityUrl", e.target.value)}
@@ -138,8 +145,9 @@ export function PilotSignUpForm({ onDone }: { onDone?: () => void }) {
       </div>
 
       <div>
-        <label className="block text-sm font-medium mb-1">Community name</label>
+        <label htmlFor="pilot-communityName" className="block text-sm font-medium mb-1">Community name</label>
         <input
+          id="pilot-communityName"
           type="text"
           value={form.values.communityName}
           onChange={(e) => form.setValue("communityName", e.target.value)}

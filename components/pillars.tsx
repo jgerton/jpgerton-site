@@ -127,8 +127,8 @@ export function Pillars() {
             rel="noopener noreferrer"
             className={`mt-xl inline-flex w-full items-center justify-center rounded-lg px-lg py-2.5 text-sm font-semibold transition-all duration-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${
               pillar.highlighted
-                ? "bg-accent-warm text-accent-warm-foreground shadow-sm hover:brightness-110"
-                : "bg-primary text-primary-foreground hover:brightness-110"
+                ? "bg-accent-warm text-accent-warm-foreground shadow-sm hover:opacity-90"
+                : "bg-primary text-primary-foreground hover:opacity-90"
             }`}
           >
             {pillar.cta.text}

@@ -67,7 +67,7 @@ export default function AboutPage() {
           className="pointer-events-none absolute inset-0"
           aria-hidden="true"
         >
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_-20%,rgba(13,148,136,0.08),transparent)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_-20%,color-mix(in_srgb,var(--color-brand-teal)_8%,transparent),transparent)]" />
         </div>
 
         <div className="relative mx-auto max-w-3xl px-md text-center">
@@ -95,7 +95,7 @@ export default function AboutPage() {
             {steps.map((step) => (
               <div
                 key={step.title}
-                className="flex flex-col items-center rounded-lg border border-border bg-card p-xl shadow-sm text-center transition-shadow duration-base hover:shadow-md"
+                className="flex flex-col items-center text-center"
               >
                 {/* Numbered circle */}
                 <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-sm font-bold text-primary-foreground">
@@ -103,7 +103,7 @@ export default function AboutPage() {
                 </div>
 
                 {/* Title */}
-                <h3 className="mt-md font-heading text-h5 font-bold text-card-foreground">
+                <h3 className="mt-md font-heading text-h5 font-bold text-foreground">
                   {step.title}
                 </h3>
 
@@ -128,9 +128,9 @@ export default function AboutPage() {
             {values.map((value) => (
               <div
                 key={value.title}
-                className="rounded-lg border border-border bg-card p-xl shadow-sm transition-shadow duration-base hover:shadow-md"
+                className="border-t border-border pt-lg"
               >
-                <h3 className="font-heading text-h5 font-bold text-card-foreground">
+                <h3 className="font-heading text-h5 font-bold text-foreground">
                   {value.title}
                 </h3>
                 <p className="mt-sm text-sm leading-relaxed text-muted-foreground">
