@@ -161,8 +161,21 @@ export function PilotSignUpForm({ onDone }: { onDone?: () => void }) {
         disabled={!form.values.firstName || !form.isDirty || form.isSubmitting}
         className="w-full px-4 py-3 rounded-lg bg-primary text-primary-foreground font-medium hover:opacity-90 transition-opacity disabled:opacity-50"
       >
-        {form.isSubmitting ? "Saving..." : isEditing ? "Save changes" : "Continue"}
+        {form.isSubmitting
+          ? "Saving..."
+          : form.isSubmitted && !form.isDirty
+            ? "Saved"
+            : isEditing && !form.isDirty
+              ? "No unsaved changes"
+              : isEditing
+                ? "Save changes"
+                : "Continue"}
       </button>
+      {form.isSubmitted && !form.isDirty && (
+        <p className="text-sm text-center text-green-600 dark:text-green-400">
+          Profile saved successfully.
+        </p>
+      )}
       <div className="flex justify-center gap-4 pt-2">
         {form.isDirty && (
           <button

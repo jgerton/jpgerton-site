@@ -34,21 +34,25 @@ export function useFormState<T extends Record<string, unknown>>({
   const referenceValues = savedValues ?? initialValues;
   const [values, setValues] = useState<T>(referenceValues);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(
-    savedValues !== undefined && savedValues !== null
-  );
+  const [isSubmitted, setIsSubmitted] = useState(false);
   const prevSavedRef = useRef(savedValues);
   const dirtyRef = useRef(false);
+  const hasSubmittedRef = useRef(false);
 
   const isDirty = !shallowEqual(values, referenceValues);
   dirtyRef.current = isDirty;
 
   useEffect(() => {
-    if (savedValues && prevSavedRef.current !== savedValues) {
+    if (
+      savedValues &&
+      (!prevSavedRef.current || !shallowEqual(prevSavedRef.current, savedValues))
+    ) {
       prevSavedRef.current = savedValues;
       if (!dirtyRef.current) {
         setValues(savedValues);
-        setIsSubmitted(true);
+        if (hasSubmittedRef.current) {
+          setIsSubmitted(true);
+        }
       }
     }
   }, [savedValues]);
@@ -61,6 +65,7 @@ export function useFormState<T extends Record<string, unknown>>({
     setIsSubmitting(true);
     try {
       await onSubmit(values);
+      hasSubmittedRef.current = true;
       setIsSubmitted(true);
     } finally {
       setIsSubmitting(false);
