@@ -116,4 +116,50 @@ export default defineSchema({
     openText: v.optional(v.string()),
     createdAt: v.number(),
   }).index("by_userId", ["userId"]),
+
+  // --- Community Pulse tables (Slice 1) ---
+  communities: defineTable({
+    skoolGroupId: v.string(),
+    name: v.string(),
+    ownerEmail: v.string(),
+    edition: v.union(v.literal("builder"), v.literal("pro")),
+    lastSyncedAt: v.number(),
+  })
+    .index("by_skool_group", ["skoolGroupId"])
+    .index("by_owner", ["ownerEmail"]),
+
+  memberSnapshots: defineTable({
+    communityId: v.id("communities"),
+    skoolUserId: v.string(),
+    firstName: v.string(),
+    lastName: v.string(),
+    engagementScore: v.number(),
+    actStatus: v.optional(v.string()),
+    lastOffline: v.optional(v.number()),
+    points: v.number(),
+    level: v.number(),
+    attrComp: v.optional(v.string()),
+    attrSrcComp: v.optional(v.string()),
+    requestLocation: v.optional(v.string()),
+    churnRisk: v.union(
+      v.literal("low"),
+      v.literal("medium"),
+      v.literal("high")
+    ),
+    snapshotDate: v.number(),
+  })
+    .index("by_community", ["communityId"])
+    .index("by_community_date", ["communityId", "snapshotDate"])
+    .index("by_churn_risk", ["communityId", "churnRisk"]),
+
+  extensionSessions: defineTable({
+    token: v.string(),
+    email: v.string(),
+    googleSub: v.string(),
+    pilotProfileId: v.optional(v.id("pilotProfiles")),
+    expiresAt: v.number(),
+    createdAt: v.number(),
+  })
+    .index("by_token", ["token"])
+    .index("by_email", ["email"]),
 });
