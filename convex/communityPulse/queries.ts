@@ -93,6 +93,12 @@ export const getCommunityBySlug = query({
         q.eq("skoolGroupId", args.slug)
       )
       .first();
+
+    // If ownerEmail provided, verify ownership
+    if (community && args.ownerEmail && community.ownerEmail !== args.ownerEmail) {
+      return null;
+    }
+
     return community;
   },
 });
