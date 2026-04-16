@@ -475,4 +475,786 @@ Notes or questions:
 `,
     emailSubject: "[PILOT-PLAYBOOK-EX12] First Flywheel Piece",
   },
+  // Build 2: Module 5 - Onboarding That Sticks
+  ex13: {
+    title: "Exercise 13: Write your 7-day welcome sequence",
+    fields: [
+      { label: "Day 1 welcome DM", placeholder: "Include personalization placeholder..." },
+      { label: "Day 2 nudge (completed version)", placeholder: "What you send if they did the Start Here..." },
+      { label: "Day 2 nudge (not completed version)", placeholder: "What you send if they haven't started..." },
+      { label: "Day 3 community prompt", placeholder: "A specific question for your niche..." },
+      { label: "Day 5 value delivery", placeholder: "A resource or insight relevant to them..." },
+      { label: "Day 7 celebration / follow-up", placeholder: "Public recognition or final check-in..." },
+    ],
+    prompt: `I'm building a 7-day welcome sequence for my Skool community as part of a freemium playbook exercise.
+
+Research shows: automated welcome messages alone have zero effect on retention (Wikipedia study, n=57,084). Personal touchpoints yield 30% better 90-day retention. 80% of community churn happens in the first 7 days.
+
+The sequence structure:
+- Day 1: Personal welcome DM (within 1 hour of joining)
+- Day 2: Quick-win nudge (two versions: completed and not completed)
+- Day 3: Community connection prompt
+- Day 5: Value delivery relevant to their interests
+- Day 7: Celebrate engagement or final check-in
+
+My community niche: [fill in]
+My Start Here quick win: [fill in]
+
+Help me write each day's message. Push back if any message feels too templated, too long, or too salesy.`,
+    emailBody: `Exercise 13: Write your 7-day welcome sequence
+
+Write the actual messages for each day. Include personalization placeholders.
+
+Day 1 welcome DM:
+
+Day 2 nudge (if they completed Start Here):
+
+Day 2 nudge (if they haven't):
+
+Day 3 community prompt:
+
+Day 5 value delivery:
+
+Day 7 celebration / follow-up:
+
+`,
+    emailSubject: "[PILOT-PLAYBOOK-EX13] 7-Day Welcome Sequence",
+  },
+  ex14: {
+    title: "Exercise 14: Map your activation path",
+    fields: [
+      { label: "Step-by-step activation path", placeholder: "From 'member clicks join' to 'member completes first action'..." },
+      { label: "Drop-off points and mitigations", placeholder: "Where could they get lost? How will you address it?" },
+    ],
+    prompt: `I'm mapping my Day 1 activation path for my Skool community.
+
+Context: There's a 69% correlation between strong 7-day activation and strong 3-month retention (Amplitude). Users who perform their key action in the initial session are 3x more likely to renew. Target: 30%+ Day 1 activation rate.
+
+For each step from "member clicks join" to "member completes first action," I need:
+1. What the member sees
+2. What they need to do
+3. What could go wrong (drop-off point)
+4. How I'll address each drop-off
+
+My community niche: [fill in]
+My activation metric: [fill in]
+My Start Here quick win: [fill in]
+
+Help me identify blind spots in my activation path.`,
+    emailBody: `Exercise 14: Map your activation path
+
+Step by step, from "member clicks join" to "member completes first action."
+
+For each step:
+- What the member sees
+- What they need to do
+- What could go wrong
+- How you'll address it
+
+My activation metric:
+
+Step 1:
+
+Step 2:
+
+Step 3:
+
+Step 4:
+
+Step 5:
+
+`,
+    emailSubject: "[PILOT-PLAYBOOK-EX14] Activation Path Map",
+  },
+  ex15: {
+    title: "Exercise 15: Design your 90-day integration path",
+    fields: [
+      { label: "Phase 1: Welcome (Days 1-7)", placeholder: "What the member experiences, your actions, success metric..." },
+      { label: "Phase 2: Activate (Days 8-30)", placeholder: "How you drive return visits and habit formation..." },
+      { label: "Phase 3: Integrate (Days 31-90)", placeholder: "How members connect with each other, not just you..." },
+    ],
+    prompt: `I'm designing a 90-day integration path for my community. Members inactive in the first 90 days are 60-70% more likely to churn (i4a).
+
+Three phases:
+- Welcome (Days 1-7): First action completed, first response received
+- Activate (Days 8-30): Building the return visit habit
+- Integrate (Days 31-90): Connecting members to each other
+
+For each phase I need: what the member experiences, my actions, success metric, intervention plan for quiet members.
+
+My community niche: [fill in]
+My current community size: [fill in]
+
+Help me design Phase 2 (the hardest one). How do I drive return visits when there's not much content or activity yet?`,
+    emailBody: `Exercise 15: Design your 90-day integration path
+
+Phase 1 - Welcome (Days 1-7):
+What member experiences:
+My actions:
+Success metric:
+Intervention for quiet members:
+
+Phase 2 - Activate (Days 8-30):
+What member experiences:
+My actions:
+Success metric:
+Intervention for quiet members:
+
+Phase 3 - Integrate (Days 31-90):
+What member experiences:
+My actions:
+Success metric:
+Intervention for quiet members:
+
+`,
+    emailSubject: "[PILOT-PLAYBOOK-EX15] 90-Day Integration Path",
+  },
+  ex16: {
+    title: "Exercise 16: Write your 'going quiet' outreach message",
+    fields: [
+      { label: "Your outreach message", placeholder: "The DM you'd send to a member going quiet..." },
+      { label: "Your trigger (days of silence before reaching out)" },
+      { label: "Your process for checking who's gone quiet" },
+    ],
+    prompt: `I'm writing a re-engagement message for community members who've gone quiet.
+
+Context: Churn is predictable 2-4 weeks before cancellation. A personal message to members going quiet in the first 3-5 days can recover 20-30%.
+
+The message should:
+- Acknowledge absence without guilt-tripping
+- Ask an open question
+- Give them an easy out ("life got busy")
+- NOT mention their subscription or payment
+
+My community niche: [fill in]
+My trigger threshold: [fill in] days of silence
+
+Help me write this message and evaluate whether it feels genuine or automated.`,
+    emailBody: `Exercise 16: Write your "going quiet" outreach message
+
+Your outreach message (the actual DM):
+
+Your trigger (how many days of silence?):
+
+Your process for checking who's gone quiet:
+
+Notes or questions:
+
+`,
+    emailSubject: "[PILOT-PLAYBOOK-EX16] Going Quiet Outreach",
+  },
+  // Build 2: Module 6 - Live Sessions That Justify the Price
+  ex17: {
+    title: "Exercise 17: Choose your live session format",
+    fields: [
+      { label: "Format chosen and why" },
+      { label: "Day and time", placeholder: "Consider your members' time zones..." },
+      { label: "First session topic" },
+      { label: "Announcement paragraph" },
+    ],
+    prompt: `I'm choosing a live session format for my paid community.
+
+Options: Q&A (lowest prep, depends on questions), Workshop (high value, requires prep), Office Hours (personalized, can feel unfocused), Hot Seat (intense for one member, others learn by watching), Co-working (accountability, minimal teaching).
+
+Pick the format that: matches what members want, you can sustain weekly, produces value even at low attendance.
+
+My community niche: [fill in]
+My current paid member count: [fill in]
+Format I'm leaning toward: [fill in]
+
+Help me choose and write the announcement post.`,
+    emailBody: `Exercise 17: Choose your live session format
+
+Format chosen:
+
+Why this format:
+
+Day and time:
+
+First session topic:
+
+Announcement paragraph:
+
+`,
+    emailSubject: "[PILOT-PLAYBOOK-EX17] Live Session Format",
+  },
+  ex18: {
+    title: "Exercise 18: Live session debrief",
+    fields: [
+      { label: "How many attended?" },
+      { label: "What worked?" },
+      { label: "What was awkward or fell flat?" },
+      { label: "Would you run the same format again?" },
+    ],
+    prompt: `I just ran a live session for my community and need to debrief.
+
+My format: [fill in]
+Attendance: [fill in]
+What worked: [fill in]
+What was awkward: [fill in]
+
+Help me evaluate: should I stick with this format, adjust it, or try a different one? What specific changes would improve the next session?`,
+    emailBody: `Exercise 18: Live session debrief
+
+Format used:
+
+How many attended:
+
+What worked:
+
+What was awkward or fell flat:
+
+Would you run the same format again? Why/why not:
+
+`,
+    emailSubject: "[PILOT-PLAYBOOK-EX18] Live Session Debrief",
+  },
+  ex19: {
+    title: "Exercise 19: Design your async access system",
+    fields: [
+      { label: "Where recordings will live" },
+      { label: "Session summary template" },
+      { label: "Highlight clipping process" },
+    ],
+    prompt: `I'm designing an async access system for my live session recordings. 50% of registrants prefer watching replays over attending live.
+
+I need:
+1. Where recordings live (which classroom module, organized by topic not date)
+2. A session summary template (2-3 takeaways, action items, recording link, discussion question)
+3. A process for clipping 3-5 minute highlights
+
+My community platform: [fill in]
+My live session format: [fill in]
+
+Help me design a system I'll actually maintain weekly.`,
+    emailBody: `Exercise 19: Design your async access system
+
+Where recordings will live:
+
+Session summary template (what you'll post after each session):
+
+Highlight clipping process (tools, length, where posted):
+
+`,
+    emailSubject: "[PILOT-PLAYBOOK-EX19] Async Access System",
+  },
+  ex20: {
+    title: "Exercise 20: Design your first challenge",
+    fields: [
+      { label: "Challenge name and duration" },
+      { label: "Price point and reasoning" },
+      { label: "Daily structure (topic + deliverable per day)" },
+      { label: "Upgrade offer for completers" },
+    ],
+    prompt: `I'm designing my first paid challenge for my community.
+
+Context: Paid challenges see 70-80% completion (vs. 12-15% for courses). Challenge completers convert to memberships at 25-45%. Sweet spot pricing: $47-97 for first challenge.
+
+Duration options: 5-7 days (higher completion) or 10-14 days (deeper transformation).
+
+My community niche: [fill in]
+My paid tier price: [fill in]
+My target audience for the challenge: [fill in]
+
+Help me design the daily structure and the upgrade offer. Each day should take 30-60 minutes of member time with a clear deliverable they post.`,
+    emailBody: `Exercise 20: Design your first challenge
+
+Challenge name:
+
+Duration:
+
+Price point and reasoning:
+
+Daily structure:
+Day 1:
+Day 2:
+Day 3:
+Day 4:
+Day 5:
+Day 6:
+Day 7:
+
+Upgrade offer for completers:
+
+`,
+    emailSubject: "[PILOT-PLAYBOOK-EX20] First Challenge Design",
+  },
+  // Build 2: Module 7 - Keeping Them (Churn Prevention)
+  ex21: {
+    title: "Exercise 21: Set up your churn dashboard",
+    fields: [
+      { label: "Monthly churn rate", placeholder: "(members lost / members at start) x 100" },
+      { label: "Engagement rate", placeholder: "(active members / total paid) x 100" },
+      { label: "Longest inactive member (days since last activity)" },
+      { label: "Net member growth this month" },
+    ],
+    prompt: `I'm setting up a churn dashboard for my community with four metrics:
+1. Monthly churn rate: (members lost / members at start) x 100. Target: under 10%.
+2. Engagement rate: (members who posted/commented/reacted this week / total paid) x 100. Target: above 50%.
+3. Time since last activity per member. Warning: 14+ days.
+4. Net member growth: new paid minus cancelled. Target: positive every month.
+
+My community: [fill in]
+My current numbers: [fill in]
+
+Help me interpret these numbers and identify what to focus on first.`,
+    emailBody: `Exercise 21: Set up your churn dashboard
+
+Monthly churn rate:
+
+Engagement rate (weekly):
+
+Longest inactive member (days):
+
+Net member growth this month:
+
+Where you're tracking these:
+
+`,
+    emailSubject: "[PILOT-PLAYBOOK-EX21] Churn Dashboard",
+  },
+  ex22: {
+    title: "Exercise 22: Content audit",
+    fields: [
+      { label: "Content pieces created last week (count)" },
+      { label: "How many generated member-to-member conversation?" },
+      { label: "How many generated only responses to you?" },
+      { label: "How many generated no engagement?" },
+    ],
+    prompt: `I'm auditing my content output for churn risk. Research shows more than 1 new content piece per week can increase overwhelm and churn.
+
+My content from last week: [fill in]
+Member-to-member conversations generated: [fill in]
+Responses only to me: [fill in]
+No engagement: [fill in]
+
+If most content generates responses to me but not member-to-member conversation, I'm creating a broadcast, not a community. Help me shift toward content that sparks peer interaction.`,
+    emailBody: `Exercise 22: Content audit
+
+Content pieces created last week:
+
+Generated member-to-member conversation:
+
+Generated only responses to you:
+
+Generated no engagement:
+
+Analysis and next steps:
+
+`,
+    emailSubject: "[PILOT-PLAYBOOK-EX22] Content Audit",
+  },
+  ex23: {
+    title: "Exercise 23: Re-engagement outreach message",
+    fields: [
+      { label: "Your outreach message template" },
+      { label: "Who you'd send it to today" },
+    ],
+    prompt: `I'm writing a re-engagement message for paid members going quiet.
+
+The message should reference something specific they shared, ask an open question, and NOT mention their subscription. It should feel like a genuine check-in, not a retention tactic.
+
+My community niche: [fill in]
+Member I'd send it to: [fill in]
+What they last shared/discussed: [fill in]
+
+Help me write a message that feels personal, not templated.`,
+    emailBody: `Exercise 23: Re-engagement outreach message
+
+Your outreach message template:
+
+Who you'd send it to today (or save for later):
+
+`,
+    emailSubject: "[PILOT-PLAYBOOK-EX23] Re-engagement Outreach",
+  },
+  ex24: {
+    title: "Exercise 24: Monthly ROI post template",
+    fields: [
+      { label: "Your monthly ROI post", placeholder: "Fill in with actual data from this month..." },
+    ],
+    prompt: `I'm creating a monthly ROI post template for my community. The goal is to remind members of the value they received, showcase wins, and create anticipation for next month.
+
+Template structure:
+- What we built (member wins)
+- What we covered (weekly topics with recording links)
+- Coming next month (upcoming events/content)
+- Call for member wins
+
+My community: [fill in]
+This month's highlights: [fill in]
+
+Help me fill in the template with my actual data and make it feel like a celebration, not a report.`,
+    emailBody: `Exercise 24: Monthly ROI post template
+
+This month in [your community]:
+
+What we built:
+
+What we covered:
+
+Coming next month:
+
+Call for member wins:
+
+`,
+    emailSubject: "[PILOT-PLAYBOOK-EX24] Monthly ROI Post",
+  },
+  ex25: {
+    title: "Exercise 25: Annual billing decision",
+    fields: [
+      { label: "Will you offer annual billing?", placeholder: "Yes or No" },
+      { label: "Annual price and effective discount (if yes)" },
+      { label: "Your reasoning" },
+    ],
+    prompt: `I'm deciding whether to offer annual billing for my community.
+
+Context: Annual plans reduce churn by 9.5 percentage points (Recurly). Standard discount: 2-3 months free (17-25% off). Don't offer annual until you have 3+ months of consistent value delivery.
+
+My monthly price: [fill in]
+Months I've been running: [fill in]
+My decision: [fill in]
+My reasoning: [fill in]
+
+Help me evaluate whether I'm ready for annual billing and what price makes sense.`,
+    emailBody: `Exercise 25: Annual billing decision
+
+Will you offer annual billing?
+
+If yes, annual price and effective discount:
+
+Your reasoning:
+
+`,
+    emailSubject: "[PILOT-PLAYBOOK-EX25] Annual Billing Decision",
+  },
+  // Build 2: Module 8 - The Revenue Ladder
+  ex26: {
+    title: "Exercise 26: Map your revenue ladder",
+    fields: [
+      { label: "Layer 1: Subscription", placeholder: "What, price, when to activate, proof needed..." },
+      { label: "Layer 2: Challenges", placeholder: "What, price, when to activate, proof needed..." },
+      { label: "Layer 3: Digital products", placeholder: "What, price, when to activate, proof needed..." },
+      { label: "Layer 4: Premium tier", placeholder: "What, price, when to activate, proof needed..." },
+      { label: "Layer 5: High-ticket", placeholder: "What, price, when to activate, proof needed..." },
+    ],
+    prompt: `I'm mapping my revenue ladder for my community.
+
+The layers: subscription ($19-49/mo), challenges ($47-197), digital products (bundled as perks), premium tier ($97-200+/mo), high-ticket coaching ($500-10K+).
+
+Build bottom-up: subscription first, then challenges at 50+ free members, then products, then premium at 30+ paid, then coaching last.
+
+My niche: [fill in]
+My current community size: [fill in]
+My subscription price: [fill in]
+
+For each layer: what I'd offer, price point, activation milestone, and what proof from the layer below makes it easy to sell.`,
+    emailBody: `Exercise 26: Map your revenue ladder
+
+Layer 1 - Subscription:
+Offer:
+Price:
+Activate when:
+Proof needed:
+
+Layer 2 - Challenges:
+Offer:
+Price:
+Activate when:
+Proof needed:
+
+Layer 3 - Digital products:
+Offer:
+Price:
+Activate when:
+Proof needed:
+
+Layer 4 - Premium tier:
+Offer:
+Price:
+Activate when:
+Proof needed:
+
+Layer 5 - High-ticket:
+Offer:
+Price:
+Activate when:
+Proof needed:
+
+`,
+    emailSubject: "[PILOT-PLAYBOOK-EX26] Revenue Ladder Map",
+  },
+  ex27: {
+    title: "Exercise 27: Design your challenge funnel",
+    fields: [
+      { label: "Challenge name, duration, and price" },
+      { label: "Announcement post (Proof > Context > Small Ask)" },
+      { label: "Three exit-path offers with pricing" },
+      { label: "When you'll run it (specific date)" },
+    ],
+    prompt: `I'm designing a challenge funnel that feeds my revenue ladder.
+
+The funnel: free tier sees announcement > participants pay $47-97 > completers get upgrade offer > three exit paths (subscribe, premium, coaching).
+
+My niche: [fill in]
+My challenge idea: [fill in]
+My subscription price: [fill in]
+
+Help me write the announcement post using Proof > Context > Small Ask, and design the three exit-path offers.`,
+    emailBody: `Exercise 27: Design your challenge funnel
+
+Challenge name, duration, price:
+
+Announcement post for free tier:
+
+Exit path 1 - Subscribe:
+
+Exit path 2 - Premium:
+
+Exit path 3 - Coaching:
+
+Target date to run:
+
+`,
+    emailSubject: "[PILOT-PLAYBOOK-EX27] Challenge Funnel Design",
+  },
+  ex28: {
+    title: "Exercise 28: Digital products audit",
+    fields: [
+      { label: "Products to bundle as subscription perks" },
+      { label: "Products to sell standalone / use as lead magnets" },
+      { label: "Products without clear demand (don't build yet)" },
+    ],
+    prompt: `I'm auditing my content and resources to decide what to bundle vs. sell standalone.
+
+Bundle it if: the product requires community context, support, or accountability to be useful.
+Sell standalone if: the product is self-contained and delivers value alone.
+Don't create if: you'd build it solely to have something to sell.
+
+My existing content/resources: [fill in]
+Products I've been thinking about: [fill in]
+
+Help me sort these into the three categories and identify what's actually worth creating.`,
+    emailBody: `Exercise 28: Digital products audit
+
+Products to bundle as subscription perks:
+
+Products to sell standalone or use as lead magnets:
+
+Products without clear demand (don't build yet):
+
+`,
+    emailSubject: "[PILOT-PLAYBOOK-EX28] Digital Products Audit",
+  },
+  ex29: {
+    title: "Exercise 29: Map your upsell path",
+    fields: [
+      { label: "Free to Paid", placeholder: "Trigger, offer, proof point, ask..." },
+      { label: "Paid to Challenge", placeholder: "Trigger, offer, proof point, ask..." },
+      { label: "Challenge to Premium", placeholder: "Trigger, offer, proof point, ask..." },
+      { label: "Premium to High-ticket", placeholder: "Trigger, offer, proof point, ask..." },
+    ],
+    prompt: `I'm mapping my upsell path from free to high-ticket using the Proof > Context > Small Ask pattern.
+
+For each transition:
+- Trigger: what the member has achieved
+- Offer: what you're inviting them to
+- Proof point: from your proof ledger
+- Ask: how you'd present it
+
+Natural upsells say "you've proven you're ready for more." Forced upsells say "pay more to get more." Design for natural.
+
+My community: [fill in]
+My current proof points: [fill in]
+
+Help me design each transition to feel earned, not sold.`,
+    emailBody: `Exercise 29: Map your upsell path
+
+Free to Paid:
+Trigger:
+Offer:
+Proof point:
+Ask:
+
+Paid to Challenge:
+Trigger:
+Offer:
+Proof point:
+Ask:
+
+Challenge to Premium:
+Trigger:
+Offer:
+Proof point:
+Ask:
+
+Premium to High-ticket:
+Trigger:
+Offer:
+Proof point:
+Ask:
+
+`,
+    emailSubject: "[PILOT-PLAYBOOK-EX29] Upsell Path Map",
+  },
+  ex30: {
+    title: "Exercise 30: 12-month revenue projection",
+    fields: [
+      { label: "Month 1-3 projection", placeholder: "What's realistic with your current size?" },
+      { label: "Month 4-6 projection", placeholder: "After first challenge and some growth?" },
+      { label: "Month 7-12 projection", placeholder: "With all layers activated?" },
+    ],
+    prompt: `I'm building a 12-month revenue projection for my community.
+
+Reference scenarios:
+- Subscription-heavy: 100 free, 40 paid at $29/mo, quarterly challenges, 15 premium, 2 coaching = ~$5,200/mo
+- Challenge-heavy: 200 free, 60 paid at $29/mo, monthly mini-challenges, quarterly premium, 20 premium, 1 coaching = ~$8,700/mo
+
+My current state: [fill in]
+My revenue ladder from Exercise 26: [fill in]
+
+Help me build a realistic projection. Round down, not up. I'd rather be pleasantly surprised than disappointed.`,
+    emailBody: `Exercise 30: 12-month revenue projection
+
+Month 1-3 (current reality):
+
+Month 4-6 (after first challenge):
+
+Month 7-12 (all layers activated):
+
+Assumptions I'm making:
+
+`,
+    emailSubject: "[PILOT-PLAYBOOK-EX30] Revenue Projection",
+  },
+  // Build 2: Module 9 - Proof-Based Communication
+  ex31: {
+    title: "Exercise 31: Set up your proof ledger",
+    fields: [
+      { label: "Proof point 1", placeholder: "Date, member, win, category, quote, source..." },
+      { label: "Proof point 2", placeholder: "Date, member, win, category, quote, source..." },
+    ],
+    prompt: `I'm setting up a proof ledger with three tabs: Member Wins, Community Metrics, and Milestones.
+
+I need to seed it with at least 2 proof points. These can come from my community, freelance work, content, or anywhere I've generated a real result for someone.
+
+If I have zero proof points, my first priority is generating one, not writing better copy.
+
+My community/work: [fill in]
+My proof points so far: [fill in]
+
+Help me evaluate whether my proof points are specific enough to be credible. Generic claims invite skepticism. Specific details invite curiosity.`,
+    emailBody: `Exercise 31: Set up your proof ledger
+
+Proof point 1:
+Date:
+Member/person:
+Win:
+Category:
+Quote (if available):
+Source:
+
+Proof point 2:
+Date:
+Member/person:
+Win:
+Category:
+Quote (if available):
+Source:
+
+`,
+    emailSubject: "[PILOT-PLAYBOOK-EX31] Proof Ledger Setup",
+  },
+  ex32: {
+    title: "Exercise 32: Rewrite your welcome message with proof",
+    fields: [
+      { label: "Your current welcome message" },
+      { label: "Your rewritten message (Proof > Context > Small Ask)" },
+    ],
+    prompt: `I'm rewriting my community welcome message using the Proof > Context > Small Ask pattern.
+
+The pattern:
+- Proof: a real, specific, verifiable result
+- Context: one sentence connecting the proof to the reader
+- Small Ask: the lowest-friction next step
+
+The proof should be real. If I don't have member wins yet, I'll use my own result.
+
+My current welcome message: [fill in]
+My best proof point: [fill in]
+
+Help me rewrite it. Push back if the proof feels generic or the ask feels too big.`,
+    emailBody: `Exercise 32: Rewrite your welcome message with proof
+
+Your current welcome message:
+
+Your rewritten message (Proof > Context > Small Ask):
+
+`,
+    emailSubject: "[PILOT-PLAYBOOK-EX32] Welcome Message Rewrite",
+  },
+  ex33: {
+    title: "Exercise 33: Map your 'want more?' moments",
+    fields: [
+      { label: "Moment 1 + proof-rich nudge" },
+      { label: "Moment 2 + proof-rich nudge" },
+      { label: "Moment 3 + proof-rich nudge" },
+    ],
+    prompt: `I'm mapping 3-5 "want more?" moments in my community where a free member is most likely to feel the gap between free and paid.
+
+Five types: the "want more?" post, the win announcement, the live session preview, the welcome DM sequence, the conversation upgrade.
+
+For each moment, I need a proof-rich nudge: real proof point, one sentence of context, one small ask.
+
+My community niche: [fill in]
+My free vs. paid split: [fill in]
+My proof points: [fill in]
+
+Help me identify the moments and write the nudges.`,
+    emailBody: `Exercise 33: Map your "want more?" moments
+
+Moment 1:
+Where it happens:
+Proof-rich nudge:
+
+Moment 2:
+Where it happens:
+Proof-rich nudge:
+
+Moment 3:
+Where it happens:
+Proof-rich nudge:
+
+`,
+    emailSubject: "[PILOT-PLAYBOOK-EX33] Want More Moments Map",
+  },
+  ex34: {
+    title: "Exercise 34: Send your second email",
+    fields: [
+      { label: "Who you're reaching out to" },
+      { label: "Your rewritten outreach (Proof > Context > Small Ask)" },
+      { label: "Outcome (after sending)" },
+    ],
+    prompt: `I'm rewriting a cold outreach message using the Proof > Context > Small Ask pattern from the Janoch story.
+
+The key difference from my first attempt: lead with a proof point I have now that I didn't have then. The ask should be smaller than the first time.
+
+Who I'm reaching out to: [fill in]
+My first message (what I sent before): [fill in]
+New proof point I can lead with: [fill in]
+
+Help me rewrite the outreach. The goal isn't to "follow up," it's to send a fundamentally different message that leads with evidence instead of promises.`,
+    emailBody: `Exercise 34: Send your second email
+
+Who you're reaching out to:
+
+Your original message (first attempt):
+
+Your rewritten outreach (Proof > Context > Small Ask):
+
+Outcome (fill in after sending):
+
+`,
+    emailSubject: "[PILOT-PLAYBOOK-EX34] Second Email Outreach",
+  },
 };
