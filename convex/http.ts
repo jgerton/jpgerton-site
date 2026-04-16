@@ -2,10 +2,17 @@ import { httpRouter } from "convex/server";
 import { auth } from "./auth";
 import { httpAction } from "./_generated/server";
 import { api } from "./_generated/api";
+import { extensionLogin } from "./communityPulse/authActions";
 
 const http = httpRouter();
 
 auth.addHttpRoutes(http);
+
+http.route({
+  path: "/extension/auth",
+  method: "POST",
+  handler: extensionLogin,
+});
 
 http.route({
   path: "/zapier/ycah-member",
