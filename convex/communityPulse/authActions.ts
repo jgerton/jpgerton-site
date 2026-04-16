@@ -1,5 +1,4 @@
-import { httpAction, internalMutation } from "../_generated/server";
-import { api, internal } from "../_generated/api";
+import { mutation, internalMutation } from "../_generated/server";
 import { v } from "convex/values";
 
 function generateToken(): string {
@@ -8,122 +7,70 @@ function generateToken(): string {
   return Array.from(bytes, (b) => b.toString(16).padStart(2, "0")).join("");
 }
 
-export const extensionLogin = httpAction(async (ctx, request) => {
-  if (request.method !== "POST") {
-    return new Response("Method not allowed", { status: 405 });
-  }
+/**
+ * Create an extension session for the currently authenticated website user.
+ * Called from the /pilots/connect-extension page after the user signs in.
+ */
+export const createWebSession = mutation({
+  args: {},
+  handler: async (ctx) => {
+    const identity = await ctx.auth.getUserIdentity();
+    if (!identity) {
+      throw new Error("Not authenticated");
+    }
 
-  const body = await request.json();
-  const { accessToken } = body as { accessToken: string };
+    const email = identity.email;
+    if (!email) {
+      throw new Error("No email in identity");
+    }
 
-  if (!accessToken) {
-    return new Response(
-      JSON.stringify({ error: "Missing accessToken" }),
-      { status: 400, headers: { "Content-Type": "application/json" } }
-    );
-  }
+    // Look up pilotProfile by email
+    const profile = await ctx.db
+      .query("pilotProfiles")
+      .withIndex("by_email", (q) => q.eq("email", email))
+      .first();
 
-  // Validate Google access token
-  const googleRes = await fetch(
-    "https://www.googleapis.com/oauth2/v3/userinfo",
-    { headers: { Authorization: `Bearer ${accessToken}` } }
-  );
+    if (!profile) {
+      throw new Error("No pilot profile found");
+    }
 
-  if (!googleRes.ok) {
-    return new Response(
-      JSON.stringify({ error: "Invalid Google token" }),
-      { status: 401, headers: { "Content-Type": "application/json" } }
-    );
-  }
+    if (
+      profile.approvalStatus !== "approved" &&
+      profile.approvalStatus !== "auto-approved"
+    ) {
+      throw new Error("Profile not approved");
+    }
 
-  const googleUser = (await googleRes.json()) as {
-    sub: string;
-    email: string;
-    name: string;
-    given_name?: string;
-    family_name?: string;
-    picture?: string;
-  };
-
-  // Look up pilotProfile by email
-  const profile = await ctx.runQuery(api.pilotProfiles.getByEmail, {
-    email: googleUser.email,
-  });
-
-  if (!profile) {
-    return new Response(
-      JSON.stringify({
-        error: "No pilot profile found",
-        message: "Sign up at jpgerton.com/pilots first",
-      }),
-      { status: 403, headers: { "Content-Type": "application/json" } }
-    );
-  }
-
-  if (
-    profile.approvalStatus !== "approved" &&
-    profile.approvalStatus !== "auto-approved"
-  ) {
-    return new Response(
-      JSON.stringify({
-        error: "Profile not approved",
-        status: profile.approvalStatus,
-      }),
-      { status: 403, headers: { "Content-Type": "application/json" } }
-    );
-  }
-
-  // Create extension session (7 day expiry)
-  const token = generateToken();
-  const expiresAt = Date.now() + 7 * 24 * 60 * 60 * 1000;
-
-  await ctx.runMutation(internal.communityPulse.authActions.createSession, {
-    token,
-    email: googleUser.email,
-    googleSub: googleUser.sub,
-    pilotProfileId: profile._id,
-    expiresAt,
-  });
-
-  return new Response(
-    JSON.stringify({
-      sessionToken: token,
-      profile: {
-        email: profile.email,
-        preferredName: profile.preferredName,
-        communityName: profile.communityName,
-      },
-    }),
-    { status: 200, headers: { "Content-Type": "application/json" } }
-  );
-});
-
-export const createSession = internalMutation({
-  args: {
-    token: v.string(),
-    email: v.string(),
-    googleSub: v.string(),
-    pilotProfileId: v.id("pilotProfiles"),
-    expiresAt: v.number(),
-  },
-  handler: async (ctx, args) => {
-    // Remove existing sessions for this email (one session per user)
+    // Clean up existing sessions for this email
     const existing = await ctx.db
       .query("extensionSessions")
-      .withIndex("by_email", (q) => q.eq("email", args.email))
+      .withIndex("by_email", (q) => q.eq("email", email))
       .collect();
 
     for (const session of existing) {
       await ctx.db.delete(session._id);
     }
 
+    // Create new session (7-day expiry)
+    const token = generateToken();
+    const expiresAt = Date.now() + 7 * 24 * 60 * 60 * 1000;
+
     await ctx.db.insert("extensionSessions", {
-      token: args.token,
-      email: args.email,
-      googleSub: args.googleSub,
-      pilotProfileId: args.pilotProfileId,
-      expiresAt: args.expiresAt,
+      token,
+      email,
+      googleSub: identity.subject ?? "",
+      pilotProfileId: profile._id,
+      expiresAt,
       createdAt: Date.now(),
     });
+
+    return {
+      sessionToken: token,
+      profile: {
+        email: profile.email,
+        preferredName: profile.preferredName,
+        communityName: profile.communityName,
+      },
+    };
   },
 });
