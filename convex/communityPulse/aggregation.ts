@@ -1,7 +1,25 @@
-import { toMs } from "./scoring";
+import { toMs, assignQuadrant, type ChurnRisk, type Quadrant } from "./scoring";
 
 export interface MemberInput {
   skoolUserId: string;
+}
+
+export interface SnapshotInput {
+  _id: string;
+  skoolUserId: string;
+  churnRisk: ChurnRisk;
+}
+
+export interface MemberPatch {
+  postsAuthored: number;
+  postsCommentedOn: number;
+  lastActivityInCommunity: number | undefined;
+  quadrant: Quadrant;
+}
+
+export interface SnapshotPatch {
+  snapshotId: string;
+  patch: MemberPatch;
 }
 
 export interface PostInput {
@@ -74,4 +92,41 @@ export function aggregateMemberActivity(
 
 function maxDefined(a: number | undefined, b: number): number {
   return a == null ? b : Math.max(a, b);
+}
+
+/**
+ * Compose aggregation + quadrant assignment into per-snapshot patches.
+ * Pure: no DB access, no Date.now(). Pass `now` in from the caller.
+ */
+export function buildMemberPatches(
+  snapshots: SnapshotInput[],
+  posts: PostInput[],
+  now: number,
+): SnapshotPatch[] {
+  const members: MemberInput[] = snapshots.map((s) => ({
+    skoolUserId: s.skoolUserId,
+  }));
+  const activity = aggregateMemberActivity(members, posts);
+  const byUserId = new Map(activity.map((a) => [a.skoolUserId, a]));
+
+  return snapshots.map((snap) => {
+    const a = byUserId.get(snap.skoolUserId);
+    const postsAuthored = a?.postsAuthored ?? 0;
+    const postsCommentedOn = a?.postsCommentedOn ?? 0;
+    const lastActivityInCommunity = a?.lastActivityInCommunity;
+    const quadrant = assignQuadrant({
+      churnRisk: snap.churnRisk,
+      lastActivityInCommunity,
+      now,
+    });
+    return {
+      snapshotId: snap._id,
+      patch: {
+        postsAuthored,
+        postsCommentedOn,
+        lastActivityInCommunity,
+        quadrant,
+      },
+    };
+  });
 }
