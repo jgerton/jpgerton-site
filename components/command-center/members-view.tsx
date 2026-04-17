@@ -91,7 +91,7 @@ export function MembersView({ atRisk, watch, active }: MembersViewProps) {
       <div className="border border-fd-border rounded-lg overflow-hidden">
         {filtered.length === 0 ? (
           <p className="text-sm text-fd-muted-foreground text-center py-8">
-            No members in this segment.
+            All clear here. Your community is thriving.
           </p>
         ) : (
           <div className="divide-y divide-fd-border px-4">
