@@ -116,4 +116,107 @@ export default defineSchema({
     openText: v.optional(v.string()),
     createdAt: v.number(),
   }).index("by_userId", ["userId"]),
+
+  // --- Community Pulse tables (Slice 1) ---
+  communities: defineTable({
+    skoolGroupId: v.string(),
+    name: v.string(),
+    ownerEmail: v.string(),
+    edition: v.union(v.literal("builder"), v.literal("pro")),
+    lastSyncedAt: v.number(),
+  })
+    .index("by_skool_group", ["skoolGroupId"])
+    .index("by_owner", ["ownerEmail"]),
+
+  memberSnapshots: defineTable({
+    communityId: v.id("communities"),
+    skoolUserId: v.string(),
+    firstName: v.string(),
+    lastName: v.string(),
+    engagementScore: v.number(),
+    actStatus: v.optional(v.string()),
+    lastOffline: v.optional(v.number()),
+    points: v.number(),
+    level: v.number(),
+    attrComp: v.optional(v.string()),
+    attrSrcComp: v.optional(v.string()),
+    requestLocation: v.optional(v.string()),
+    churnRisk: v.union(
+      v.literal("low"),
+      v.literal("medium"),
+      v.literal("high")
+    ),
+    snapshotDate: v.number(),
+    // Slice 2: community-specific activity + 2x2 quadrant.
+    // Optional during migration; populated by backfillQuadrants and then by
+    // syncCommunityActivity on every subsequent sync.
+    postsAuthored: v.optional(v.number()),
+    postsCommentedOn: v.optional(v.number()),
+    lastActivityInCommunity: v.optional(v.number()),
+    quadrant: v.optional(
+      v.union(
+        v.literal("ambassador"),
+        v.literal("drifting"),
+        v.literal("loyal"),
+        v.literal("at_risk")
+      )
+    ),
+  })
+    .index("by_community", ["communityId"])
+    .index("by_community_date", ["communityId", "snapshotDate"])
+    .index("by_churn_risk", ["communityId", "churnRisk"])
+    .index("by_community_quadrant", ["communityId", "quadrant"]),
+
+  // Slice 2: raw community-feed posts. One row per Skool post per community.
+  // Rewritten on each sync; contributor list and comment counts are refreshed.
+  posts: defineTable({
+    communityId: v.id("communities"),
+    skoolPostId: v.string(),
+    skoolGroupId: v.string(),
+    authorSkoolUserId: v.string(),
+    postType: v.string(),
+    labelId: v.optional(v.string()),
+    title: v.string(),
+    contributorIds: v.array(v.string()),
+    commentCount: v.number(),
+    upvotes: v.number(),
+    pinned: v.boolean(),
+    createdAt: v.number(),              // ms
+    lastCommentAt: v.optional(v.number()), // ms
+    syncedAt: v.number(),
+  })
+    .index("by_community_created", ["communityId", "createdAt"])
+    .index("by_community_author", ["communityId", "authorSkoolUserId"])
+    .index("by_community_post", ["communityId", "skoolPostId"]),
+
+  // Slice 2: follow-up CRM. Append-only log of owner actions per member.
+  memberFollowups: defineTable({
+    memberSnapshotId: v.id("memberSnapshots"),
+    communityId: v.id("communities"),
+    skoolUserId: v.string(),
+    quadrant: v.union(
+      v.literal("ambassador"),
+      v.literal("drifting"),
+      v.literal("loyal"),
+      v.literal("at_risk")
+    ),
+    action: v.string(),
+    note: v.optional(v.string()),
+    actedAt: v.number(),
+    outcome: v.optional(v.string()),
+    outcomeAt: v.optional(v.number()),
+  })
+    .index("by_member", ["skoolUserId", "communityId"])
+    .index("by_community_acted", ["communityId", "actedAt"]),
+
+  extensionSessions: defineTable({
+    token: v.string(),
+    email: v.string(),
+    googleSub: v.string(),
+    pilotProfileId: v.optional(v.id("pilotProfiles")),
+    expiresAt: v.number(),
+    createdAt: v.number(),
+  })
+    .index("by_token", ["token"])
+    .index("by_email", ["email"]),
 });

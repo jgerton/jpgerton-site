@@ -1,0 +1,63 @@
+@import url("https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Figtree:wght@400;500;600&display=swap");
+
+/* Scoped Community Ops design tokens */
+.community-ops {
+  --bg: oklch(0.15 0.01 250);
+  --surface: oklch(0.20 0.01 250);
+  --surface-hover: oklch(0.22 0.01 250);
+  --text-primary: oklch(0.93 0.005 250);
+  --text-secondary: oklch(0.60 0.01 250);
+  --warm-accent: oklch(0.80 0.15 75);
+  --warm-accent-strong: oklch(0.65 0.18 55);
+  --warm-accent-subtle: oklch(0.80 0.15 75 / 0.10);
+  --warm-urgent: oklch(0.78 0.12 40);
+  --cool-accent: oklch(0.82 0.08 240);
+  --danger: oklch(0.65 0.2 25);
+  --success: oklch(0.72 0.15 155);
+  --success-subtle: oklch(0.72 0.15 155 / 0.10);
+  --border: oklch(0.25 0.01 250);
+  --rule: oklch(0.22 0.01 250);
+  --pulse-glow: oklch(0.80 0.15 75 / 0.4);
+
+  font-family: "Figtree", system-ui, sans-serif;
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+}
+
+@media (prefers-color-scheme: light) {
+  .community-ops {
+    --bg: oklch(0.97 0.005 75);
+    --surface: oklch(0.93 0.005 75);
+    --surface-hover: oklch(0.90 0.008 75);
+    --text-primary: oklch(0.15 0.01 250);
+    --text-secondary: oklch(0.45 0.015 250);
+    --warm-accent: oklch(0.55 0.18 55);
+    --warm-accent-strong: oklch(0.50 0.20 55);
+    --warm-accent-subtle: oklch(0.55 0.18 55 / 0.08);
+    --warm-urgent: oklch(0.45 0.16 40);
+    --cool-accent: oklch(0.45 0.12 240);
+    --danger: oklch(0.50 0.22 25);
+    --success: oklch(0.42 0.15 155);
+    --success-subtle: oklch(0.42 0.15 155 / 0.08);
+    --border: oklch(0.88 0.005 75);
+    --rule: oklch(0.90 0.005 75);
+    --pulse-glow: oklch(0.55 0.18 55 / 0.3);
+  }
+}
+
+/* Pulse animation */
+@keyframes pulse-glow {
+  0%, 100% { transform: scale(1); opacity: 0.6; }
+  50% { transform: scale(1.8); opacity: 0; }
+}
+
+.community-ops .pulse-dot-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .community-ops .pulse-dot-glow {
+    animation: none;
+  }
+}
