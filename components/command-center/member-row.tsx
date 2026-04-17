@@ -8,6 +8,7 @@ interface MemberSnapshot {
   actStatus?: string;
   points: number;
   level: number;
+  quadrant?: "ambassador" | "drifting" | "loyal" | "at_risk";
 }
 
 interface MemberRowProps {
@@ -20,6 +21,13 @@ const RISK_STYLES = {
   medium: { color: "var(--warm-urgent)", label: "Watch" },
   low: { color: "var(--cool-accent)", label: "Active" },
 };
+
+const QUADRANT_COLORS = {
+  ambassador: "var(--cool-accent)",
+  drifting: "var(--warm-urgent)",
+  loyal: "var(--cool-accent)",
+  at_risk: "var(--danger)",
+} as const;
 
 function toMs(timestamp: number | undefined): number | undefined {
   if (timestamp == null) return undefined;
@@ -56,7 +64,17 @@ export function MemberRow({ member, index }: MemberRowProps) {
         borderRadius: "50%",
         background: risk.color,
         flexShrink: 0,
-      }} />
+      }} title={`Skool-wide: ${risk.label}`} />
+      {member.quadrant && (
+        <span style={{
+          width: 7,
+          height: 7,
+          borderRadius: "50%",
+          background: QUADRANT_COLORS[member.quadrant],
+          flexShrink: 0,
+          outline: "1.5px solid var(--surface)",
+        }} title={`Quadrant: ${member.quadrant}`} />
+      )}
       <div style={{ flex: 1, minWidth: 0, display: "flex", alignItems: "baseline", gap: 8 }}>
         <span style={{ fontSize: 13, fontWeight: 500, fontFamily: "Figtree, sans-serif" }}>
           {member.firstName} {member.lastName}

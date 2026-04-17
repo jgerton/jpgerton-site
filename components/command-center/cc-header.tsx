@@ -6,11 +6,15 @@ interface DashboardSummary {
   watchCount: number;
   engagementRate: number;
   lastSyncedAt: number;
+  ambassadorCount?: number;
+  driftingCount?: number;
+  loyalCount?: number;
+  quadrantAtRiskCount?: number;
 }
 
 interface CcHeaderProps {
   communityName: string;
-  summary: DashboardSummary | null;
+  summary: DashboardSummary | null | undefined;
   projectSlug: string;
 }
 

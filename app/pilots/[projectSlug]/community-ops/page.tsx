@@ -1,15 +1,14 @@
 "use client";
 
-import { useParams, useSearchParams } from "next/navigation";
+import { useParams } from "next/navigation";
 import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { usePilotProfile } from "@/hooks/use-pilot-profile";
 import { CcHeader } from "@/components/command-center/cc-header";
-import { MembersView } from "@/components/command-center/members-view";
+import { QuadrantGrid } from "@/components/command-center/quadrant-grid";
 
 export default function CommandCenterPage() {
   const params = useParams<{ projectSlug: string }>();
-  const searchParams = useSearchParams();
   const { profile } = usePilotProfile();
 
   const community = useQuery(
@@ -23,13 +22,6 @@ export default function CommandCenterPage() {
     api.communityPulse.queries.getDashboardSummary,
     community ? { communityId: community._id } : "skip"
   );
-
-  const members = useQuery(
-    api.communityPulse.queries.getAtRiskMembers,
-    community ? { communityId: community._id } : "skip"
-  );
-
-  const view = searchParams.get("view") ?? "members";
 
   if (community === undefined) {
     return (
@@ -63,6 +55,13 @@ export default function CommandCenterPage() {
     );
   }
 
+  const quadrantCounts = {
+    ambassador: summary?.ambassadorCount ?? 0,
+    drifting: summary?.driftingCount ?? 0,
+    loyal: summary?.loyalCount ?? 0,
+    at_risk: summary?.quadrantAtRiskCount ?? 0,
+  };
+
   return (
     <div style={{ background: "var(--bg)", minHeight: "80vh", padding: "32px 24px" }}>
       <div className="max-w-4xl mx-auto">
@@ -72,13 +71,7 @@ export default function CommandCenterPage() {
           projectSlug={params.projectSlug}
         />
 
-        {view === "members" && members && (
-          <MembersView
-            atRisk={members.atRisk}
-            watch={members.watch}
-            active={members.active}
-          />
-        )}
+        <QuadrantGrid projectSlug={params.projectSlug} counts={quadrantCounts} />
       </div>
     </div>
   );
