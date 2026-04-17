@@ -9,6 +9,11 @@
  */
 
 import type * as auth from "../auth.js";
+import type * as communityPulse_authActions from "../communityPulse/authActions.js";
+import type * as communityPulse_queries from "../communityPulse/queries.js";
+import type * as communityPulse_scoring from "../communityPulse/scoring.js";
+import type * as communityPulse_sessions from "../communityPulse/sessions.js";
+import type * as communityPulse_sync from "../communityPulse/sync.js";
 import type * as http from "../http.js";
 import type * as pilotExercises from "../pilotExercises.js";
 import type * as pilotFeedback from "../pilotFeedback.js";
@@ -27,6 +32,11 @@ import type {
 
 declare const fullApi: ApiFromModules<{
   auth: typeof auth;
+  "communityPulse/authActions": typeof communityPulse_authActions;
+  "communityPulse/queries": typeof communityPulse_queries;
+  "communityPulse/scoring": typeof communityPulse_scoring;
+  "communityPulse/sessions": typeof communityPulse_sessions;
+  "communityPulse/sync": typeof communityPulse_sync;
   http: typeof http;
   pilotExercises: typeof pilotExercises;
   pilotFeedback: typeof pilotFeedback;

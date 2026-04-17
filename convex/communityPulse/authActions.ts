@@ -1,5 +1,5 @@
-import { mutation, internalMutation } from "../_generated/server";
-import { v } from "convex/values";
+import { mutation } from "../_generated/server";
+import { getAuthUserId } from "@convex-dev/auth/server";
 
 function generateToken(): string {
   const bytes = new Uint8Array(32);
@@ -10,24 +10,21 @@ function generateToken(): string {
 /**
  * Create an extension session for the currently authenticated website user.
  * Called from the /pilots/connect-extension page after the user signs in.
+ * Uses getAuthUserId from @convex-dev/auth to get the authenticated user,
+ * then looks up their pilotProfile by userId.
  */
 export const createWebSession = mutation({
   args: {},
   handler: async (ctx) => {
-    const identity = await ctx.auth.getUserIdentity();
-    if (!identity) {
+    const userId = await getAuthUserId(ctx);
+    if (!userId) {
       throw new Error("Not authenticated");
     }
 
-    const email = identity.email;
-    if (!email) {
-      throw new Error("No email in identity");
-    }
-
-    // Look up pilotProfile by email
+    // Look up pilotProfile by userId
     const profile = await ctx.db
       .query("pilotProfiles")
-      .withIndex("by_email", (q) => q.eq("email", email))
+      .withIndex("by_userId", (q) => q.eq("userId", userId))
       .first();
 
     if (!profile) {
@@ -44,7 +41,7 @@ export const createWebSession = mutation({
     // Clean up existing sessions for this email
     const existing = await ctx.db
       .query("extensionSessions")
-      .withIndex("by_email", (q) => q.eq("email", email))
+      .withIndex("by_email", (q) => q.eq("email", profile.email))
       .collect();
 
     for (const session of existing) {
@@ -57,8 +54,8 @@ export const createWebSession = mutation({
 
     await ctx.db.insert("extensionSessions", {
       token,
-      email,
-      googleSub: identity.subject ?? "",
+      email: profile.email,
+      googleSub: userId,
       pilotProfileId: profile._id,
       expiresAt,
       createdAt: Date.now(),
