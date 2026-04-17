@@ -91,4 +91,48 @@ describe("assessChurnRisk", () => {
   it("returns high when lastOfflineMs is undefined", () => {
     expect(assessChurnRisk(undefined)).toBe("high");
   });
+
+  it("classifies a nanosecond timestamp from 10 days ago as medium risk", () => {
+    // Skool sends lastOffline as nanoseconds (19 digits). Without conversion,
+    // daysSince goes negative and the risk collapses to "low".
+    const nsTenDaysAgo = (Date.now() - 1000 * 60 * 60 * 24 * 10) * 1_000_000;
+    expect(assessChurnRisk(nsTenDaysAgo)).toBe("medium");
+  });
+
+  it("classifies a nanosecond timestamp from 20 days ago as high risk", () => {
+    const nsTwentyDaysAgo = (Date.now() - 1000 * 60 * 60 * 24 * 20) * 1_000_000;
+    expect(assessChurnRisk(nsTwentyDaysAgo)).toBe("high");
+  });
+});
+
+describe("computeEngagementScore with nanosecond timestamps", () => {
+  beforeEach(() => {
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date("2026-04-16T12:00:00Z"));
+  });
+
+  afterEach(() => {
+    vi.useRealTimers();
+  });
+
+  it("produces the same score for equivalent ns and ms timestamps", () => {
+    // 10 days ago stresses the recency term so a ns/ms mix-up is visible.
+    const tenDaysAgoMs = Date.now() - 1000 * 60 * 60 * 24 * 10;
+    const tenDaysAgoNs = tenDaysAgoMs * 1_000_000;
+
+    const msScore = computeEngagementScore({
+      actStatus: "active",
+      lastOfflineMs: tenDaysAgoMs,
+      points: 100,
+      level: 3,
+    });
+    const nsScore = computeEngagementScore({
+      actStatus: "active",
+      lastOfflineMs: tenDaysAgoNs,
+      points: 100,
+      level: 3,
+    });
+
+    expect(nsScore).toBe(msScore);
+  });
 });

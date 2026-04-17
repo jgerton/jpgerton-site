@@ -10,6 +10,16 @@ const ACT_STATUS_SCORES: Record<string, number> = {
 };
 const ACT_STATUS_DEFAULT = 20;
 
+// Skool sends lastOffline as nanosecond timestamps (19 digits).
+// Anything past year 5000 in ms is assumed to actually be ns.
+const NS_THRESHOLD = 1e15;
+
+export function toMs(timestamp: number | undefined): number | undefined {
+  if (timestamp == null) return undefined;
+  if (timestamp > NS_THRESHOLD) return Math.floor(timestamp / 1e6);
+  return timestamp;
+}
+
 export interface ScoringInput {
   actStatus?: string;
   lastOfflineMs?: number;
@@ -21,9 +31,11 @@ export function computeEngagementScore(input: ScoringInput): number {
   const activityScore =
     ACT_STATUS_SCORES[input.actStatus ?? ""] ?? ACT_STATUS_DEFAULT;
 
+  const lastOfflineMs = toMs(input.lastOfflineMs);
+
   let recencyScore = 0;
-  if (input.lastOfflineMs != null) {
-    const daysSince = (Date.now() - input.lastOfflineMs) / DAY_MS;
+  if (lastOfflineMs != null) {
+    const daysSince = (Date.now() - lastOfflineMs) / DAY_MS;
     recencyScore = Math.max(0, Math.min(100, 100 * Math.exp(-daysSince / 7)));
   }
 
@@ -44,7 +56,8 @@ export type ChurnRisk = "low" | "medium" | "high";
 const MEDIUM_THRESHOLD_DAYS = 7;
 const HIGH_THRESHOLD_DAYS = 14;
 
-export function assessChurnRisk(lastOfflineMs: number | undefined): ChurnRisk {
+export function assessChurnRisk(lastOffline: number | undefined): ChurnRisk {
+  const lastOfflineMs = toMs(lastOffline);
   if (lastOfflineMs == null) return "high";
   const daysSince = (Date.now() - lastOfflineMs) / DAY_MS;
   if (daysSince < MEDIUM_THRESHOLD_DAYS) return "low";

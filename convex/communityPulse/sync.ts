@@ -1,7 +1,7 @@
 import { mutation } from "../_generated/server";
 import { v } from "convex/values";
 import { verifyExtensionSession } from "./sessions";
-import { computeEngagementScore, assessChurnRisk } from "./scoring";
+import { computeEngagementScore, assessChurnRisk, toMs } from "./scoring";
 
 const rawMemberValidator = v.object({
   skoolUserId: v.string(),
@@ -62,16 +62,19 @@ export const syncMembers = mutation({
       await ctx.db.delete(snap._id);
     }
 
-    // Create new snapshots with computed scores
+    // Create new snapshots with computed scores.
+    // Normalize Skool nanosecond timestamps to ms at the storage boundary.
     for (const member of args.members) {
+      const lastOfflineMs = toMs(member.lastOffline);
+
       const engagementScore = computeEngagementScore({
         actStatus: member.actStatus,
-        lastOfflineMs: member.lastOffline,
+        lastOfflineMs,
         points: member.points,
         level: member.level,
       });
 
-      const churnRisk = assessChurnRisk(member.lastOffline);
+      const churnRisk = assessChurnRisk(lastOfflineMs);
 
       await ctx.db.insert("memberSnapshots", {
         communityId: community!._id,
@@ -80,7 +83,7 @@ export const syncMembers = mutation({
         lastName: member.lastName,
         engagementScore,
         actStatus: member.actStatus,
-        lastOffline: member.lastOffline,
+        lastOffline: lastOfflineMs,
         points: member.points,
         level: member.level,
         attrComp: member.attrComp,
