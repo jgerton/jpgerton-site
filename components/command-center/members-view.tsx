@@ -138,9 +138,9 @@ export function MembersView({ atRisk, watch, active }: MembersViewProps) {
             All clear here. Your community is thriving.
           </p>
         ) : (
-          <div style={{ padding: "0 16px" }}>
-            {filtered.map((member) => (
-              <MemberRow key={member._id} member={member} />
+          <div style={{ padding: "4px 4px" }}>
+            {filtered.map((member, i) => (
+              <MemberRow key={member._id} member={member} index={i} />
             ))}
           </div>
         )}

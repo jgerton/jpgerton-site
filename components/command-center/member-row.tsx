@@ -12,6 +12,7 @@ interface MemberSnapshot {
 
 interface MemberRowProps {
   member: MemberSnapshot;
+  index: number;
 }
 
 const RISK_STYLES = {
@@ -20,15 +21,24 @@ const RISK_STYLES = {
   low: { color: "var(--cool-accent)", label: "Active" },
 };
 
-function timeAgo(ms: number | undefined): string {
+function toMs(timestamp: number | undefined): number | undefined {
+  if (timestamp == null) return undefined;
+  // Skool sends nanosecond timestamps (19 digits). Convert to milliseconds.
+  if (timestamp > 1e15) return Math.floor(timestamp / 1e6);
+  return timestamp;
+}
+
+function timeAgo(raw: number | undefined): string {
+  const ms = toMs(raw);
   if (ms == null) return "unknown";
   const days = Math.floor((Date.now() - ms) / (1000 * 60 * 60 * 24));
+  if (days < 0) return "online";
   if (days === 0) return "today";
   if (days === 1) return "yesterday";
   return `${days}d ago`;
 }
 
-export function MemberRow({ member }: MemberRowProps) {
+export function MemberRow({ member, index }: MemberRowProps) {
   const risk = RISK_STYLES[member.churnRisk];
 
   return (
@@ -36,26 +46,27 @@ export function MemberRow({ member }: MemberRowProps) {
       display: "flex",
       alignItems: "center",
       gap: 12,
-      padding: "12px 0",
-      borderBottom: "1px solid var(--rule)",
+      padding: "6px 12px",
+      background: index % 2 === 0 ? "transparent" : "var(--surface-hover)",
+      borderRadius: 4,
     }}>
       <span style={{
-        width: 8,
-        height: 8,
+        width: 7,
+        height: 7,
         borderRadius: "50%",
         background: risk.color,
         flexShrink: 0,
       }} />
-      <div style={{ flex: 1, minWidth: 0 }}>
-        <div style={{ fontSize: 14, fontWeight: 500, fontFamily: "Figtree, sans-serif" }}>
+      <div style={{ flex: 1, minWidth: 0, display: "flex", alignItems: "baseline", gap: 8 }}>
+        <span style={{ fontSize: 13, fontWeight: 500, fontFamily: "Figtree, sans-serif" }}>
           {member.firstName} {member.lastName}
-        </div>
-        <div style={{ fontSize: 12, color: "var(--text-secondary)", marginTop: 2 }}>
-          Score: {member.engagementScore} · Last seen: {timeAgo(member.lastOffline)}
-        </div>
+        </span>
+        <span style={{ fontSize: 11, color: "var(--text-secondary)" }}>
+          {member.engagementScore} · {timeAgo(member.lastOffline)}
+        </span>
       </div>
       <span style={{
-        fontSize: 11,
+        fontSize: 10,
         fontWeight: 600,
         fontFamily: "Archivo, sans-serif",
         letterSpacing: "0.03em",
