@@ -48,53 +48,97 @@ export function MembersView({ atRisk, watch, active }: MembersViewProps) {
       )
     : displayMembers;
 
+  const getCount = (key: Segment) =>
+    key === "at-risk" ? atRisk.length
+    : key === "watch" ? watch.length
+    : key === "active" ? active.length
+    : allMembers.length;
+
   return (
     <div>
-      <div className="flex items-center gap-2 mb-4 text-xs text-fd-muted-foreground">
+      {/* Contextual link */}
+      <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 16, fontSize: 12, color: "var(--text-secondary)" }}>
         <span>Related:</span>
-        <a href="/pilots/docs/freemium-playbook/build-2/module-5" className="text-fd-primary underline">
+        <a
+          href="/pilots/docs/freemium-playbook/build-2/module-5"
+          style={{ color: "var(--warm-accent)", textDecoration: "underline" }}
+        >
           Exercise 5: Retention
         </a>
       </div>
 
-      <div className="flex gap-1 mb-4 p-1 bg-fd-muted rounded-lg">
-        {SEGMENTS.map(({ key, label }) => {
-          const count = key === "at-risk" ? atRisk.length
-            : key === "watch" ? watch.length
-            : key === "active" ? active.length
-            : allMembers.length;
-
-          return (
-            <button
-              key={key}
-              onClick={() => setSegment(key)}
-              className={`flex-1 px-3 py-1.5 text-sm rounded-md transition-colors ${
-                segment === key
-                  ? "bg-fd-background text-fd-foreground font-medium shadow-sm"
-                  : "text-fd-muted-foreground hover:text-fd-foreground"
-              }`}
-            >
-              {label} ({count})
-            </button>
-          );
-        })}
+      {/* Segment tabs */}
+      <div style={{
+        display: "flex",
+        gap: 4,
+        marginBottom: 16,
+        padding: 4,
+        background: "var(--surface)",
+        borderRadius: 8,
+      }}>
+        {SEGMENTS.map(({ key, label }) => (
+          <button
+            key={key}
+            onClick={() => setSegment(key)}
+            style={{
+              flex: 1,
+              padding: "6px 12px",
+              fontSize: 13,
+              fontFamily: "Figtree, sans-serif",
+              fontWeight: segment === key ? 600 : 400,
+              borderRadius: 6,
+              border: "none",
+              cursor: "pointer",
+              transition: "all 0.15s ease",
+              background: segment === key ? "var(--surface-hover)" : "transparent",
+              color: segment === key ? "var(--text-primary)" : "var(--text-secondary)",
+              boxShadow: segment === key ? "0 1px 3px rgba(0,0,0,0.15)" : "none",
+            }}
+          >
+            {label} ({getCount(key)})
+          </button>
+        ))}
       </div>
 
+      {/* Search */}
       <input
         type="text"
         placeholder="Search members..."
         value={search}
         onChange={(e) => setSearch(e.target.value)}
-        className="w-full px-3 py-2 text-sm border border-fd-border rounded-lg bg-fd-background mb-4 focus:outline-none focus:ring-2 focus:ring-fd-primary"
+        style={{
+          width: "100%",
+          padding: "8px 12px",
+          fontSize: 13,
+          fontFamily: "Figtree, sans-serif",
+          border: "1px solid var(--border)",
+          borderRadius: 8,
+          background: "var(--surface)",
+          color: "var(--text-primary)",
+          outline: "none",
+          marginBottom: 16,
+          boxSizing: "border-box",
+        }}
       />
 
-      <div className="border border-fd-border rounded-lg overflow-hidden">
+      {/* Member list */}
+      <div style={{
+        background: "var(--surface)",
+        borderRadius: 8,
+        border: "1px solid var(--border)",
+        overflow: "hidden",
+      }}>
         {filtered.length === 0 ? (
-          <p className="text-sm text-fd-muted-foreground text-center py-8">
+          <p style={{
+            fontSize: 13,
+            color: "var(--text-secondary)",
+            textAlign: "center",
+            padding: "32px 16px",
+          }}>
             All clear here. Your community is thriving.
           </p>
         ) : (
-          <div className="divide-y divide-fd-border px-4">
+          <div style={{ padding: "0 16px" }}>
             {filtered.map((member) => (
               <MemberRow key={member._id} member={member} />
             ))}
@@ -102,7 +146,7 @@ export function MembersView({ atRisk, watch, active }: MembersViewProps) {
         )}
       </div>
 
-      <p className="text-xs text-fd-muted-foreground mt-3">
+      <p style={{ fontSize: 11, color: "var(--text-secondary)", marginTop: 12 }}>
         Showing {filtered.length} of {allMembers.length} members
       </p>
     </div>

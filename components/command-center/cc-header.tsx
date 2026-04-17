@@ -25,29 +25,73 @@ function timeAgo(timestamp: number): string {
 
 export function CcHeader({ communityName, summary, projectSlug }: CcHeaderProps) {
   return (
-    <div className="mb-8">
-      <div className="flex items-center justify-between mb-1">
-        <h1 className="text-2xl font-bold">{communityName}</h1>
+    <div style={{ marginBottom: 32 }}>
+      {/* Status line with pulse dot */}
+      <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
+        <span style={{ position: "relative", display: "flex", alignItems: "center", justifyContent: "center", width: 10, height: 10 }}>
+          <span
+            className="pulse-dot-glow"
+            style={{
+              position: "absolute",
+              display: "inline-flex",
+              width: "100%",
+              height: "100%",
+              borderRadius: "9999px",
+              background: "var(--pulse-glow)",
+            }}
+          />
+          <span style={{
+            position: "relative",
+            display: "inline-flex",
+            width: 7,
+            height: 7,
+            borderRadius: "9999px",
+            background: "var(--warm-accent)",
+          }} />
+        </span>
+        <span style={{
+          fontSize: 11,
+          fontWeight: 600,
+          letterSpacing: "0.04em",
+          textTransform: "uppercase" as const,
+          color: "var(--text-secondary)",
+          fontFamily: "Archivo, sans-serif",
+        }}>
+          Community Ops
+        </span>
+      </div>
+
+      {/* Community name + nav */}
+      <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", marginBottom: 24 }}>
+        <h1 style={{ fontSize: 28, fontWeight: 700, margin: 0, fontFamily: "Figtree, sans-serif" }}>
+          {communityName}
+        </h1>
         <a
           href={`/pilots/${projectSlug}`}
-          className="text-sm text-fd-muted-foreground hover:text-fd-foreground"
+          style={{ fontSize: 13, color: "var(--text-secondary)", textDecoration: "none" }}
+          onMouseOver={(e) => (e.currentTarget.style.color = "var(--text-primary)")}
+          onMouseOut={(e) => (e.currentTarget.style.color = "var(--text-secondary)")}
         >
           Back to playbook
         </a>
       </div>
-      <p className="text-sm text-fd-muted-foreground mb-6">Community Ops</p>
 
+      {/* Stat cards */}
       {summary && (
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <StatCard label="Total Members" value={summary.totalMembers} />
-          <StatCard label="Engagement Rate" value={`${summary.engagementRate}%`} />
-          <StatCard label="At Risk" value={summary.atRiskCount} variant="danger" />
-          <StatCard label="Watch" value={summary.watchCount} variant="warning" />
+        <div style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))",
+          gap: 12,
+        }}>
+          <StatCard label="Members" value={summary.totalMembers} />
+          <StatCard label="Engaged" value={`${summary.engagementRate}%`} accent="success" />
+          <StatCard label="At Risk" value={summary.atRiskCount} accent="danger" />
+          <StatCard label="Watch" value={summary.watchCount} accent="warning" />
         </div>
       )}
 
       {summary && (
-        <p className="text-xs text-fd-muted-foreground mt-3">
+        <p style={{ fontSize: 11, color: "var(--text-secondary)", marginTop: 12 }}>
           Last synced: {timeAgo(summary.lastSyncedAt)}
         </p>
       )}
@@ -58,23 +102,46 @@ export function CcHeader({ communityName, summary, projectSlug }: CcHeaderProps)
 function StatCard({
   label,
   value,
-  variant,
+  accent,
 }: {
   label: string;
   value: number | string;
-  variant?: "danger" | "warning";
+  accent?: "danger" | "warning" | "success";
 }) {
-  const borderClass =
-    variant === "danger"
-      ? "border-red-200 dark:border-red-900"
-      : variant === "warning"
-        ? "border-amber-200 dark:border-amber-900"
-        : "border-fd-border";
+  const accentColor =
+    accent === "danger" ? "var(--danger)"
+    : accent === "warning" ? "var(--warm-urgent)"
+    : accent === "success" ? "var(--success)"
+    : "var(--warm-accent)";
 
   return (
-    <div className={`rounded-lg border p-4 ${borderClass}`}>
-      <div className="text-2xl font-bold tabular-nums">{value}</div>
-      <div className="text-xs text-fd-muted-foreground mt-1">{label}</div>
+    <div style={{
+      background: "var(--surface)",
+      borderRadius: 8,
+      padding: "16px 16px 12px",
+      borderLeft: `3px solid ${accentColor}`,
+    }}>
+      <div style={{
+        fontSize: 28,
+        fontWeight: 700,
+        fontFamily: "Archivo, sans-serif",
+        fontVariantNumeric: "tabular-nums",
+        color: accent ? accentColor : "var(--text-primary)",
+        lineHeight: 1,
+      }}>
+        {value}
+      </div>
+      <div style={{
+        fontSize: 11,
+        fontWeight: 600,
+        letterSpacing: "0.04em",
+        textTransform: "uppercase" as const,
+        color: "var(--text-secondary)",
+        marginTop: 6,
+        fontFamily: "Archivo, sans-serif",
+      }}>
+        {label}
+      </div>
     </div>
   );
 }
