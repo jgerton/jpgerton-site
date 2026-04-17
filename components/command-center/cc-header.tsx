@@ -35,7 +35,7 @@ export function CcHeader({ communityName, summary, projectSlug }: CcHeaderProps)
           Back to playbook
         </a>
       </div>
-      <p className="text-sm text-fd-muted-foreground mb-6">Command Center</p>
+      <p className="text-sm text-fd-muted-foreground mb-6">Community Ops</p>
 
       {summary && (
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
