@@ -64,3 +64,26 @@ export function assessChurnRisk(lastOffline: number | undefined): ChurnRisk {
   if (daysSince < HIGH_THRESHOLD_DAYS) return "medium";
   return "high";
 }
+
+export type Quadrant = "ambassador" | "drifting" | "loyal" | "at_risk";
+
+const COMMUNITY_ACTIVE_THRESHOLD_DAYS = 14;
+
+export interface QuadrantInput {
+  churnRisk: ChurnRisk;
+  lastActivityInCommunity: number | undefined;
+  now: number;
+}
+
+export function assignQuadrant(input: QuadrantInput): Quadrant {
+  const skoolActive = input.churnRisk === "low";
+  const lastMs = toMs(input.lastActivityInCommunity);
+  const communityActive =
+    lastMs != null &&
+    (input.now - lastMs) / DAY_MS < COMMUNITY_ACTIVE_THRESHOLD_DAYS;
+
+  if (skoolActive && communityActive) return "ambassador";
+  if (skoolActive && !communityActive) return "drifting";
+  if (!skoolActive && communityActive) return "loyal";
+  return "at_risk";
+}
