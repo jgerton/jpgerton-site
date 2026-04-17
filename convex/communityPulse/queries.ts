@@ -87,18 +87,29 @@ export const getCommunityBySlug = query({
     ownerEmail: v.optional(v.string()),
   },
   handler: async (ctx, args) => {
-    const community = await ctx.db
+    // Try by Skool group slug first
+    const bySlug = await ctx.db
       .query("communities")
       .withIndex("by_skool_group", (q) =>
         q.eq("skoolGroupId", args.slug)
       )
       .first();
 
-    // If ownerEmail provided, verify ownership
-    if (community && args.ownerEmail && community.ownerEmail !== args.ownerEmail) {
-      return null;
+    if (bySlug) {
+      if (args.ownerEmail && bySlug.ownerEmail !== args.ownerEmail) {
+        return null;
+      }
+      return bySlug;
     }
 
-    return community;
+    // Fallback: find by owner email (Slice 1: one community per user)
+    if (args.ownerEmail) {
+      return await ctx.db
+        .query("communities")
+        .withIndex("by_owner", (q) => q.eq("ownerEmail", args.ownerEmail!))
+        .first();
+    }
+
+    return null;
   },
 });
