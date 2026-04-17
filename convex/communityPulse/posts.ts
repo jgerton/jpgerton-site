@@ -105,6 +105,9 @@ export const syncCommunityActivity = mutation({
       )
       .collect();
 
+    // Keep the header's "Last synced" fresh regardless of whether snapshots exist.
+    await ctx.db.patch(community._id, { lastSyncedAt: syncedAt });
+
     if (snapshots.length === 0) {
       return {
         communityId: community._id,
