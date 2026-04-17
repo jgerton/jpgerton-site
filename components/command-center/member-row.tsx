@@ -62,7 +62,11 @@ export function MemberRow({ member, index }: MemberRowProps) {
           {member.firstName} {member.lastName}
         </span>
         <span style={{ fontSize: 11, color: "var(--text-secondary)" }}>
-          {member.engagementScore} · {timeAgo(member.lastOffline)}
+          <span title="Engagement score (0-100)">
+            Score {member.engagementScore}
+          </span>
+          {" · "}
+          {timeAgo(member.lastOffline)}
         </span>
       </div>
       <span style={{
