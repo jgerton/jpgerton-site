@@ -147,10 +147,67 @@ export default defineSchema({
       v.literal("high")
     ),
     snapshotDate: v.number(),
+    // Slice 2: community-specific activity + 2x2 quadrant.
+    // Optional during migration; populated by backfillQuadrants and then by
+    // syncCommunityActivity on every subsequent sync.
+    postsAuthored: v.optional(v.number()),
+    postsCommentedOn: v.optional(v.number()),
+    lastActivityInCommunity: v.optional(v.number()),
+    quadrant: v.optional(
+      v.union(
+        v.literal("ambassador"),
+        v.literal("drifting"),
+        v.literal("loyal"),
+        v.literal("at_risk")
+      )
+    ),
   })
     .index("by_community", ["communityId"])
     .index("by_community_date", ["communityId", "snapshotDate"])
-    .index("by_churn_risk", ["communityId", "churnRisk"]),
+    .index("by_churn_risk", ["communityId", "churnRisk"])
+    .index("by_community_quadrant", ["communityId", "quadrant"]),
+
+  // Slice 2: raw community-feed posts. One row per Skool post per community.
+  // Rewritten on each sync; contributor list and comment counts are refreshed.
+  posts: defineTable({
+    communityId: v.id("communities"),
+    skoolPostId: v.string(),
+    skoolGroupId: v.string(),
+    authorSkoolUserId: v.string(),
+    postType: v.string(),
+    labelId: v.optional(v.string()),
+    title: v.string(),
+    contributorIds: v.array(v.string()),
+    commentCount: v.number(),
+    upvotes: v.number(),
+    pinned: v.boolean(),
+    createdAt: v.number(),              // ms
+    lastCommentAt: v.optional(v.number()), // ms
+    syncedAt: v.number(),
+  })
+    .index("by_community_created", ["communityId", "createdAt"])
+    .index("by_community_author", ["communityId", "authorSkoolUserId"])
+    .index("by_community_post", ["communityId", "skoolPostId"]),
+
+  // Slice 2: follow-up CRM. Append-only log of owner actions per member.
+  memberFollowups: defineTable({
+    memberSnapshotId: v.id("memberSnapshots"),
+    communityId: v.id("communities"),
+    skoolUserId: v.string(),
+    quadrant: v.union(
+      v.literal("ambassador"),
+      v.literal("drifting"),
+      v.literal("loyal"),
+      v.literal("at_risk")
+    ),
+    action: v.string(),
+    note: v.optional(v.string()),
+    actedAt: v.number(),
+    outcome: v.optional(v.string()),
+    outcomeAt: v.optional(v.number()),
+  })
+    .index("by_member", ["skoolUserId", "communityId"])
+    .index("by_community_acted", ["communityId", "actedAt"]),
 
   extensionSessions: defineTable({
     token: v.string(),

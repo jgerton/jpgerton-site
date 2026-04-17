@@ -9,7 +9,9 @@
  */
 
 import type * as auth from "../auth.js";
+import type * as communityPulse_aggregation from "../communityPulse/aggregation.js";
 import type * as communityPulse_authActions from "../communityPulse/authActions.js";
+import type * as communityPulse_backfill from "../communityPulse/backfill.js";
 import type * as communityPulse_queries from "../communityPulse/queries.js";
 import type * as communityPulse_scoring from "../communityPulse/scoring.js";
 import type * as communityPulse_sessions from "../communityPulse/sessions.js";
@@ -32,7 +34,9 @@ import type {
 
 declare const fullApi: ApiFromModules<{
   auth: typeof auth;
+  "communityPulse/aggregation": typeof communityPulse_aggregation;
   "communityPulse/authActions": typeof communityPulse_authActions;
+  "communityPulse/backfill": typeof communityPulse_backfill;
   "communityPulse/queries": typeof communityPulse_queries;
   "communityPulse/scoring": typeof communityPulse_scoring;
   "communityPulse/sessions": typeof communityPulse_sessions;
