@@ -7,6 +7,22 @@ import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { usePilotProfile } from "@/hooks/use-pilot-profile";
 
+// Narrow ambient declaration for the Chrome extension API we use on this page.
+// The site does not depend on @types/chrome; runtime is guarded with
+// `typeof chrome !== "undefined"`.
+declare const chrome:
+  | {
+      runtime?: {
+        sendMessage: (
+          extensionId: string,
+          message: unknown,
+          callback: (response: unknown) => void
+        ) => void;
+        lastError?: { message?: string };
+      };
+    }
+  | undefined;
+
 export default function ConnectExtensionPage() {
   const searchParams = useSearchParams();
   const extensionId = searchParams.get("extId");
@@ -44,19 +60,18 @@ export default function ConnectExtensionPage() {
       const session = await createSession();
 
       // Send token to extension via externally_connectable
-      if (
-        typeof chrome !== "undefined" &&
-        chrome.runtime?.sendMessage
-      ) {
-        chrome.runtime.sendMessage(
+      const runtime =
+        typeof chrome !== "undefined" ? chrome?.runtime : undefined;
+      if (runtime?.sendMessage) {
+        runtime.sendMessage(
           extensionId,
           {
             type: "CP_AUTH",
             sessionToken: session.sessionToken,
             profile: session.profile,
           },
-          (response: unknown) => {
-            if (chrome.runtime.lastError) {
+          (_response: unknown) => {
+            if (runtime.lastError) {
               setError(
                 "Could not reach the extension. Is Community Pulse installed and enabled?"
               );
