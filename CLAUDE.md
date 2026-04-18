@@ -8,9 +8,11 @@ When working on Convex code, **always read `convex/_generated/ai/guidelines.md` 
 Convex agent skills for common tasks can be installed by running `npx convex ai-files install`.
 <!-- convex-ai-end -->
 
-## Community Pulse (Slice 1 + Slice 2, shipped 2026-04-17)
+## Community Pulse (Slice 1 + Slice 2 shipped 2026-04-17; v1.0 in progress)
 
 This repo hosts **both the Convex backend AND the Community Ops web UI** for the Community Pulse Chrome extension. The extension itself lives in [jgerton/community-pulse](https://github.com/jgerton/community-pulse).
+
+**Roadmap to v1.0:** `E:/Projects/community-pulse/ROADMAP.md` — canonical plan covering "What Done Looks Like" criteria, current state, remaining slices (3-6), risks, and replan triggers.
 
 ### Convex tables (`convex/communityPulse/`)
 
