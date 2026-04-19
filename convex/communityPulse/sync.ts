@@ -14,6 +14,8 @@ const rawMemberValidator = v.object({
   attrComp: v.optional(v.string()),
   attrSrcComp: v.optional(v.string()),
   requestLocation: v.optional(v.string()),
+  // Slice 3: Skool URL slug (user.name from pageProps) for profile URL construction
+  skoolName: v.optional(v.string()),
 });
 
 export const syncMembers = mutation({
@@ -21,6 +23,9 @@ export const syncMembers = mutation({
     sessionToken: v.string(),
     communitySlug: v.string(),
     communityName: v.string(),
+    // Slice 3: pilot's own Skool identity captured from pageProps.self
+    ownSkoolUserId: v.optional(v.string()),
+    ownSkoolUserName: v.optional(v.string()),
     members: v.array(rawMemberValidator),
   },
   handler: async (ctx, args) => {
@@ -91,7 +96,23 @@ export const syncMembers = mutation({
         requestLocation: member.requestLocation,
         churnRisk,
         snapshotDate,
+        skoolName: member.skoolName,
       });
+    }
+
+    // Slice 3: backfill pilot's own Skool identity onto their pilotProfile (idempotent).
+    // Only write if caller provided ownSkoolUserId AND the profile doesn't already have one.
+    if (args.ownSkoolUserId) {
+      const pilotProfile = await ctx.db
+        .query("pilotProfiles")
+        .withIndex("by_email", (q) => q.eq("email", session.email))
+        .first();
+      if (pilotProfile && !pilotProfile.ownSkoolUserId) {
+        await ctx.db.patch(pilotProfile._id, {
+          ownSkoolUserId: args.ownSkoolUserId,
+          ownSkoolUserName: args.ownSkoolUserName,
+        });
+      }
     }
 
     return {

@@ -45,12 +45,21 @@ export default defineSchema({
       v.literal("revoked")
     ),
     ycahMemberId: v.optional(v.string()),
+    // Slice 3: pilot's own Skool identity (backfilled by syncMembers, idempotent)
+    ownSkoolUserId: v.optional(v.string()),
+    ownSkoolUserName: v.optional(v.string()),
+    // Slice 3: voice profile for AI drafting
+    voiceProfile: v.optional(v.string()),
+    voiceProfileApproved: v.optional(v.boolean()),
+    voiceProfileGeneratedAt: v.optional(v.number()),
+    voiceProfileSourceCount: v.optional(v.number()),
     createdAt: v.number(),
     updatedAt: v.number(),
   })
     .index("by_userId", ["userId"])
     .index("by_email", ["email"])
-    .index("by_status", ["approvalStatus"]),
+    .index("by_status", ["approvalStatus"])
+    .index("by_ownSkoolUserId", ["ownSkoolUserId"]),
   pilotOnboarding: defineTable({
     userId: v.id("users"),
     completedAt: v.optional(v.number()),
@@ -161,6 +170,8 @@ export default defineSchema({
         v.literal("at_risk")
       )
     ),
+    // Slice 3: Skool URL slug (user.name from pageProps) for profile URL construction
+    skoolName: v.optional(v.string()),
   })
     .index("by_community", ["communityId"])
     .index("by_community_date", ["communityId", "snapshotDate"])
