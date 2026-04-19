@@ -110,7 +110,9 @@ export const syncMembers = mutation({
       if (pilotProfile && !pilotProfile.ownSkoolUserId) {
         await ctx.db.patch(pilotProfile._id, {
           ownSkoolUserId: args.ownSkoolUserId,
-          ownSkoolUserName: args.ownSkoolUserName,
+          ...(args.ownSkoolUserName !== undefined && {
+            ownSkoolUserName: args.ownSkoolUserName,
+          }),
         });
       }
     }

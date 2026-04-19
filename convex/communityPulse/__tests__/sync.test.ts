@@ -75,6 +75,28 @@ describe("syncMembers — pilotProfile identity backfill", () => {
     });
     const profile = await t.run(async (ctx) => ctx.db.get(profileId));
     expect(profile?.ownSkoolUserId).toBe("u_pre_existing");
+    expect(profile?.ownSkoolUserName).toBe("pre-existing");
+  });
+
+  it("patches ownSkoolUserId alone when ownSkoolUserName is omitted", async () => {
+    const t = convexTest(schema, modules);
+    await seedPilotSession(t);
+    await t.mutation(api.communityPulse.sync.syncMembers, {
+      sessionToken: "fake-token",
+      communitySlug: "ycah",
+      communityName: "YCAH",
+      ownSkoolUserId: "u_pilot123",
+      // no ownSkoolUserName
+      members: [],
+    });
+    const profile = await t.run(async (ctx) =>
+      ctx.db
+        .query("pilotProfiles")
+        .withIndex("by_email", (q) => q.eq("email", "jon@example.com"))
+        .first()
+    );
+    expect(profile?.ownSkoolUserId).toBe("u_pilot123");
+    expect(profile?.ownSkoolUserName).toBeUndefined();
   });
 
   it("stores skoolName on each memberSnapshot", async () => {
