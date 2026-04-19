@@ -2,7 +2,7 @@
 import { describe, it, expect } from "vitest";
 import { convexTest } from "convex-test";
 import schema from "../../schema";
-import { api } from "../../_generated/api";
+import { api, internal } from "../../_generated/api";
 
 // convex-test's findModulesRoot extracts the prefix from the _generated path.
 // From this file's location, Vite normalizes paths so _generated is at "../../_generated/"
@@ -78,7 +78,7 @@ describe("saveVoiceProfile", () => {
         createdAt: 0, updatedAt: 0,
       });
     });
-    await t.mutation(api.communityPulse.voiceProfile.saveVoiceProfile, {
+    await t.mutation(internal.communityPulse.voiceProfile.saveVoiceProfile, {
       pilotProfileId: profileId,
       markdown: "## Voice\n\nDirect.",
       sourceCount: 10,

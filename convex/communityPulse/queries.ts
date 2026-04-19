@@ -189,6 +189,7 @@ export const getCommunityBySlug = query({
   },
 });
 
+/** UI-facing: throws when ownSkoolUserId is missing so the pilot knows to re-run member sync. */
 export const getOwnPosts = query({
   args: { pilotProfileId: v.id("pilotProfiles") },
   handler: async (ctx, args) => {
@@ -211,6 +212,7 @@ export const getOwnPosts = query({
   },
 });
 
+/** Action-facing: returns { profile, posts: [] } on missing ownSkoolUserId so callers can run the ownership check first. */
 export const getOwnPostsForProfile = query({
   args: { pilotProfileId: v.id("pilotProfiles") },
   handler: async (ctx, args) => {

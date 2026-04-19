@@ -1,5 +1,5 @@
-import { action, mutation } from "../_generated/server";
-import { api } from "../_generated/api";
+import { action, internalMutation, mutation } from "../_generated/server";
+import { api, internal } from "../_generated/api";
 import { v } from "convex/values";
 import { extractVoiceProfile, createProvider } from "@community-pulse/core";
 import { getAuthUserId } from "@convex-dev/auth/server";
@@ -37,7 +37,7 @@ export const generateVoiceProfile = action({
       model: "anthropic/claude-haiku-4-5",
     });
 
-    await ctx.runMutation(api.communityPulse.voiceProfile.saveVoiceProfile, {
+    await ctx.runMutation(internal.communityPulse.voiceProfile.saveVoiceProfile, {
       pilotProfileId: args.pilotProfileId,
       markdown: extracted.markdown,
       sourceCount: extracted.sourceCount,
@@ -48,7 +48,7 @@ export const generateVoiceProfile = action({
   },
 });
 
-export const saveVoiceProfile = mutation({
+export const saveVoiceProfile = internalMutation({
   args: {
     pilotProfileId: v.id("pilotProfiles"),
     markdown: v.string(),
