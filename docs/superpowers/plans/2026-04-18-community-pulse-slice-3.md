@@ -472,7 +472,7 @@ describe("checkNegativeParallelism (antislop-9)", () => {
     expect(checkNegativeParallelism("Your price signals who this community is for.")).toBeNull();
   });
   it("flags three-or-more not-just/not-only constructions", () => {
-    const draft = "This isn't just X. It's not only Y, but also Z. It goes beyond A to B.";
+    const draft = "It's not only X. This isn't just Y. It goes beyond A to B.";
     const flag = checkNegativeParallelism(draft);
     expect(flag?.test).toBe("antislop-9-negative-parallelism");
     expect(flag?.excerpt.toLowerCase()).toContain("not only");
@@ -628,7 +628,7 @@ export function checkRuleOfThree(draft: string): Flag | null {
   if (matches.length < 3) return null;
   return {
     test: "antislop-11-rule-of-three",
-    excerpt: matches[0][0],
+    excerpt: matches[0]![0],
     reason: `Found ${matches.length} triplet lists; 3+ suggests pattern-matching.`,
   };
 }
@@ -687,7 +687,7 @@ export function checkSignificanceInflation(draft: string): Flag | null {
   if (matches.length < 2) return null;
   return {
     test: "antislop-14-significance-inflation",
-    excerpt: matches[0][0],
+    excerpt: matches[0]![0],
     reason: `Found ${matches.length} significance-inflating words; 2+ is a tell.`,
   };
 }
