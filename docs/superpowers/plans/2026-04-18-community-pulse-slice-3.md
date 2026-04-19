@@ -594,7 +594,7 @@ function countMatches(draft: string, pattern: RegExp): number {
 }
 
 export function checkNegativeParallelism(draft: string): Flag | null {
-  const pattern = /\b(not\s+just|not\s+only|more\s+than\s+just|goes?\s+beyond\s+[^.]+?\s+to|isn'?t\s+merely)\b/gi;
+  const pattern = /\b(not\s+just|isn'?t\s+just|not\s+only|more\s+than\s+just|goes?\s+beyond\s+[^.]+?\s+to|isn'?t\s+merely)\b/gi;
   const count = countMatches(draft, pattern);
   if (count < 3) return null;
   const first = draft.match(pattern)?.[0] ?? "";
