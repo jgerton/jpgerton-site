@@ -253,6 +253,8 @@ Loop:
 
 - [x] **Task 1.1 — Verify `pageProps.self` shape on YCAH members page.** ✅ Completed 2026-04-19. See "Captured values" above. `self.id` and `self.name` both present on members page; members-page capture path confirmed.
 
+- [x] **Task 1.2a — Install convex-test infrastructure (jpgerton-site).** ✅ Completed 2026-04-19 with commit `e694cfc` (landed inline during Phase 1b member sync work). `convex-test@0.0.49` and `@edge-runtime/vm@5.0.0` are devDependencies; `vitest.config.ts` sets `environment: "edge-runtime"`; `sync.test.ts` uses the `convexTest` + `seedPilotSession` pattern that Phase 7 voiceProfile mutation tests will reuse.
+
 - [ ] **Task 1.2 — Write failing test for pilotProfiles sync patch.** File: `convex/communityPulse/__tests__/sync.test.ts` (new). Fake a mutation ctx, call `syncMembers` with `ownSkoolUserId: "u_pilot123"`, assert the pilot's `pilotProfiles` row (looked up by session email) is patched with `ownSkoolUserId: "u_pilot123"` and `ownSkoolUserName: "jon-gerton"`. Expected: FAIL.
 
 ```typescript
