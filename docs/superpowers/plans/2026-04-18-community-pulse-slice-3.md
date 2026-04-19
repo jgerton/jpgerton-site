@@ -547,6 +547,11 @@ describe("checkPassiveVoice (antislop-15)", () => {
     const flag = checkPassiveVoice(draft);
     expect(flag?.test).toBe("antislop-15-passive-voice");
   });
+  it("flags 3+ passive markers using common tech-ops participles", () => {
+    const draft = "The feature was deployed on Tuesday. Issues were reviewed. Updates were released to staging.";
+    const flag = checkPassiveVoice(draft);
+    expect(flag?.test).toBe("antislop-15-passive-voice");
+  });
 });
 
 describe("checkHedge (voice-6)", () => {
@@ -694,7 +699,7 @@ export function checkSignificanceInflation(draft: string): Flag | null {
 
 export function checkPassiveVoice(draft: string): Flag | null {
   const patterns = [
-    /\b(was|were|is|are|has\s+been|have\s+been)\s+(found|shown|considered|determined|observed|implemented)\b/gi,
+    /\b(was|were|is|are|has\s+been|have\s+been)\s+(found|shown|considered|determined|observed|implemented|deployed|reviewed|approved|updated|released|announced|created|launched|built|developed|designed|completed)\b/gi,
     /\bit\s+(was|should\s+be)\s+(determined|noted|observed|found)\s+that\b/gi,
     /\bcan\s+be\s+seen\s+as\b/gi,
   ];
