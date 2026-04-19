@@ -333,12 +333,12 @@ describe("drafting types exist", () => {
       kind: "dm",
       quadrant: "drifting",
       targetMember: { firstName: "Sam", skoolName: "sam" },
-      voiceProfile: "prose...",
+      voiceProfileMarkdown: "prose...",
     };
     const reply: DraftRequest = {
       kind: "post_reply",
       post: { title: "t", content: "c", authorFirstName: "A" },
-      voiceProfile: "prose...",
+      voiceProfileMarkdown: "prose...",
       intent: "supportive",
     };
     expect(dm.kind).toBe("dm");
@@ -378,8 +378,8 @@ export interface PostToReply {
 export type ReplyIntent = "supportive" | "question_answer" | "celebrate_win";
 
 export type DraftRequest =
-  | { kind: "dm"; quadrant: Quadrant; targetMember: TargetMember; voiceProfile: string; principle?: string; }
-  | { kind: "post_reply"; post: PostToReply; voiceProfile: string; intent: ReplyIntent; };
+  | { kind: "dm"; quadrant: Quadrant; targetMember: TargetMember; voiceProfileMarkdown: string; principle?: string; }
+  | { kind: "post_reply"; post: PostToReply; voiceProfileMarkdown: string; intent: ReplyIntent; };
 
 export interface DraftResponse {
   text: string;
@@ -1236,12 +1236,12 @@ import { assembleDMPrompt, assemblePostReplyPrompt, buildRetryPrompt } from "../
 import type { DraftRequest, Flag } from "../../src/drafting/types.js";
 
 describe("assembleDMPrompt", () => {
-  it("injects voiceProfile verbatim into the system prompt", () => {
+  it("injects voiceProfileMarkdown verbatim into the system prompt", () => {
     const voice = "I write short direct sentences. I open with the point.";
     const req: DraftRequest = {
       kind: "dm", quadrant: "drifting",
       targetMember: { firstName: "Sam" },
-      voiceProfile: voice,
+      voiceProfileMarkdown: voice,
     };
     const { system, user } = assembleDMPrompt(req);
     expect(system).toContain(voice);
@@ -1254,7 +1254,7 @@ describe("assembleDMPrompt", () => {
     const req: DraftRequest = {
       kind: "dm", quadrant: "ambassador",
       targetMember: { firstName: "A" },
-      voiceProfile: "v",
+      voiceProfileMarkdown: "v",
     };
     const { system } = assembleDMPrompt(req);
     expect(system.toLowerCase()).toContain("no filler");
@@ -1267,7 +1267,7 @@ describe("assemblePostReplyPrompt", () => {
     const req: DraftRequest = {
       kind: "post_reply",
       post: { title: "T", content: "Body", authorFirstName: "A" },
-      voiceProfile: "v", intent: "supportive",
+      voiceProfileMarkdown: "v", intent: "supportive",
     };
     const { system, user } = assemblePostReplyPrompt(req);
     expect(user).toContain("T");
@@ -1326,7 +1326,7 @@ export function assembleDMPrompt(req: Extract<DraftRequest, { kind: "dm" }>) {
     BASELINE_RULES,
     "",
     "Voice profile (match this exactly):",
-    req.voiceProfile,
+    req.voiceProfileMarkdown,
     req.principle ? `\nPlaybook principle to apply: ${req.principle}` : "",
   ].filter(Boolean).join("\n");
 
@@ -1349,7 +1349,7 @@ export function assemblePostReplyPrompt(req: Extract<DraftRequest, { kind: "post
     BASELINE_RULES,
     "",
     "Voice profile (match this exactly):",
-    req.voiceProfile,
+    req.voiceProfileMarkdown,
   ].join("\n");
 
   const user = [
@@ -1392,7 +1392,7 @@ import type { DraftRequest } from "../../src/drafting/types.js";
 const dmReq: DraftRequest = {
   kind: "dm", quadrant: "drifting",
   targetMember: { firstName: "Sam" },
-  voiceProfile: "direct",
+  voiceProfileMarkdown: "direct",
 };
 
 describe("generateAndValidate", () => {
@@ -2054,11 +2054,11 @@ export const generateSampleDraft = action({
       kind: "dm" as const,
       quadrant: inputs.targetMember!.quadrant ?? "drifting" as const,
       targetMember: inputs.targetMember!,
-      voiceProfile: inputs.voiceProfile,
+      voiceProfileMarkdown: inputs.voiceProfile,
     } : {
       kind: "post_reply" as const,
       post: inputs.post!,
-      voiceProfile: inputs.voiceProfile,
+      voiceProfileMarkdown: inputs.voiceProfile,
       intent: "supportive" as const,
     };
 
