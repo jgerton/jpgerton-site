@@ -17,6 +17,7 @@ import type * as communityPulse_queries from "../communityPulse/queries.js";
 import type * as communityPulse_scoring from "../communityPulse/scoring.js";
 import type * as communityPulse_sessions from "../communityPulse/sessions.js";
 import type * as communityPulse_sync from "../communityPulse/sync.js";
+import type * as communityPulse_voiceProfile from "../communityPulse/voiceProfile.js";
 import type * as http from "../http.js";
 import type * as pilotExercises from "../pilotExercises.js";
 import type * as pilotFeedback from "../pilotFeedback.js";
@@ -43,6 +44,7 @@ declare const fullApi: ApiFromModules<{
   "communityPulse/scoring": typeof communityPulse_scoring;
   "communityPulse/sessions": typeof communityPulse_sessions;
   "communityPulse/sync": typeof communityPulse_sync;
+  "communityPulse/voiceProfile": typeof communityPulse_voiceProfile;
   http: typeof http;
   pilotExercises: typeof pilotExercises;
   pilotFeedback: typeof pilotFeedback;

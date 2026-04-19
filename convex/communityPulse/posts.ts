@@ -17,6 +17,7 @@ const rawPostValidator = v.object({
   pinned: v.boolean(),
   createdAt: v.number(),          // ms or ns; normalized server-side
   lastCommentAt: v.optional(v.number()),
+  content: v.optional(v.string()),
 });
 
 /**
@@ -87,6 +88,7 @@ export const syncCommunityActivity = mutation({
         createdAt: createdAtMs,
         lastCommentAt: lastCommentMs,
         syncedAt,
+        content: p.content,
       };
 
       if (existing) {

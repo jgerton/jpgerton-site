@@ -188,3 +188,46 @@ export const getCommunityBySlug = query({
     return null;
   },
 });
+
+export const getOwnPosts = query({
+  args: { pilotProfileId: v.id("pilotProfiles") },
+  handler: async (ctx, args) => {
+    const profile = await ctx.db.get(args.pilotProfileId);
+    if (!profile || !profile.ownSkoolUserId) {
+      throw new Error("Pilot profile has no ownSkoolUserId; re-run member sync first.");
+    }
+    const community = await ctx.db
+      .query("communities")
+      .withIndex("by_owner", q => q.eq("ownerEmail", profile.email))
+      .first();
+    if (!community) return [];
+    const posts = await ctx.db
+      .query("posts")
+      .withIndex("by_community_author", q =>
+        q.eq("communityId", community._id).eq("authorSkoolUserId", profile.ownSkoolUserId!))
+      .collect();
+    posts.sort((a, b) => b.createdAt - a.createdAt);
+    return posts;
+  },
+});
+
+export const getOwnPostsForProfile = query({
+  args: { pilotProfileId: v.id("pilotProfiles") },
+  handler: async (ctx, args) => {
+    const profile = await ctx.db.get(args.pilotProfileId);
+    if (!profile) throw new Error("Profile not found");
+    if (!profile.ownSkoolUserId) return { profile, posts: [] };
+    const community = await ctx.db
+      .query("communities")
+      .withIndex("by_owner", q => q.eq("ownerEmail", profile.email))
+      .first();
+    if (!community) return { profile, posts: [] };
+    const posts = await ctx.db
+      .query("posts")
+      .withIndex("by_community_author", q =>
+        q.eq("communityId", community._id).eq("authorSkoolUserId", profile.ownSkoolUserId!))
+      .collect();
+    posts.sort((a, b) => b.createdAt - a.createdAt);
+    return { profile, posts };
+  },
+});

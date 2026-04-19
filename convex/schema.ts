@@ -195,6 +195,7 @@ export default defineSchema({
     createdAt: v.number(),              // ms
     lastCommentAt: v.optional(v.number()), // ms
     syncedAt: v.number(),
+    content: v.optional(v.string()),
   })
     .index("by_community_created", ["communityId", "createdAt"])
     .index("by_community_author", ["communityId", "authorSkoolUserId"])

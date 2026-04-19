@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@auth/core": "0.37.0",
+    "@community-pulse/core": "file:../community-pulse/packages/core",
     "@convex-dev/auth": "^0.0.91",
     "convex": "^1.35.1",
     "fumadocs-core": "^16.7.14",
