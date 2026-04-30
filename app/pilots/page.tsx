@@ -1,10 +1,11 @@
 "use client";
 
-import { useQuery } from "convex/react";
+import { useQuery, useConvexAuth } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import Link from "next/link";
 
 export default function PilotsPage() {
+  const { isAuthenticated, isLoading } = useConvexAuth();
   const projects = useQuery(api.projects.listActiveProjects);
 
   return (
@@ -13,8 +14,11 @@ export default function PilotsPage() {
         <div className="space-y-4">
           <h1 className="text-4xl font-heading font-bold">Pilots</h1>
           <p className="text-lg text-muted-foreground">
-            Projects I&apos;m building in public. Sign in to follow along, run
-            the exercises, and share what works.
+            Projects I&apos;m building in public.{" "}
+            {!isLoading &&
+              (isAuthenticated
+                ? "Pick one to follow along, run the exercises, and share what works."
+                : "Sign in to follow along, run the exercises, and share what works.")}
           </p>
         </div>
 
@@ -42,15 +46,17 @@ export default function PilotsPage() {
           </div>
         )}
 
-        <div className="pt-8 border-t border-border">
-          <p className="text-muted-foreground text-sm">
-            Want to pilot a project?{" "}
-            <Link href="/pilots/signin" className="text-accent hover:underline">
-              Sign in with Google
-            </Link>{" "}
-            to get access.
-          </p>
-        </div>
+        {!isLoading && !isAuthenticated && (
+          <div className="pt-8 border-t border-border">
+            <p className="text-muted-foreground text-sm">
+              Want to pilot a project?{" "}
+              <Link href="/pilots/signin" className="text-accent hover:underline">
+                Sign in with Google
+              </Link>{" "}
+              to get access.
+            </p>
+          </div>
+        )}
       </div>
     </section>
   );
