@@ -6,6 +6,7 @@ import { usePilotProfile } from "@/hooks/use-pilot-profile";
 import { WelcomeModal } from "./welcome-modal";
 import { ModuleFeedbackForm } from "./module-feedback-form";
 import { UXFeedbackPrompt } from "./ux-feedback-prompt";
+import { UXFeedbackForm } from "./ux-feedback-form";
 import { ProgressTracker } from "./progress-tracker";
 import { useState, useEffect } from "react";
 
@@ -43,6 +44,7 @@ export function DocsPageWrapper({ children }: { children: React.ReactNode }) {
   const { showWelcome, hasCompleted, complete, skip, updateScreen } = useOnboarding();
   const { preferredName } = usePilotProfile();
   const [welcomeOpen, setWelcomeOpen] = useState(false);
+  const [uxFeedbackOpen, setUxFeedbackOpen] = useState(false);
 
   const shouldShowWelcome = showWelcome && !hasCompleted;
 
@@ -93,8 +95,15 @@ export function DocsPageWrapper({ children }: { children: React.ReactNode }) {
           <UXFeedbackPrompt
             projectSlug={projectSlug}
             buildSlug={buildSlug}
-            onOpen={() => {}}
+            onOpen={() => setUxFeedbackOpen(true)}
           />
+          {uxFeedbackOpen && (
+            <UXFeedbackForm
+              projectSlug={projectSlug}
+              buildSlug={buildSlug}
+              onClose={() => setUxFeedbackOpen(false)}
+            />
+          )}
         </>
       )}
     </div>

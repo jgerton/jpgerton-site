@@ -5,22 +5,24 @@ import { useConvexAuth } from "convex/react";
 import Link from "next/link";
 
 export function PilotNav() {
-  const { isAuthenticated } = useConvexAuth();
+  const { isAuthenticated, isLoading } = useConvexAuth();
   const { signOut } = useAuthActions();
 
-  if (!isAuthenticated) return null;
+  if (isLoading || !isAuthenticated) return null;
 
   return (
-    <div className="flex items-center gap-4 text-sm text-muted-foreground">
-      <Link href="/pilots" className="hover:text-accent">
-        All Projects
-      </Link>
-      <button
-        onClick={() => void signOut()}
-        className="hover:text-accent"
-      >
-        Sign out
-      </button>
+    <div className="border-b border-border bg-background/50">
+      <div className="container mx-auto flex h-10 items-center justify-end gap-4 px-4 text-sm text-muted-foreground">
+        <Link href="/pilots" className="hover:text-accent">
+          All Projects
+        </Link>
+        <button
+          onClick={() => void signOut()}
+          className="hover:text-accent"
+        >
+          Sign out
+        </button>
+      </div>
     </div>
   );
 }
