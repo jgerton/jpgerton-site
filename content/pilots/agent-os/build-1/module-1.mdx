@@ -1,104 +1,83 @@
 ---
 title: "Module 1: Install vault-intake"
-description: "Get vault-intake running on your machine using CLI, Claude Desktop, or Cowork."
+description: "Get vault-intake installed as a Claude Code skill. Requires Python 3.12+, uv, and a Claude Pro or Max subscription."
 ---
 
 # Module 1: Install vault-intake
 
-vault-intake runs as a Claude skill. There are three ways to use it depending on your setup. Pick the one that matches how you already work with Claude.
+vault-intake is a Claude Code skill. It runs inside your existing Claude Code session using your Pro or Max subscription -- no API key, no separate billing. You install it once; after that, `/vault-intake` is available as a slash command in any Claude Code session.
 
-## Choose your path
+## Prerequisites
 
-**CLI path** -- for developers comfortable in a terminal. vault-intake runs directly as a CLI tool invoked from your shell or from a script. Most control, most flexibility.
+Before you install, you need:
 
-**Claude Desktop path** -- for users who run Claude Desktop with MCP servers. vault-intake is added as an MCP server in your Claude Desktop config. You invoke it through Claude's chat interface.
-
-**Cowork path** -- for users inside a Cowork environment or similar AI-assisted workspace where Claude Code is available. vault-intake runs as a skill within your existing Claude Code session.
-
-You only need one path. Start with the one you already have set up.
-
-## CLI installation
-
-<Action>
-**Prerequisites:** Node.js 18+ installed; an Anthropic API key set as `ANTHROPIC_API_KEY` in your environment.
-</Action>
-
-```bash
-npm install -g vault-intake
-```
-
-Verify the install:
-
-```bash
-vault-intake --version
-```
-
-You should see a version number. If you see a "command not found" error, check that your npm global bin directory is on your PATH.
+- **Python 3.12+** -- check with `python --version` or `python3 --version`
+- **uv** -- the Python package manager used by vault-intake. Install with `curl -LsSf https://astral.sh/uv/install.sh | sh` (Mac/Linux) or `powershell -c "irm https://astral.sh/uv/install.ps1 | iex"` (Windows)
+- **Claude Code** with a Pro or Max subscription -- this is how you'll invoke the skill
 
 <WatchOut>
-On Windows, the npm global directory is usually `%APPDATA%\npm`. On Mac/Linux it's typically `/usr/local/bin` or `~/.npm-global/bin`. If `vault-intake --version` fails, run `npm config get prefix` to find where global packages are installed and add `/bin` to your PATH.
+vault-intake is a Python project. It does not use npm, Node.js, or the Anthropic API directly. If you're looking for an npm install command or an API key field, you're on the wrong track.
 </WatchOut>
 
-## Claude Desktop (MCP) installation
+## Install steps
+
+```bash
+git clone https://github.com/jgerton/vault-intake.git
+cd vault-intake
+uv sync
+uv run scripts/install_skill.py
+```
+
+`install_skill.py` copies the skill files into `~/.claude/skills/vault-intake/`. After it finishes, open a new Claude Code session -- `/vault-intake` will be available as a slash command.
 
 <Action>
-**Prerequisites:** Claude Desktop installed; the MCP configuration file accessible at `~/Library/Application Support/Claude/claude_desktop_config.json` (Mac) or `%APPDATA%\Claude\claude_desktop_config.json` (Windows).
+After the install script finishes, open a new Claude Code session (not the one you used to install) and type `/vault-intake`. If the skill loads and describes its pipeline, the install succeeded.
 </Action>
 
-Add vault-intake as an MCP server in your Claude Desktop config:
+## Verify the install
 
-```json
-{
-  "mcpServers": {
-    "vault-intake": {
-      "command": "npx",
-      "args": ["-y", "vault-intake"],
-      "env": {
-        "ANTHROPIC_API_KEY": "your-key-here"
-      }
-    }
-  }
-}
-```
+Two ways to check:
 
-Restart Claude Desktop after saving. You should see vault-intake appear in the available tools list.
+**In Claude Code (primary):**
 
-<WatchOut>
-Do not put your API key directly in the config file if you share your machine or sync your config. Use an environment variable reference or a secrets manager instead.
-</WatchOut>
+Open a new session and type `/vault-intake`. The skill will load and describe itself. If it responds with the pipeline overview, you're good.
 
-## Cowork / Claude Code installation
+**Config validator (standalone):**
 
-If you're using Claude Code (the CLI) or a Cowork environment:
+If you've already written your Vault Config block (Module 2 covers this), you can validate it directly:
 
 ```bash
-claude skills install vault-intake
+uv run scripts/resolve_config.py /path/to/your/vault/CLAUDE.md
 ```
 
-Or if skills are managed via your session, vault-intake is available as a skill named `vault-intake` once installed. Invoke it by name in your Claude Code session.
-
-## Verify your installation
-
-Regardless of path, run a quick verification:
-
-**CLI:**
-```bash
-vault-intake --version
-vault-intake test
-```
-
-**Claude Desktop:** Open a new chat and type "test vault-intake" -- you should see the skill respond with its version and vault path.
-
-**Cowork:** In your Claude Code session, invoke the skill and ask it to report its version.
+This prints the resolved config as JSON. If it errors, the output tells you which required field is missing.
 
 <KeyData>
-A successful verification shows: vault-intake version number, the resolved vault path (from your CLAUDE.md Vault Config block, or a default), and confirmation that the Anthropic API key is valid.
+A successful install produces no version number and no "API key valid" message. The only confirmation you need is that `/vault-intake` loads in a new Claude Code session. If it does, the install is complete.
 </KeyData>
 
-If you see a vault path you don't recognize, that's expected if you haven't written your Vault Config block yet -- Module 2 covers that. The default path is `~/vault` or `~/Documents/Obsidian`.
+## The standalone CLI path
+
+If you want to run vault-intake without Claude Code -- from a script or a terminal pipeline -- there's a standalone CLI:
+
+```bash
+uv run scripts/intake.py --vault /path/to/vault --input /path/to/content.txt
+```
+
+This runs the full intake pipeline without a Claude Code session. It uses the same `uv` toolchain and the same Vault Config from your vault's `CLAUDE.md`.
+
+Most pilots will use the Claude Code skill path. The CLI path is useful if you want to pipe content from other tools (yt-dlp, Blotato, etc.) directly into vault-intake as part of a shell workflow.
+
+## Troubleshooting
+
+**`uv: command not found`** -- uv is not on your PATH. Follow the uv install instructions above and restart your terminal.
+
+**`python3.12: command not found`** -- Python 3.12 is not installed. Install it from python.org or via your system package manager. uv can also manage Python versions: `uv python install 3.12`.
+
+**`/vault-intake not found` in Claude Code** -- the install script may have run but Claude Code wasn't restarted. Close the session and open a new one. If it still doesn't appear, check that `~/.claude/skills/vault-intake/` exists and contains `SKILL.md`.
 
 <PilotExercise exerciseId="ex1">
-Install vault-intake using whichever path fits your setup. Run the verification step and paste the output.
+Install vault-intake and open a new Claude Code session. Type `/vault-intake` and confirm the skill loads.
 
-If something went wrong during install, describe what happened instead -- a failed install attempt is equally useful feedback.
+Share which install path you used (Claude Code skill or standalone CLI), and paste or describe the output you saw when the skill loaded. If something went wrong, describe what happened instead -- a failed install attempt is equally useful feedback.
 </PilotExercise>

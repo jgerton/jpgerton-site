@@ -1,97 +1,104 @@
 ---
 title: "Module 3: Your First Capture"
-description: "Take a real piece of content through the vault-intake pipeline from source to note."
+description: "Take a real piece of content through the vault-intake pipeline. Get the text first, then run the skill."
 ---
 
 # Module 3: Your First Capture
 
-This is the module that matters. Everything before this was setup. This is where you find out whether vault-intake actually works for your vault, your content, and your workflow.
+vault-intake takes text as input. It doesn't fetch URLs or download videos -- you get the content first, then pipe it in. This is the right mental model: vault-intake is a classifier, router, and formatter, not a scraper.
 
-## Choose a good first source
+## Step 1: Get your content as text
 
-Pick something you actually want to keep -- not a demo, not a test, something you'd have captured manually if you had the time. Good first sources:
+Pick something you actually want to keep. Good first sources:
 
-- A YouTube video you've been meaning to watch and take notes on
-- An article or blog post you want to reference later
-- A podcast transcript
-- A long Twitter/X thread on a topic you care about
+- A YouTube transcript (use yt-dlp: `yt-dlp --write-auto-subs --skip-download "URL"`, then feed the `.vtt` or `.srt` file)
+- An article or blog post (copy the full text, paste into a `.txt` file)
+- Notes from a meeting or conversation (paste your rough notes into a file)
+- A long thread or document you want in your vault
+
+Save the content as a plain text file. vault-intake reads from stdin or a file path.
 
 <Insight>
-The best first capture is something where you already have an opinion. When vault-intake produces a note on content you know well, you can immediately tell whether the summary is accurate, whether the tags are right, and whether the wikilinks make sense. Generic content gives you no calibration signal.
+The best first capture is something where you already know the content well. When vault-intake produces a note on content you know, you can immediately tell whether the classification is accurate, whether the domain assignment makes sense, and whether the refined output captured the key points. Generic "test" content gives you no calibration signal.
 </Insight>
 
-## Run the capture
+## Step 2: Run the capture
 
-**CLI:**
+**Via Claude Code skill (primary path):**
+
+Open a Claude Code session and type `/vault-intake`. The skill will load and prompt you for input. Paste your content directly into the chat, or tell the skill the file path.
+
+**Via standalone CLI:**
+
 ```bash
-vault-intake capture "https://youtube.com/watch?v=yourvideohere"
-vault-intake capture "https://example.com/article"
+# From a file:
+uv run scripts/intake.py --vault /path/to/vault --input /path/to/content.txt
+
+# From stdin:
+cat content.txt | uv run scripts/intake.py --vault /path/to/vault
+
+# Dry run (see the output without writing to vault):
+uv run scripts/intake.py --vault /path/to/vault --input content.txt --dry-run
+
+# Skip confirmation prompt:
+uv run scripts/intake.py --vault /path/to/vault --input content.txt --yes
 ```
 
-**Claude Desktop:** In a new chat: "Capture this for my vault: [URL or paste content]"
+<Action>
+Run the dry run first (`--dry-run`). It shows you exactly what vault-intake would write without touching your vault. Confirm the classification and output look right before committing the write.
+</Action>
 
-**Cowork:** In your Claude Code session, invoke vault-intake with the URL or pasted content.
+## Step 3: Read the output
 
-## What you'll get
-
-vault-intake produces a markdown file in your configured Inbox folder (from Module 2). The note structure:
+vault-intake writes a Markdown file to your vault. The structure:
 
 ```markdown
 ---
-title: "Article Title"
-source: "https://..."
-captured: 2026-05-02
+schema_version: '1.0'
+source_type: paste
+source_uri: ''
+captured_at: '2026-05-02'
+processed_by: /vault-intake
+confidence: 0.82
+title: your-note-title
+date: '2026-05-02'
+type: note
+domain: ai-tools
 tags:
   - ai-tools
   - knowledge-management
-type: article
 ---
 
-# Article Title
+{refined or original body text}
 
-## Summary
+## Possible next steps
+- Review the key points [Signal: action item detected]
 
-[2-3 paragraph summary]
-
-## Key Points
-
-- Point 1
-- Point 2
-
-## My Notes
-
-[empty section for your annotations]
-
-## Related
-
-- [[related-note-1]]
-- [[related-note-2]]
+## Original capture
+{verbatim original input, only appears when refinement changed the text}
 ```
 
-The `Related` section suggests wikilinks based on your domain list. These are suggestions, not hard links -- vault-intake doesn't know which notes actually exist in your vault yet.
-
-## Reading the output
-
-When you open the note in Obsidian, check:
-
-**Is the summary accurate?** Does it capture the main argument or the key information? If it's vague or misses the point, that's feedback.
-
-**Are the tags right?** Do the tags match your domain list and the content? Tags that don't exist in your vault are noise; tags that fit will show up in your graph.
-
-**Do the wikilinks make sense?** Not whether the linked notes exist -- whether the suggested connections are reasonable for your vault's domain.
-
-**Did it land in the right folder?** Check that `folder` in your Vault Config is pointing where you want.
+The file lands in a folder inside your vault determined by the `(type, routing_mode)` combination -- for example, `resources/` for reference material or `insights/` for analytical notes when using PARA routing.
 
 <KeyData>
-A good first capture produces a note you'd actually use. If you'd delete it immediately, something is misconfigured. If you'd edit it a bit before using it, that's normal. If you'd use it as-is, vault-intake is working well for this content type.
+The `confidence` frontmatter field tells you how certain vault-intake was about the domain classification. A value below 0.6 (the default threshold) means it wasn't confident enough to classify -- it will flag this for your review rather than guessing. If you see low-confidence results on content that clearly belongs to one of your domains, your domain descriptions may need to be more specific.
 </KeyData>
 
+## What vault-intake does NOT add automatically
+
+Some things that are NOT in the output:
+- **Summary sections** -- the refined body IS the summary; there's no separate `## Summary` heading
+- **Wikilinks to existing notes** -- the dry-run surfaces suggested wikilinks for your review; they are not auto-inserted into the note
+- **A `## My Notes` section** -- the `## Original capture` section appears only when refinement changed the input; there's no empty annotation placeholder
+
+If your output looks different from this -- no frontmatter, no domain assignment, an error message -- Module 4 is where you report that.
+
 <WatchOut>
-YouTube captures require the video to have captions or a transcript. Videos without captions will produce a low-quality capture based only on the title and description. If your first video doesn't have captions, try a different source.
+If vault-intake can't determine the content type or domain, it will ask for clarification rather than guess. This is expected behavior for ambiguous content. Your first capture should be something clearly within one of your configured domains.
 </WatchOut>
 
 <PilotExercise exerciseId="ex3">
-Run a capture on a real piece of content. Share what you captured, what came out, what landed well, and what surprised you.
+Run a capture on a real piece of content using either the Claude Code skill or the CLI. Try the dry run first to preview the output.
 
-"Surprised" includes both good surprises (it did something you didn't expect and liked) and bad ones (it did something unexpected that wasn't useful). Both are high-signal.
+Share what you captured (content type and topic), what the output looked like (frontmatter fields, domain assignment, confidence score), what landed well, and what surprised you -- good or bad.
 </PilotExercise>

@@ -8,24 +8,28 @@ export const exerciseConfigs: Record<string, ExerciseConfig> = {
     fields: [
       {
         label: "Installation method",
-        placeholder: "CLI / Claude Desktop / Cowork",
+        placeholder: "Claude Code skill (primary) or standalone CLI",
       },
       {
         label: "Verification output",
-        placeholder: "Paste the terminal or UI confirmation here",
+        placeholder: "What happened when you typed /vault-intake in Claude Code, or describe what you saw...",
       },
     ],
-    prompt: `I'm working through the Agent OS pilot and installing vault-intake using the method that fits my setup: CLI, Claude Desktop, or Cowork.
+    prompt: `I'm installing vault-intake as a Claude Code skill for the Agent OS pilot.
 
-My installation method: [fill in]
-My verification output: [fill in]
+Install steps I ran: git clone, uv sync, uv run scripts/install_skill.py, then opened a new Claude Code session and typed /vault-intake.
 
-Help me assess this install. Did the installation succeed? Does the verification output confirm the right version and the right vault path?`,
+My installation method: [Claude Code skill / standalone CLI]
+What I saw when I verified: [fill in]
+
+Help me assess whether the install succeeded. Did the skill load correctly? If something went wrong, help me diagnose it.`,
     emailBody: `Install and Verify vault-intake
 
-Installation method:
+Installation method (Claude Code skill or standalone CLI):
 
-Verification output:
+What you saw when you verified:
+
+Any errors or issues encountered:
 
 `,
     emailSubject: "[PILOT-AGENT-OS-EX1] Install Verification",
@@ -35,24 +39,38 @@ Verification output:
     fields: [
       {
         label: "Vault Config block",
-        placeholder: "Paste the full CLAUDE.md Vault Config block here",
+        placeholder: "Paste the full ## Vault Config YAML block from your vault's CLAUDE.md...",
       },
       {
-        label: "Domain list",
-        placeholder: "List the domains you included, one per line",
+        label: "Domain slugs and descriptions",
+        placeholder: "List each domain slug and its description, one per line...",
       },
     ],
-    prompt: `I'm writing my CLAUDE.md Vault Config block for vault-intake. I need it to include my vault path, the domain list for the work I actually do, and the capture preferences that should guide what gets saved.
+    prompt: `I'm writing the Vault Config block for my vault's CLAUDE.md as part of the Agent OS pilot.
 
-My Vault Config block: [fill in]
-My domain list: [fill in]
+The required fields are: vault_path, classification_mode, routing_mode, and domains (with slug + description per domain).
 
-Help me assess this config. Is the Vault Config block complete? Does the domain list cover my actual work without being too broad or too narrow?`,
+My Vault Config block:
+\`\`\`yaml
+[fill in]
+\`\`\`
+
+My domains (slug: description):
+[fill in]
+
+Help me assess this config:
+1. Are all required fields present and correctly formatted?
+2. Are my domain descriptions specific enough to classify content accurately?
+3. Is there anything that would cause the config validator to fail?`,
     emailBody: `Write Your Vault Config Block
 
-Vault Config block:
+Your full Vault Config block (paste the YAML):
 
-Domain list:
+Your domain slugs and descriptions:
+
+Validator output (from uv run scripts/resolve_config.py):
+
+Any questions or things you weren't sure about:
 
 `,
     emailSubject: "[PILOT-AGENT-OS-EX2] Vault Config Block",
@@ -62,27 +80,36 @@ Domain list:
     fields: [
       {
         label: "What you captured",
-        placeholder: "Describe the session or context you captured",
+        placeholder: "Content type (transcript, article, notes...) and topic...",
       },
       {
         label: "What landed well",
-        placeholder: "What did vault-intake get right?",
+        placeholder: "Domain assignment, confidence score, frontmatter accuracy, output structure...",
       },
       {
         label: "What surprised you",
-        placeholder: "Anything unexpected, good or bad",
+        placeholder: "Anything unexpected, good or bad...",
       },
     ],
-    prompt: `I'm running my first real vault-intake capture for the Agent OS pilot. This is not a test run. I want to capture something from an actual working session and judge whether the output reflects what mattered.
+    prompt: `I'm running my first real vault-intake capture for the Agent OS pilot.
 
-What I captured: [fill in]
+I prepared the content as plain text first (vault-intake doesn't fetch URLs directly), then ran it through the skill or CLI.
+
+What I captured (content type and topic): [fill in]
+How I ran it (Claude Code skill or uv run scripts/intake.py): [fill in]
+Domain it was assigned to: [fill in]
+Confidence score from frontmatter: [fill in]
 What landed well: [fill in]
 What surprised me: [fill in]
 
-Help me assess this first capture. Did it reflect what actually mattered in the session? Did the structure feel natural for how I would want to find and reuse this later?`,
+Help me assess this first capture. Did the domain assignment make sense? Is the confidence score reasonable for this content? What would I need to adjust for this to be consistently useful?`,
     emailBody: `Your First Capture
 
-What you captured:
+Content type and topic:
+
+How you ran it (Claude Code skill or CLI):
+
+Domain assigned and confidence score:
 
 What landed well:
 
@@ -96,18 +123,18 @@ What surprised you:
     fields: [
       {
         label: "Friction items",
-        placeholder: "One item per line",
+        placeholder: "One item per line: what felt slow, confusing, broken, or annoying...",
       },
     ],
-    prompt: `I'm cataloging every point of friction I've encountered so far while using vault-intake. I need one item per line, with no minimum and no maximum.
+    prompt: `I'm cataloging friction points from my first week with vault-intake.
 
-My friction items:
+My friction items (one per line):
 [fill in]
 
-Help me assess this report. Are the friction items specific enough to act on? Do any root causes cluster around a single theme?`,
+Help me assess this report. Are the items specific enough to act on? Do any cluster around a single root cause? Which would you prioritize if you were fixing them?`,
     emailBody: `Friction Report
 
-Friction items:
+Friction items (one per line):
 
 `,
     emailSubject: "[PILOT-AGENT-OS-EX4] Friction Report",
@@ -117,24 +144,29 @@ Friction items:
     fields: [
       {
         label: "Wishes",
-        placeholder: "Features or behaviors you wish existed",
+        placeholder: "Features or behaviors you wish existed or worked differently...",
       },
       {
         label: "Edge cases",
-        placeholder: "Situations vault-intake did not handle well",
+        placeholder: "Situations vault-intake didn't handle well, or where you weren't sure what to do...",
       },
       {
         label: "Surprises",
-        placeholder: "Anything unexpected from the pilot overall",
+        placeholder: "Anything that worked better than expected, or differently than you assumed...",
       },
     ],
-    prompt: `I'm writing my final open reflection for the Agent OS pilot. I want to capture feature wishes, edge cases vault-intake did not handle, and anything surprising from the pilot overall.
+    prompt: `I'm doing a forward-looking feedback pass on vault-intake after using it for the Agent OS pilot.
 
-My wishes: [fill in]
-My edge cases: [fill in]
-My surprises: [fill in]
+Wishes (grounded in real workflow gaps, not hypotheticals):
+[fill in]
 
-Help me assess this reflection. Are my wishes grounded in real workflow gaps? Do the edge cases suggest any missing capture rules?`,
+Edge cases I hit (specific situations the tool didn't handle well):
+[fill in]
+
+Surprises (better or different than expected):
+[fill in]
+
+Help me articulate these clearly as product feedback. For each wish, push back if it sounds like a workaround rather than a genuine product gap. For edge cases, help me identify whether it's a config issue or a real product limitation.`,
     emailBody: `Wishes, Edge Cases, and Surprises
 
 Wishes:

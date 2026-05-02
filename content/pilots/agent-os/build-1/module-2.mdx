@@ -1,125 +1,118 @@
 ---
 title: "Module 2: Configure Your Vault"
-description: "Write the CLAUDE.md Vault Config block that tells vault-intake about your domains, vault path, and capture preferences."
+description: "Write the Vault Config block in your vault's CLAUDE.md. Three required fields, one required section."
 ---
 
 # Module 2: Configure Your Vault
 
-vault-intake reads a Vault Config block from your CLAUDE.md to understand how to structure captures for your specific vault. Without it, it falls back to generic defaults. With it, your captures land with the right tags, the right links, and in the right directories.
+vault-intake reads a `## Vault Config` section from your vault's `CLAUDE.md` to understand how to classify and route your captures. This is not your global `~/.claude/CLAUDE.md` -- it's the `CLAUDE.md` file inside your Obsidian vault directory.
 
-## Where the Vault Config block lives
+If you don't have a `CLAUDE.md` in your vault yet, create one. vault-intake looks for a heading called `## Vault Config` followed by a YAML block.
 
-Add it to your global CLAUDE.md (`~/.claude/CLAUDE.md`) or to a project-level CLAUDE.md if you want different capture behavior per project.
+## The config block
 
-The block uses a YAML code fence:
+Add this to your vault's `CLAUDE.md`:
 
+````markdown
+## Vault Config
+
+```yaml
+vault_path: /absolute/path/to/your/vault
+classification_mode: fixed_domains
+routing_mode: para
+domains:
+  - slug: your-first-domain
+    description: One sentence describing what this domain covers
+  - slug: your-second-domain
+    description: One sentence describing what this domain covers
+```
 ````
-```vault-config
-vault_path: ~/Documents/Obsidian/MyVault
-domains:
-  - AI tools and workflows
-  - knowledge management
-  - Obsidian
-  - productivity for makers
-capture_defaults:
-  add_wikilinks: true
-  add_tags: true
-  folder: Inbox
-```
-````
 
-## Vault path
-
-Set `vault_path` to the absolute path of your Obsidian vault. vault-intake writes files here directly.
-
-```yaml
-vault_path: ~/Documents/Obsidian/MyVault
-```
-
-On Windows use forward slashes or double backslashes:
-```yaml
-vault_path: C:/Users/yourname/Documents/MyVault
-```
-
-## Domain list
-
-Domains tell vault-intake what topics you work in. It uses this to:
-- Tag captures accurately
-- Suggest related notes via wikilinks
-- Prioritize the right sections when summarizing long content
-
-<Insight>
-Good domains are specific enough to be meaningful but broad enough to apply across multiple sources. "AI tools and workflows" is better than "Claude" (too narrow) or "technology" (too broad). Think about the headings in your Obsidian vault -- those are your domains.
-</Insight>
-
-Example domain lists by role:
-
-**Indie hacker / builder:**
-```yaml
-domains:
-  - AI tools and workflows
-  - knowledge management
-  - community building
-  - product development
-  - marketing for makers
-```
-
-**Developer educator:**
-```yaml
-domains:
-  - TypeScript and JavaScript
-  - developer experience
-  - technical writing
-  - open source
-  - learning systems
-```
-
-**Researcher:**
-```yaml
-domains:
-  - research methodology
-  - literature review
-  - data analysis
-  - academic writing
-  - cognitive science
-```
-
-Your list should reflect what's actually in your vault, not what you aspire to capture.
-
-## Capture defaults
-
-```yaml
-capture_defaults:
-  add_wikilinks: true    # suggests links to related notes
-  add_tags: true         # adds tags from your domain list
-  folder: Inbox          # default folder for new captures
-```
-
-`folder` can be any folder path relative to your vault root. If the folder doesn't exist, vault-intake creates it.
+Three fields are required: `vault_path`, `classification_mode`, and `routing_mode`. If `classification_mode` is `fixed_domains`, `domains` is also required.
 
 <WatchOut>
-If you use Obsidian Sync, vault-intake's file writes will sync automatically. If you're on a shared vault with other users, make sure your Inbox folder isn't a shared inbox.
+`vault_path` must be an absolute path, not a relative one. `~/Documents/Obsidian/MyVault` works on Mac/Linux. On Windows use forward slashes: `C:/Users/yourname/Documents/MyVault`.
 </WatchOut>
 
-## A complete example
+## Filling in your domains
+
+Each domain needs two sub-fields:
+
+- **slug** -- a short kebab-case identifier used in filenames and tags (e.g., `ai-tools`, `knowledge-management`)
+- **description** -- one sentence describing what this domain covers, written in plain language
+
+vault-intake uses the description to classify incoming content. A specific description produces more accurate classification than a broad one.
+
+<Insight>
+Write domain descriptions as if you're explaining to a colleague what goes in that folder. "Notes on building Skool communities, freemium conversion, and member retention" is more useful than "community." The description is read by the model during classification -- specificity matters.
+</Insight>
+
+**Example for an indie hacker / builder:**
 
 ```yaml
-vault_path: ~/Documents/Obsidian/MyVault
 domains:
-  - AI tools and workflows
-  - knowledge management
-  - community building for creators
-  - Skool and Obsidian
-capture_defaults:
-  add_wikilinks: true
-  add_tags: true
-  folder: Inbox/vault-intake
+  - slug: ai-tools
+    description: Tools, workflows, and techniques for using AI in daily knowledge work and content creation
+  - slug: community-building
+    description: Building and growing online communities, Skool mechanics, member engagement, and freemium conversion
+  - slug: product-development
+    description: Building software products as an indie hacker, including technical and business decisions
+  - slug: knowledge-management
+    description: Obsidian, note-taking systems, PKM methods, and how to structure a personal knowledge base
 ```
 
-This is Jon's actual config at time of writing. Your domains should reflect your vault, not his.
+Your domains should reflect what is actually in your vault. Start with 3-5 domains. You can add more later.
+
+## Mode choices
+
+**`classification_mode`:** Use `fixed_domains` if you have a defined set of topics (recommended for most users). Use `emergent` if you want vault-intake to infer domain categories from content without a predefined list.
+
+**`routing_mode`:** Use `para` to route notes into a PARA-style folder structure (Projects, Areas, Resources, Archives). Use `emergent` to let vault-intake decide the folder based on content type.
+
+The most common pairing is `fixed_domains` + `para`. If you're not sure, use that.
+
+## Optional fields
+
+```yaml
+language: en                              # default: en
+skip_notebooklm: false                    # default: false; set true to skip NotebookLM integration
+refinement_enabled: true                  # default: true; set false to skip AI refinement step
+classification_confidence_threshold: 0.6  # default: 0.6; lower = more permissive classification
+notebook_map:                             # optional; map domain slugs to NotebookLM notebook IDs
+  ai-tools: your-notebook-id-here
+```
+
+For the alpha pilot, you only need the three required fields plus your domains. Leave the optional fields at defaults unless you have a specific reason to change them.
+
+## A complete working example
+
+```yaml
+vault_path: /Users/jon/Documents/Obsidian/Vault
+classification_mode: fixed_domains
+routing_mode: para
+domains:
+  - slug: ai-tools
+    description: Tools, workflows, and techniques for using AI in daily knowledge work and content creation
+  - slug: community-building
+    description: Building and growing online communities, Skool mechanics, member engagement, and freemium conversion
+  - slug: product-development
+    description: Building software products as an indie hacker, including technical and business decisions
+  - slug: knowledge-management
+    description: Obsidian, note-taking systems, PKM methods, and how to structure a personal knowledge base
+```
+
+## Validate your config
+
+After writing your config, validate it before running a capture:
+
+```bash
+uv run scripts/resolve_config.py /path/to/your/vault/CLAUDE.md
+```
+
+This prints the resolved config as JSON. If it errors, the message will tell you which required field is missing or malformed.
 
 <PilotExercise exerciseId="ex2">
-Write your Vault Config block and add it to your CLAUDE.md. Share the full block here, including your domain list.
+Write your Vault Config block and add it to your vault's `CLAUDE.md`. Run the validator and confirm it resolves without errors.
 
-If you weren't sure how to write a domain or left something blank, include that in your response -- "wasn't sure whether X belongs in domains" is useful feedback.
+Paste your full config block here (domains included). If you weren't sure how to write a domain description, or if the validator flagged an error you had to fix, include that in your response -- that's useful feedback.
 </PilotExercise>
