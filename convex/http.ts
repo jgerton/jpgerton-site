@@ -8,11 +8,11 @@ const http = httpRouter();
 auth.addHttpRoutes(http);
 
 http.route({
-  path: "/zapier/ycah-member",
+  path: "/webhook/ycah-member",
   method: "POST",
   handler: httpAction(async (ctx, request) => {
-    const secret = request.headers.get("x-zapier-secret");
-    const expectedSecret = process.env.ZAPIER_WEBHOOK_SECRET;
+    const secret = request.headers.get("x-webhook-secret");
+    const expectedSecret = process.env.WEBHOOK_SECRET;
 
     if (!expectedSecret || secret !== expectedSecret) {
       return new Response("Unauthorized", { status: 401 });
@@ -20,7 +20,7 @@ http.route({
 
     const body = await request.json();
 
-    await ctx.runMutation(api.ycahMembers.syncFromZapier, {
+    await ctx.runMutation(api.ycahMembers.syncFromWebhook, {
       email: body.email,
       name: body.name,
       communityUrl: body.communityUrl || undefined,

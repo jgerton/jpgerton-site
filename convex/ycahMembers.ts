@@ -3,7 +3,7 @@ import { mutation, query } from "./_generated/server";
 import { v } from "convex/values";
 import { getAuthUserId } from "@convex-dev/auth/server";
 
-export const syncFromZapier = mutation({
+export const syncFromWebhook = mutation({
   args: {
     email: v.string(),
     name: v.string(),
