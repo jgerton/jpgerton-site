@@ -8,24 +8,38 @@ export const exerciseConfigs: Record<string, ExerciseConfig> = {
     fields: [
       {
         label: "Installation method",
-        placeholder: "Claude Code skill (primary) or standalone CLI",
+        placeholder: "Claude Code skill path (git clone + install_skill.py) or standalone CLI only",
+      },
+      {
+        label: "Where you invoked /vault-intake",
+        placeholder: "CLI terminal / Code tab in Claude Desktop / Cowork tab in Claude Desktop",
+      },
+      {
+        label: "Operating system",
+        placeholder: "Mac / Windows / Linux",
       },
       {
         label: "Verification output",
-        placeholder: "What happened when you typed /vault-intake in Claude Code, or describe what you saw...",
+        placeholder: "What happened when you typed /vault-intake -- describe what you saw or paste the response...",
       },
     ],
     prompt: `I'm installing vault-intake as a Claude Code skill for the Agent OS pilot.
 
 Install steps I ran: git clone, uv sync, uv run scripts/install_skill.py, then opened a new Claude Code session and typed /vault-intake.
 
-My installation method: [Claude Code skill / standalone CLI]
+My installation method: [Claude Code skill path / standalone CLI only]
+Where I invoked /vault-intake: [CLI terminal / Code tab in Claude Desktop / Cowork tab in Claude Desktop]
+My operating system: [Mac / Windows / Linux]
 What I saw when I verified: [fill in]
 
 Help me assess whether the install succeeded. Did the skill load correctly? If something went wrong, help me diagnose it.`,
     emailBody: `Install and Verify vault-intake
 
-Installation method (Claude Code skill or standalone CLI):
+Installation method (Claude Code skill path or standalone CLI):
+
+Where you invoked /vault-intake (CLI terminal / Code tab / Cowork tab):
+
+Operating system (Mac / Windows / Linux):
 
 What you saw when you verified:
 
