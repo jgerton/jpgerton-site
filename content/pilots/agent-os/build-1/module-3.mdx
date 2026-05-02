@@ -1,0 +1,97 @@
+---
+title: "Module 3: Your First Capture"
+description: "Take a real piece of content through the vault-intake pipeline from source to note."
+---
+
+# Module 3: Your First Capture
+
+This is the module that matters. Everything before this was setup. This is where you find out whether vault-intake actually works for your vault, your content, and your workflow.
+
+## Choose a good first source
+
+Pick something you actually want to keep -- not a demo, not a test, something you'd have captured manually if you had the time. Good first sources:
+
+- A YouTube video you've been meaning to watch and take notes on
+- An article or blog post you want to reference later
+- A podcast transcript
+- A long Twitter/X thread on a topic you care about
+
+<Insight>
+The best first capture is something where you already have an opinion. When vault-intake produces a note on content you know well, you can immediately tell whether the summary is accurate, whether the tags are right, and whether the wikilinks make sense. Generic content gives you no calibration signal.
+</Insight>
+
+## Run the capture
+
+**CLI:**
+```bash
+vault-intake capture "https://youtube.com/watch?v=yourvideohere"
+vault-intake capture "https://example.com/article"
+```
+
+**Claude Desktop:** In a new chat: "Capture this for my vault: [URL or paste content]"
+
+**Cowork:** In your Claude Code session, invoke vault-intake with the URL or pasted content.
+
+## What you'll get
+
+vault-intake produces a markdown file in your configured Inbox folder (from Module 2). The note structure:
+
+```markdown
+---
+title: "Article Title"
+source: "https://..."
+captured: 2026-05-02
+tags:
+  - ai-tools
+  - knowledge-management
+type: article
+---
+
+# Article Title
+
+## Summary
+
+[2-3 paragraph summary]
+
+## Key Points
+
+- Point 1
+- Point 2
+
+## My Notes
+
+[empty section for your annotations]
+
+## Related
+
+- [[related-note-1]]
+- [[related-note-2]]
+```
+
+The `Related` section suggests wikilinks based on your domain list. These are suggestions, not hard links -- vault-intake doesn't know which notes actually exist in your vault yet.
+
+## Reading the output
+
+When you open the note in Obsidian, check:
+
+**Is the summary accurate?** Does it capture the main argument or the key information? If it's vague or misses the point, that's feedback.
+
+**Are the tags right?** Do the tags match your domain list and the content? Tags that don't exist in your vault are noise; tags that fit will show up in your graph.
+
+**Do the wikilinks make sense?** Not whether the linked notes exist -- whether the suggested connections are reasonable for your vault's domain.
+
+**Did it land in the right folder?** Check that `folder` in your Vault Config is pointing where you want.
+
+<KeyData>
+A good first capture produces a note you'd actually use. If you'd delete it immediately, something is misconfigured. If you'd edit it a bit before using it, that's normal. If you'd use it as-is, vault-intake is working well for this content type.
+</KeyData>
+
+<WatchOut>
+YouTube captures require the video to have captions or a transcript. Videos without captions will produce a low-quality capture based only on the title and description. If your first video doesn't have captions, try a different source.
+</WatchOut>
+
+<PilotExercise exerciseId="ex3">
+Run a capture on a real piece of content. Share what you captured, what came out, what landed well, and what surprised you.
+
+"Surprised" includes both good surprises (it did something you didn't expect and liked) and bad ones (it did something unexpected that wasn't useful). Both are high-signal.
+</PilotExercise>

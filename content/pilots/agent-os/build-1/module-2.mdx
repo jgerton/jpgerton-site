@@ -1,0 +1,125 @@
+---
+title: "Module 2: Configure Your Vault"
+description: "Write the CLAUDE.md Vault Config block that tells vault-intake about your domains, vault path, and capture preferences."
+---
+
+# Module 2: Configure Your Vault
+
+vault-intake reads a Vault Config block from your CLAUDE.md to understand how to structure captures for your specific vault. Without it, it falls back to generic defaults. With it, your captures land with the right tags, the right links, and in the right directories.
+
+## Where the Vault Config block lives
+
+Add it to your global CLAUDE.md (`~/.claude/CLAUDE.md`) or to a project-level CLAUDE.md if you want different capture behavior per project.
+
+The block uses a YAML code fence:
+
+````
+```vault-config
+vault_path: ~/Documents/Obsidian/MyVault
+domains:
+  - AI tools and workflows
+  - knowledge management
+  - Obsidian
+  - productivity for makers
+capture_defaults:
+  add_wikilinks: true
+  add_tags: true
+  folder: Inbox
+```
+````
+
+## Vault path
+
+Set `vault_path` to the absolute path of your Obsidian vault. vault-intake writes files here directly.
+
+```yaml
+vault_path: ~/Documents/Obsidian/MyVault
+```
+
+On Windows use forward slashes or double backslashes:
+```yaml
+vault_path: C:/Users/yourname/Documents/MyVault
+```
+
+## Domain list
+
+Domains tell vault-intake what topics you work in. It uses this to:
+- Tag captures accurately
+- Suggest related notes via wikilinks
+- Prioritize the right sections when summarizing long content
+
+<Insight>
+Good domains are specific enough to be meaningful but broad enough to apply across multiple sources. "AI tools and workflows" is better than "Claude" (too narrow) or "technology" (too broad). Think about the headings in your Obsidian vault -- those are your domains.
+</Insight>
+
+Example domain lists by role:
+
+**Indie hacker / builder:**
+```yaml
+domains:
+  - AI tools and workflows
+  - knowledge management
+  - community building
+  - product development
+  - marketing for makers
+```
+
+**Developer educator:**
+```yaml
+domains:
+  - TypeScript and JavaScript
+  - developer experience
+  - technical writing
+  - open source
+  - learning systems
+```
+
+**Researcher:**
+```yaml
+domains:
+  - research methodology
+  - literature review
+  - data analysis
+  - academic writing
+  - cognitive science
+```
+
+Your list should reflect what's actually in your vault, not what you aspire to capture.
+
+## Capture defaults
+
+```yaml
+capture_defaults:
+  add_wikilinks: true    # suggests links to related notes
+  add_tags: true         # adds tags from your domain list
+  folder: Inbox          # default folder for new captures
+```
+
+`folder` can be any folder path relative to your vault root. If the folder doesn't exist, vault-intake creates it.
+
+<WatchOut>
+If you use Obsidian Sync, vault-intake's file writes will sync automatically. If you're on a shared vault with other users, make sure your Inbox folder isn't a shared inbox.
+</WatchOut>
+
+## A complete example
+
+```yaml
+vault_path: ~/Documents/Obsidian/MyVault
+domains:
+  - AI tools and workflows
+  - knowledge management
+  - community building for creators
+  - Skool and Obsidian
+capture_defaults:
+  add_wikilinks: true
+  add_tags: true
+  folder: Inbox/vault-intake
+```
+
+This is Jon's actual config at time of writing. Your domains should reflect your vault, not his.
+
+<PilotExercise exerciseId="ex2">
+Write your Vault Config block and add it to your CLAUDE.md. Share the full block here, including your domain list.
+
+If you weren't sure how to write a domain or left something blank, include that in your response -- "wasn't sure whether X belongs in domains" is useful feedback.
+</PilotExercise>
