@@ -1,0 +1,66 @@
+---
+title: "Agent OS"
+description: "A personal AI operating system built on Claude Code. Four layers: Context, Connections, Capabilities, and Cadence. vault-intake is the first Capability."
+---
+
+# Agent OS
+
+An Agent OS is a personal AI operating system built on Claude Code. Not a chatbot. Not a note-taking app. An operating layer that knows your business, reaches your tools, executes workflows, and runs scheduled work while you sleep.
+
+The litmus test: while you are not at your desk, your Agent OS observes a real-world event and produces an output that is faster and more accurate than what you would produce yourself. That is what done looks like.
+
+## The four layers
+
+An Agent OS is built in four layers, in order. Each layer depends on the one before it.
+
+**Context** -- Claude knows your business. A fresh session can answer "what does this business do, who are the customers, and what are the active projects?" without you explaining anything. This lives in `CLAUDE.md` and a `context/` folder in your working directory.
+
+**Connections** -- Claude can reach your tools. Calendar, email, Slack, n8n, your Obsidian vault, your CRM. A `connections.md` registry maps every system the OS can touch, with the auth and invocation pattern for each.
+
+**Capabilities** -- Claude knows how to do the work. A short phrase or slash command triggers a multi-step workflow that produces a real artifact: a morning brief, a captured and classified note, a drafted reply, a weekly review. vault-intake is the first Capability in this pilot.
+
+**Cadence** -- the OS runs without being asked. Scheduled `claude -p` commands via cron or n8n fire while your laptop is closed. Overnight work lands in your vault or inbox. A morning brief is waiting when you open your computer. The mini-PC running headless Ubuntu is where this layer lives permanently.
+
+Do not build Cadence before the first three layers work manually. Automating a broken workflow produces broken output on a schedule.
+
+## What done looks like
+
+You open your laptop in the morning. In your vault: three new notes captured and classified overnight from sources your n8n pipeline was watching. A morning brief synthesized from the week's captures, with two connection alerts between notes you wrote months apart and one suggested action. A draft reply to the email that came in at 2am, staged for your review.
+
+You did not touch a keyboard. Your Agent OS ran the Cadence layer while you slept.
+
+That is the end state. Build 1 of this pilot is the first Capability: vault-intake. It is the piece that writes structured, classified, wikilinked notes into your vault from any text source. Without it, there is nothing for the synthesis layer to work with and nothing for the Cadence layer to automate.
+
+## The vault portability principle
+
+Everything vault-intake writes is plain Markdown with YAML frontmatter. No proprietary format, no sync service, no vendor lock-in. If you stop using vault-intake tomorrow, every note it wrote is still readable, searchable, and linkable in Obsidian. The Agent OS extends your vault. It does not own it.
+
+AI tools that own your knowledge create dependency. Tools that write to your vault extend it.
+
+## Where this fits in YCAH
+
+You Craft and AI Helps operates on three tiers:
+
+- **Basic** -- self-serve tools you can use today, including vault-intake once it ships. No subscription required beyond YCAH membership.
+- **Premium** -- guided workflows, live sessions, and community accountability for practitioners building their own Agent OS.
+- **Pro** -- personalized builds and direct collaboration.
+
+This pilot sits between Basic and Premium. You are testing vault-intake as a standalone Capability and giving feedback that shapes both the tool and the full Agent OS curriculum.
+
+## This pilot
+
+vault-intake is in alpha. [The source is public on GitHub](https://github.com/jgerton/vault-intake) under AGPL-3.0.
+
+Elio is the first design-partner pilot. He is working through installation, vault configuration, and first captures now. His feedback and yours directly shapes Build 2 and the connection layer above it.
+
+What you do as a pilot:
+
+- Install vault-intake and wire it to your Obsidian vault
+- Run real captures, not demo content
+- Report what worked, what felt slow or wrong, and what you wish it did
+
+Your responses go directly to Jon. Patterns across pilots drive the next build scope.
+
+## Get started
+
+[Build 1: First Capture](/pilots/docs/agent-os/build-1) covers installation through your first capture and feedback. Five modules, one exercise each, roughly 1-2 hours.
