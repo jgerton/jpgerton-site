@@ -9,6 +9,7 @@ import { RootProvider } from "fumadocs-ui/provider/next";
 import "./globals.css";
 
 export const metadata: Metadata = {
+  metadataBase: new URL(siteConfig.url),
   title: siteConfig.name,
   description: siteConfig.description,
   icons: {
