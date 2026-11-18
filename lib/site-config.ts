@@ -10,7 +10,7 @@ export const siteConfig = {
     x: "https://x.com/jgerton",
     youtube: "https://youtube.com/@jgerton",
     skool: "https://www.skool.com/you-craft-ai-helps",
-    linkedin: "https://www.linkedin.com/in/jon-gerton-8009a9393/",
+    linkedin: "https://www.linkedin.com/in/jon-gerton/",
   },
   keywords: [
     "Claude Code",
