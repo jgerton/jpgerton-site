@@ -2,7 +2,16 @@
 
 import { useParams } from "next/navigation";
 import { ExerciseCallout } from "./exercise-callout";
-import { exerciseConfigs } from "@/content/pilots/freemium-playbook/exercise-configs";
+import {
+  exerciseConfigs as freemiumConfigs,
+  type ExerciseConfig,
+} from "@/content/pilots/freemium-playbook/exercise-configs";
+import { exerciseConfigs as agentOsConfigs } from "@/content/pilots/agent-os/exercise-configs";
+
+const configsByProject: Record<string, Record<string, ExerciseConfig>> = {
+  "freemium-playbook": freemiumConfigs,
+  "agent-os": agentOsConfigs,
+};
 
 export function PilotExerciseWrapper({
   exerciseId,
@@ -19,8 +28,12 @@ export function PilotExerciseWrapper({
   const projectSlug = slugParts[0] ?? "";
   const buildSlug = slugParts[1] ?? "";
 
-  const config = exerciseConfigs[exerciseId];
-  if (!config) return <div>Unknown exercise: {exerciseId}</div>;
+  const projectConfigs = configsByProject[projectSlug] ?? {};
+  const config = projectConfigs[exerciseId];
+  if (!config) {
+    console.error(`[PilotExerciseWrapper] Unknown exercise "${exerciseId}" for project "${projectSlug}"`);
+    return <div>Unknown exercise: {exerciseId}</div>;
+  }
 
   return (
     <ExerciseCallout

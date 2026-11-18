@@ -1,0 +1,83 @@
+---
+title: "Module 1: Install vault-intake"
+description: "Get vault-intake installed as a Claude Code skill. Requires Python 3.12+, uv, and a Claude Pro or Max subscription."
+---
+
+# Module 1: Install vault-intake
+
+vault-intake is a Claude Code skill. It runs inside your existing Claude Code session using your Pro or Max subscription -- no API key, no separate billing. You install it once; after that, `/vault-intake` is available as a slash command in any Claude Code session.
+
+## Prerequisites
+
+Before you install, you need:
+
+- **Python 3.12+** -- check with `python --version` or `python3 --version`
+- **uv** -- the Python package manager used by vault-intake. Install with `curl -LsSf https://astral.sh/uv/install.sh | sh` (Mac/Linux) or `powershell -c "irm https://astral.sh/uv/install.ps1 | iex"` (Windows)
+- **Claude Code** with a Pro or Max subscription -- this is how you'll invoke the skill
+
+<WatchOut>
+vault-intake is a Python project. It does not use npm, Node.js, or the Anthropic API directly. If you're looking for an npm install command or an API key field, you're on the wrong track.
+</WatchOut>
+
+## Install steps
+
+```bash
+git clone https://github.com/jgerton/vault-intake.git
+cd vault-intake
+uv sync
+uv run scripts/install_skill.py
+```
+
+`install_skill.py` copies the skill files into `~/.claude/skills/vault-intake/`. After it finishes, open a new Claude Code session -- `/vault-intake` will be available as a slash command.
+
+<Action>
+After the install script finishes, open a new Claude Code session (not the one you used to install) and type `/vault-intake`. If the skill loads and describes its pipeline, the install succeeded.
+</Action>
+
+## Verify the install
+
+Two ways to check:
+
+**In Claude Code (primary):**
+
+Open a new session and type `/vault-intake`. The skill will load and describe itself. If it responds with the pipeline overview, you're good.
+
+**Config validator (standalone):**
+
+If you've already written your Vault Config block (Module 2 covers this), you can validate it directly:
+
+```bash
+uv run scripts/resolve_config.py /path/to/your/vault/CLAUDE.md
+```
+
+This prints the resolved config as JSON. If it errors, the output tells you which required field is missing.
+
+<KeyData>
+A successful install produces no version number and no "API key valid" message. The only confirmation you need is that `/vault-intake` loads in a new Claude Code session. If it does, the install is complete.
+</KeyData>
+
+## The standalone CLI path
+
+If you want to run vault-intake without Claude Code -- from a script or a terminal pipeline -- there's a standalone CLI:
+
+```bash
+uv run scripts/intake.py --vault /path/to/vault --input /path/to/content.txt
+```
+
+This runs the full intake pipeline without a Claude Code session. It uses the same `uv` toolchain and the same Vault Config from your vault's `CLAUDE.md`.
+
+Most pilots will use the Claude Code skill path. The CLI path is useful if you want to pipe content from other tools (yt-dlp, Blotato, etc.) directly into vault-intake as part of a shell workflow.
+
+## Troubleshooting
+
+**`uv: command not found`** -- uv is not on your PATH. Follow the uv install instructions above and restart your terminal.
+
+**`python3.12: command not found`** -- Python 3.12 is not installed. Install it from python.org or via your system package manager. uv can also manage Python versions: `uv python install 3.12`.
+
+**`/vault-intake not found` in Claude Code** -- the install script may have run but Claude Code wasn't restarted. Close the session and open a new one. If it still doesn't appear, check that `~/.claude/skills/vault-intake/` exists and contains `SKILL.md`.
+
+<PilotExercise exerciseId="ex1">
+Install vault-intake and open a new Claude Code session. Type `/vault-intake` and confirm the skill loads.
+
+Share: which install path you used (Claude Code skill path or standalone CLI), where you invoked `/vault-intake` (CLI terminal, Code tab in Claude Desktop, or Cowork tab), your operating system, and what you saw when the skill loaded. If something went wrong, describe what happened -- a failed install is equally useful feedback.
+</PilotExercise>
